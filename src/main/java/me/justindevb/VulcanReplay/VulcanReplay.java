@@ -11,10 +11,13 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.justindevb.VulcanReplpay.util.UpdateChecker;
+import me.justindevb.VulcanReplay.Listeners.PlayerListener;
+import me.justindevb.VulcanReplay.Listeners.VulcanListener;
+import me.justindevb.VulcanReplay.Util.UpdateChecker;
 
 public class VulcanReplay extends JavaPlugin {
 
@@ -31,6 +34,8 @@ public class VulcanReplay extends JavaPlugin {
 		initBstats();
 
 		checkForUpdate();
+		
+		handleReload();
 
 	}
 
@@ -110,11 +115,12 @@ public class VulcanReplay extends JavaPlugin {
 		list.add("strafe");
 		config.addDefault("Genral.Disabled-Recordings", list);
 		config.addDefault("General.Recording-Length", 2);
+		config.addDefault("General.Overwrite", false);
 
 		String path = "Discord.";
 		config.addDefault(path + "Enabled", true);
 		config.addDefault(path + "Webhook", "Enter webhook here");
-		config.addDefault(path + "Avatar", "Enter link to a discord avatar");
+		config.addDefault(path + "Avatar", "https://i.imgur.com/JPG1Kwk.png");
 		config.addDefault(path + "Username", "VulcanReplay");
 		config.addDefault(path + "Server-Name", "Server");
 		config.options().copyDefaults(true);
@@ -183,6 +189,20 @@ public class VulcanReplay extends JavaPlugin {
 			else
 				log("There is an update available! Download at: https://www.spigotmc.org/resources/vulcan-replay.97845/",
 						true);
+		});
+	}
+
+	/**
+	 * Attempt to handle if the plugin was reloaded with /reload or PlugMan
+	 */
+	private void handleReload() {
+		Bukkit.getScheduler().runTask(this, () -> {
+			if (!Bukkit.getOnlinePlayers().isEmpty()) {
+				for (Player p : Bukkit.getOnlinePlayers()) {
+					PlayerCache cachedPlayer = new PlayerCache(p, this);
+					putCachedPlayer(p.getUniqueId(), cachedPlayer);
+				}
+			}
 		});
 	}
 

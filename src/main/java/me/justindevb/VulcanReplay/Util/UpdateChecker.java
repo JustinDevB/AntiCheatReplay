@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplpay.util;
+package me.justindevb.VulcanReplay.Util;
 
 import java.io.IOException;
 import java.io.InputStream;

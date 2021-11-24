@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplay;
+package me.justindevb.VulcanReplay.Util;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplay;
+package me.justindevb.VulcanReplay.Listeners;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -9,11 +9,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -25,6 +25,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import me.frep.vulcan.api.event.VulcanFlagEvent;
 import me.frep.vulcan.api.event.VulcanPunishEvent;
 import me.jumper251.replay.api.ReplayAPI;
+import me.justindevb.VulcanReplay.Util.DiscordWebhook;
+import me.justindevb.VulcanReplay.PlayerCache;
+import me.justindevb.VulcanReplay.VulcanReplay;
 
 public class VulcanListener implements Listener {
 
@@ -40,6 +43,7 @@ public class VulcanListener implements Listener {
 	private String SERVER_NAME = "";
 	private double PLAYER_RANGE = 0D;
 	private long delay = 2;
+	private boolean OVERWRITE = false;
 
 	final ReplayAPI replay = ReplayAPI.getInstance();
 
@@ -110,8 +114,7 @@ public class VulcanListener implements Listener {
 					replay.stopReplay(replayName, true);
 					vulcanReplay.log("Saving recording of attempted hack...", false);
 					vulcanReplay.log("Saved as: " + replayName, false);
-					sendDiscordWebhook(replayName, p,
-							getOnlineTime(loginTime, System.currentTimeMillis()));
+					sendDiscordWebhook(replayName, p, getOnlineTime(loginTime, System.currentTimeMillis()));
 					punishList.remove(p.getName());
 
 					if (alertList.contains(p.getName()))
@@ -196,9 +199,27 @@ public class VulcanListener implements Listener {
 
 		String[] part = time.split("T");
 
-		return part[0];
+		if (this.OVERWRITE)
+			return part[0];
+
+		return part[0] + "." + getRandomSalt();
+
 	}
 
+	/**
+	 * Random number between 1 and 100
+	 * @return
+	 */
+	private int getRandomSalt() {
+		Random rand = new Random();
+		int n = 100 - 1 + 1;
+		int val = rand.nextInt() % n;
+		return Math.abs(val);
+	}
+
+	/**
+	 * Initialize our config values
+	 */
 	private void initConfigFields() {
 		FileConfiguration config = vulcanReplay.getConfig();
 		this.WEBHOOK_URL = config.getString("Discord.Webhook");
@@ -210,6 +231,7 @@ public class VulcanListener implements Listener {
 
 		this.disabledRecordings = config.getStringList("General.Disabled-Recordings");
 		this.delay = config.getLong("General.Recording-Length");
+		this.OVERWRITE = config.getBoolean("General.Overwrite");
 	}
 
 	private long getOnlineTime(long loginTime, long currentTime) {
