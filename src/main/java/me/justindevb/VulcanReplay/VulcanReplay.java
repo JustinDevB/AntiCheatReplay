@@ -14,6 +14,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.justindevb.VulcanReplpay.util.UpdateChecker;
+
 public class VulcanReplay extends JavaPlugin {
 
 	private HashMap<UUID, PlayerCache> playerCache = new HashMap<>();
@@ -28,6 +30,13 @@ public class VulcanReplay extends JavaPlugin {
 
 		initBstats();
 
+		checkForUpdate();
+
+	}
+
+	@Override
+	public void onDisable() {
+		this.playerCache.clear();
 	}
 
 	private void registerListener() {
@@ -93,6 +102,7 @@ public class VulcanReplay extends JavaPlugin {
 	 */
 	private void initConfig() {
 		FileConfiguration config = getConfig();
+		config.addDefault("General.Check-Update", true);
 		config.addDefault("General.Nearby-Range", 30);
 
 		List<String> list = new ArrayList<>();
@@ -162,6 +172,18 @@ public class VulcanReplay extends JavaPlugin {
 			getLogger().log(Level.SEVERE, msg);
 		else
 			getLogger().log(Level.INFO, msg);
+	}
+
+	private void checkForUpdate() {
+		if (!getConfig().getBoolean("General.Check-Update"))
+			return;
+		new UpdateChecker(this, 97845).getVersion(version -> {
+			if (this.getDescription().getVersion().equals(version))
+				log("You are up to date!", false);
+			else
+				log("There is an update available! Download at: https://www.spigotmc.org/resources/vulcan-replay.97845/",
+						true);
+		});
 	}
 
 }
