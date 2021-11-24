@@ -3,4 +3,4 @@ main: me.justindevb.VulcanReplay.VulcanReplay
 version: 1.2
 author: JustinDevB
 depend: [AdvancedReplay, Vulcan]
-api-version: 1.17
+api-version: 1.13
