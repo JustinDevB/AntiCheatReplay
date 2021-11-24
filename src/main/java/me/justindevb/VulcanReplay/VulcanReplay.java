@@ -1,5 +1,6 @@
 package me.justindevb.VulcanReplay;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.logging.Level;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,7 +37,8 @@ public class VulcanReplay extends JavaPlugin {
 
 	private void checkRequiredPlugins() {
 		checkReplayAPI();
-		checkVulcan();
+		checkVulcanInstalled();
+		checkVulcanApi();
 	}
 
 	/**
@@ -53,12 +55,37 @@ public class VulcanReplay extends JavaPlugin {
 	/**
 	 * Check if Vulcan is running on the server. If not disable VulcanReplay
 	 */
-	private void checkVulcan() {
+	private void checkVulcanInstalled() {
 		Plugin plugin = Bukkit.getPluginManager().getPlugin("Vulcan");
 		if (plugin == null || !plugin.isEnabled()) {
 			log("Vulcan is required to run this plugin. Shutting down...", true);
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
+	}
+
+	/**
+	 * Check to see if the Vulcan API is enabled in Vulcan's config.yml
+	 */
+	private void checkVulcanApi() {
+		log("Checking if Vulcan API is enabled", false);
+		File file = new File(this.getDataFolder().getParentFile(),
+				"Vulcan" + System.getProperty("file.separator") + "config.yml");
+		if (!file.exists()) {
+			log("Vulcan is not installed!", true);
+			return;
+		}
+
+		FileConfiguration vulcan = YamlConfiguration.loadConfiguration(file);
+
+		if (vulcan.getBoolean("settings.enable-api")) {
+			log("Vulcan API is enabled", false);
+			return;
+		}
+
+		log("Vulcan API is disabled in Vulcan's config.yml. This must be true for this plugin to work!", true);
+		Bukkit.getScheduler().runTask(this, () -> {
+			Bukkit.getPluginManager().disablePlugin(this);
+		});
 	}
 
 	/**
