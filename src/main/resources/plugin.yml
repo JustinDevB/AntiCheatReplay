@@ -1,0 +1,6 @@
+name: ${project.artifactId}
+main: ${mainClass}
+version: ${project.version}
+author: ${author}
+depend: [AdvancedReplay, Vulcan]
+api-version: 1.17
