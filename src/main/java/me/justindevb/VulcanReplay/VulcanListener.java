@@ -101,6 +101,8 @@ public class VulcanListener implements Listener {
 	 * @param Name   of recording if saving
 	 */
 	private void runLogic(Player p, String replayName) {
+		PlayerCache cachedPlayer = vulcanReplay.getCachedPlayer(p.getUniqueId());
+		long loginTime = cachedPlayer.getLoginTimeStamp();
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -108,9 +110,8 @@ public class VulcanListener implements Listener {
 					replay.stopReplay(replayName, true);
 					vulcanReplay.log("Saving recording of attempted hack...", false);
 					vulcanReplay.log("Saved as: " + replayName, false);
-					PlayerCache cachedPlayer = vulcanReplay.getCachedPlayer(p.getUniqueId());
 					sendDiscordWebhook(replayName, p,
-							getOnlineTime(cachedPlayer.getLoginTimeStamp(), System.currentTimeMillis()));
+							getOnlineTime(loginTime, System.currentTimeMillis()));
 					punishList.remove(p.getName());
 
 					if (alertList.contains(p.getName()))
@@ -173,8 +174,8 @@ public class VulcanListener implements Listener {
 					new DiscordWebhook.EmbedObject().setTitle("Instant Replay").setDescription("Recording created")
 							.setThumbnail("http://cravatar.eu/avatar/" + player.getName() + "/64.png")
 							.setColor(new Color(0, 255, 0)).addField("Server: ", SERVER_NAME, true)
-							.addField("Online for", minutesOnline + " minutes", true)
-							.addField("Recording saved as", recording, true)
+							.addField("Online for:", minutesOnline + " minutes", true)
+							.addField("Recording saved as:", recording, true)
 							.addField("View with: ", "/replay play " + recording, true));
 			vulcanReplay.log("Sending WebHook request...", false);
 			try {

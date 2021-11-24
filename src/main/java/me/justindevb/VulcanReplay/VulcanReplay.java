@@ -31,6 +31,7 @@ public class VulcanReplay extends JavaPlugin {
 
 	private void registerListener() {
 		Bukkit.getPluginManager().registerEvents(new VulcanListener(this), this);
+		Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 	}
 
 	private void checkRequiredPlugins() {
