@@ -65,17 +65,14 @@ public class VulcanListener implements Listener {
 
 		startRecording(p, replayName);
 
-		runLogic(p, replayName);
+		
 
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPunish(VulcanPunishEvent event) {
 		final Player p = event.getPlayer();
-
-		Bukkit.getScheduler().runTask(vulcanReplay, () -> {
-		});
-
+		
 		if (!punishList.contains(p.getName()))
 			punishList.add(p.getName());
 
