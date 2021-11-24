@@ -1,16 +1,21 @@
 package me.justindevb.VulcanReplay;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class VulcanReplay extends JavaPlugin {
+
+	private HashMap<UUID, PlayerCache> playerCache = new HashMap<>();
 
 	@Override
 	public void onEnable() {
@@ -78,6 +83,46 @@ public class VulcanReplay extends JavaPlugin {
 		saveConfig();
 	}
 
+	private void initBstats() {
+		final int pluginId = 13402;
+		Metrics metrics = new Metrics(this, pluginId);
+	}
+
+	public PlayerCache getCachedPlayer(UUID uuid) {
+		return this.playerCache.get(uuid);
+	}
+
+	/**
+	 * Add a player to the PlayerCache
+	 * 
+	 * @param uuid
+	 * @param player
+	 */
+	public void putCachedPlayer(UUID uuid, PlayerCache player) {
+		if (this.playerCache.containsKey(uuid))
+			return;
+		this.playerCache.put(uuid, player);
+	}
+
+	/**
+	 * Check if player is Cached
+	 * 
+	 * @return
+	 */
+	public boolean isPlayerCached(UUID uuid) {
+		return this.playerCache.containsKey(uuid);
+	}
+
+	/**
+	 * Remove a player from the PlayerCache
+	 * 
+	 * @param uuid
+	 */
+	public void removeCachedPlayer(UUID uuid) {
+		if (isPlayerCached(uuid))
+			this.playerCache.remove(uuid);
+	}
+
 	/**
 	 * Log a message to the console
 	 * 
@@ -89,11 +134,6 @@ public class VulcanReplay extends JavaPlugin {
 			getLogger().log(Level.SEVERE, msg);
 		else
 			getLogger().log(Level.INFO, msg);
-	}
-
-	private void initBstats() {
-		final int pluginId = 13402;
-		Metrics metrics = new Metrics(this, pluginId);
 	}
 
 }

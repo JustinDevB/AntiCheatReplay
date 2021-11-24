@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -65,14 +66,12 @@ public class VulcanListener implements Listener {
 
 		startRecording(p, replayName);
 
-		
-
 	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPunish(VulcanPunishEvent event) {
 		final Player p = event.getPlayer();
-		
+
 		if (!punishList.contains(p.getName()))
 			punishList.add(p.getName());
 
@@ -91,6 +90,8 @@ public class VulcanListener implements Listener {
 			replay.recordReplay(replayName, Bukkit.getConsoleSender(), getNearbyPlayers(p));
 		});
 
+		runLogic(p, replayName);
+
 	}
 
 	/**
@@ -107,7 +108,9 @@ public class VulcanListener implements Listener {
 					replay.stopReplay(replayName, true);
 					vulcanReplay.log("Saving recording of attempted hack...", false);
 					vulcanReplay.log("Saved as: " + replayName, false);
-					sendDiscordWebhook(replayName, p);
+					PlayerCache cachedPlayer = vulcanReplay.getCachedPlayer(p.getUniqueId());
+					sendDiscordWebhook(replayName, p,
+							getOnlineTime(cachedPlayer.getLoginTimeStamp(), System.currentTimeMillis()));
 					punishList.remove(p.getName());
 
 					if (alertList.contains(p.getName()))
@@ -158,7 +161,7 @@ public class VulcanListener implements Listener {
 	 * @param Name   of the Recording
 	 * @param Player that was recorded
 	 */
-	private void sendDiscordWebhook(String recording, Player player) {
+	private void sendDiscordWebhook(String recording, Player player, long minutesOnline) {
 		if (!WEBHOOK_ENABLED)
 			return;
 
@@ -170,6 +173,7 @@ public class VulcanListener implements Listener {
 					new DiscordWebhook.EmbedObject().setTitle("Instant Replay").setDescription("Recording created")
 							.setThumbnail("http://cravatar.eu/avatar/" + player.getName() + "/64.png")
 							.setColor(new Color(0, 255, 0)).addField("Server: ", SERVER_NAME, true)
+							.addField("Online for", minutesOnline + " minutes", true)
 							.addField("Recording saved as", recording, true)
 							.addField("View with: ", "/replay play " + recording, true));
 			vulcanReplay.log("Sending WebHook request...", false);
@@ -205,6 +209,11 @@ public class VulcanListener implements Listener {
 
 		this.disabledRecordings = config.getStringList("General.Disabled-Recordings");
 		this.delay = config.getLong("General.Recording-Length");
+	}
+
+	private long getOnlineTime(long loginTime, long currentTime) {
+
+		return (TimeUnit.MILLISECONDS.toMinutes(currentTime - loginTime));
 	}
 
 }

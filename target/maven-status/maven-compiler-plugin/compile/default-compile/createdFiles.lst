@@ -6,7 +6,9 @@ me\justindevb\VulcanReplay\DiscordWebhook.class
 me\justindevb\VulcanReplay\DiscordWebhook$EmbedObject$Author.class
 me\justindevb\VulcanReplay\DiscordWebhook$EmbedObject.class
 me\justindevb\VulcanReplay\VulcanListener$1.class
+me\justindevb\VulcanReplay\PlayerListener.class
 me\justindevb\VulcanReplay\DiscordWebhook$EmbedObject$Footer.class
 me\justindevb\VulcanReplay\DiscordWebhook$EmbedObject$Field.class
+me\justindevb\VulcanReplay\PlayerCache.class
 me\justindevb\VulcanReplay\DiscordWebhook$1.class
 me\justindevb\VulcanReplay\DiscordWebhook$EmbedObject$Thumbnail.class
