@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.DrilldownPie;
+import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -16,25 +19,28 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.justindevb.VulcanReplay.Listeners.PlayerListener;
+import me.justindevb.VulcanReplay.Listeners.SpartanListener;
 import me.justindevb.VulcanReplay.Listeners.VulcanListener;
 import me.justindevb.VulcanReplay.Util.UpdateChecker;
 
 public class VulcanReplay extends JavaPlugin {
 
 	private HashMap<UUID, PlayerCache> playerCache = new HashMap<>();
+	private AntiCheat antiCheatType = AntiCheat.NONE;
 
 	@Override
 	public void onEnable() {
-		registerListener();
 
 		checkRequiredPlugins();
+
+		registerListener();
 
 		initConfig();
 
 		initBstats();
 
 		checkForUpdate();
-		
+
 		handleReload();
 
 	}
@@ -44,15 +50,24 @@ public class VulcanReplay extends JavaPlugin {
 		this.playerCache.clear();
 	}
 
+	private void checkRequiredPlugins() {
+		checkReplayAPI();
+		findCompatAntiCheat();
+	}
+
 	private void registerListener() {
-		Bukkit.getPluginManager().registerEvents(new VulcanListener(this), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 	}
 
-	private void checkRequiredPlugins() {
-		checkReplayAPI();
-		checkVulcanInstalled();
-		checkVulcanApi();
+	private void findCompatAntiCheat() {
+		if (checkVulcanInstalled()) {
+			setAntiCheat(AntiCheat.VULCAN);
+			return;
+		} else if (checkSpartanInstalled()) {
+			setAntiCheat(AntiCheat.SPARTAN);
+			return;
+		}
+		disablePlugin();
 	}
 
 	/**
@@ -67,69 +82,49 @@ public class VulcanReplay extends JavaPlugin {
 	}
 
 	/**
-	 * Check if Vulcan is running on the server. If not disable VulcanReplay
+	 * Check if Vulcan is running on the server
 	 */
-	private void checkVulcanInstalled() {
+	private boolean checkVulcanInstalled() {
 		Plugin plugin = Bukkit.getPluginManager().getPlugin("Vulcan");
-		if (plugin == null || !plugin.isEnabled()) {
-			log("Vulcan is required to run this plugin. Shutting down...", true);
-			Bukkit.getPluginManager().disablePlugin(this);
-		}
+		if (plugin == null || !plugin.isEnabled())
+			return false;
+		log("Vulcan detected, enabling support..", false);
+		return true;
 	}
 
 	/**
-	 * Check to see if the Vulcan API is enabled in Vulcan's config.yml
+	 * Check if Spartan is running on the server
+	 * 
+	 * @return
 	 */
-	private void checkVulcanApi() {
-		log("Checking if Vulcan API is enabled", false);
-		File file = new File(this.getDataFolder().getParentFile(),
-				"Vulcan" + System.getProperty("file.separator") + "config.yml");
-		if (!file.exists()) {
-			log("Vulcan is not installed!", true);
-			return;
-		}
-
-		FileConfiguration vulcan = YamlConfiguration.loadConfiguration(file);
-
-		if (vulcan.getBoolean("settings.enable-api")) {
-			log("Vulcan API is enabled", false);
-			return;
-		}
-
-		log("Vulcan API is disabled in Vulcan's config.yml. This must be true for this plugin to work!", true);
-		Bukkit.getScheduler().runTask(this, () -> {
-			Bukkit.getPluginManager().disablePlugin(this);
-		});
+	private boolean checkSpartanInstalled() {
+		Plugin plugin = Bukkit.getPluginManager().getPlugin("Spartan");
+		if (plugin == null || !plugin.isEnabled())
+			return false;
+		log("Spartan detected, enabling support..", false);
+		return true;
 	}
 
 	/**
 	 * Initialize the Config
 	 */
 	private void initConfig() {
-		FileConfiguration config = getConfig();
-		config.addDefault("General.Check-Update", true);
-		config.addDefault("General.Nearby-Range", 30);
+		initGeneralConfigSettings();
 
-		List<String> list = new ArrayList<>();
-		list.add("timer");
-		list.add("strafe");
-		config.addDefault("Genral.Disabled-Recordings", list);
-		config.addDefault("General.Recording-Length", 2);
-		config.addDefault("General.Overwrite", false);
+		initDiscordConfigSettings();
 
-		String path = "Discord.";
-		config.addDefault(path + "Enabled", true);
-		config.addDefault(path + "Webhook", "Enter webhook here");
-		config.addDefault(path + "Avatar", "https://i.imgur.com/JPG1Kwk.png");
-		config.addDefault(path + "Username", "VulcanReplay");
-		config.addDefault(path + "Server-Name", "Server");
-		config.options().copyDefaults(true);
+		initVulcanConfigSettings();
+		
+	//	initSpartanConfigSettings();
+
+		getConfig().options().copyDefaults(true);
 		saveConfig();
 	}
 
 	private void initBstats() {
 		final int pluginId = 13402;
 		Metrics metrics = new Metrics(this, pluginId);
+		// metrics.addCustomChart(new DrilldownPie("", () -> {});
 	}
 
 	public PlayerCache getCachedPlayer(UUID uuid) {
@@ -204,6 +199,90 @@ public class VulcanReplay extends JavaPlugin {
 				}
 			}
 		});
+	}
+
+	public enum AntiCheat {
+		VULCAN("Vulcan"), SPARTAN("Spartan"), NONE("None");
+		public final String name;
+
+		private AntiCheat(String name) {
+			this.name = name;
+		}
+	}
+
+	/**
+	 * Set what anticheat plugin the server is using
+	 * 
+	 * @param type
+	 */
+	private void setAntiCheat(AntiCheat type) {
+		this.antiCheatType = type;
+
+		switch (antiCheatType) {
+		case VULCAN:
+			Bukkit.getPluginManager().registerEvents(new VulcanListener(this), this);
+			break;
+		case SPARTAN:
+			Bukkit.getPluginManager().registerEvents(new SpartanListener(this), this);
+			break;
+		case NONE:
+			disablePlugin();
+			break;
+		default:
+			disablePlugin();
+			break;
+
+		}
+	}
+
+	/**
+	 * Get the anticheat type the server is using
+	 * 
+	 * @return
+	 */
+	public AntiCheat getAntiCheat() {
+		return this.antiCheatType;
+	}
+
+	/**
+	 * Disable plugin if no supported AntiCheat is found
+	 */
+	private void disablePlugin() {
+		log("No supported AntiCheat detected!", true);
+		Bukkit.getPluginManager().disablePlugin(this);
+	}
+
+	private void initDiscordConfigSettings() {
+		String path = "Discord.";
+		FileConfiguration config = getConfig();
+		config.addDefault(path + "Enabled", true);
+		config.addDefault(path + "Webhook", "Enter webhook here");
+		config.addDefault(path + "Avatar", "https://i.imgur.com/JPG1Kwk.png");
+		config.addDefault(path + "Username", "VulcanReplay");
+		config.addDefault(path + "Server-Name", "Server");
+	}
+
+	private void initVulcanConfigSettings() {
+		List<String> list = new ArrayList<>();
+		list.add("timer");
+		list.add("strafe");
+		getConfig().addDefault("Vulcan.Disabled-Recordings", list);
+	}
+	
+	private void initSpartanConfigSettings() {
+		List<String> list = new ArrayList<>();
+		list.add("timer");
+		list.add("strafe");
+		getConfig().addDefault("Spartan.Disabled-Recordings", list);
+	}
+
+	private void initGeneralConfigSettings() {
+		FileConfiguration config = getConfig();
+		config.addDefault("General.Check-Update", true);
+		config.addDefault("General.Nearby-Range", 30);
+
+		config.addDefault("General.Recording-Length", 2);
+		config.addDefault("General.Overwrite", false);
 	}
 
 }

@@ -2,5 +2,6 @@ name: ${project.artifactId}
 main: ${mainClass}
 version: ${project.version}
 author: ${author}
-depend: [AdvancedReplay, Vulcan]
+depend: [AdvancedReplay]
+softdepend: [Vulcan, Spartan]
 api-version: 1.13

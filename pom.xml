@@ -5,7 +5,7 @@
 
 	<groupId>me.justindevb</groupId>
 	<artifactId>VulcanReplay</artifactId>
-	<version>1.4</version>
+	<version>1.5</version>
 	<packaging>jar</packaging>
 
 	<name>VulcanReplay</name>
@@ -22,6 +22,13 @@
 		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
+
+			<id>Sparky</id>
+
+			<url>https://nexus.sparky.ac/repository/Sparky/</url>
+
 		</repository>
 	</repositories>
 
@@ -51,6 +58,12 @@
 			<artifactId>bstats-bukkit</artifactId>
 			<version>2.2.1</version>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>me.vagdedes.spartan</groupId>
+			<artifactId>SpartanAPI</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 

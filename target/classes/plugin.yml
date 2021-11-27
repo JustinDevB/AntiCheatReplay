@@ -1,6 +1,7 @@
 name: VulcanReplay
 main: me.justindevb.VulcanReplay.VulcanReplay
-version: 1.4
+version: 1.5
 author: JustinDevB
-depend: [AdvancedReplay, Vulcan]
+depend: [AdvancedReplay]
+softdepend: [Vulcan, Spartan]
 api-version: 1.13

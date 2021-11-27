@@ -4,7 +4,7 @@
   <groupId>me.justindevb</groupId>
   <artifactId>VulcanReplay</artifactId>
   <name>VulcanReplay</name>
-  <version>1.4</version>
+  <version>1.5</version>
   <url>http://maven.apache.org</url>
   <build>
     <defaultGoal>clean package install</defaultGoal>
@@ -50,6 +50,10 @@
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
+    <repository>
+      <id>Sparky</id>
+      <url>https://nexus.sparky.ac/repository/Sparky/</url>
+    </repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -79,6 +83,12 @@
           <groupId>org.yaml</groupId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>me.vagdedes.spartan</groupId>
+      <artifactId>SpartanAPI</artifactId>
+      <version>1.0</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>me.frap.vulcan.api</groupId>
