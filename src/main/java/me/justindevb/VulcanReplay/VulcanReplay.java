@@ -1,23 +1,22 @@
 package me.justindevb.VulcanReplay;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.Callable;
 import java.util.logging.Level;
 
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.DrilldownPie;
-import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.justindev.VulcanReplay.Commands.ReloadCommand;
 import me.justindevb.VulcanReplay.Listeners.PlayerListener;
 import me.justindevb.VulcanReplay.Listeners.SpartanListener;
 import me.justindevb.VulcanReplay.Listeners.VulcanListener;
@@ -27,11 +26,15 @@ public class VulcanReplay extends JavaPlugin {
 
 	private HashMap<UUID, PlayerCache> playerCache = new HashMap<>();
 	private AntiCheat antiCheatType = AntiCheat.NONE;
+	private static VulcanReplay instance = null;
+	private Listener activeListener;
 
 	@Override
 	public void onEnable() {
 
 		checkRequiredPlugins();
+
+		instance = this;
 
 		registerListener();
 
@@ -42,6 +45,8 @@ public class VulcanReplay extends JavaPlugin {
 		checkForUpdate();
 
 		handleReload();
+
+		registerCommands();
 
 	}
 
@@ -114,17 +119,22 @@ public class VulcanReplay extends JavaPlugin {
 		initDiscordConfigSettings();
 
 		initVulcanConfigSettings();
-		
-	//	initSpartanConfigSettings();
+
+		// initSpartanConfigSettings();
 
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 	}
 
+	public void reloadReplayConfig() {
+		HandlerList.unregisterAll(activeListener);
+		reloadConfig();
+		findCompatAntiCheat();
+	}
+
 	private void initBstats() {
 		final int pluginId = 13402;
 		Metrics metrics = new Metrics(this, pluginId);
-		// metrics.addCustomChart(new DrilldownPie("", () -> {});
 	}
 
 	public PlayerCache getCachedPlayer(UUID uuid) {
@@ -220,10 +230,14 @@ public class VulcanReplay extends JavaPlugin {
 
 		switch (antiCheatType) {
 		case VULCAN:
-			Bukkit.getPluginManager().registerEvents(new VulcanListener(this), this);
+			Listener vulcanListener = new VulcanListener(this);
+			Bukkit.getPluginManager().registerEvents(vulcanListener, this);
+			activeListener = vulcanListener;
 			break;
 		case SPARTAN:
-			Bukkit.getPluginManager().registerEvents(new SpartanListener(this), this);
+			Listener spartanListener = new SpartanListener(this);
+			Bukkit.getPluginManager().registerEvents(spartanListener, this);
+			activeListener = spartanListener;
 			break;
 		case NONE:
 			disablePlugin();
@@ -268,7 +282,7 @@ public class VulcanReplay extends JavaPlugin {
 		list.add("strafe");
 		getConfig().addDefault("Vulcan.Disabled-Recordings", list);
 	}
-	
+
 	private void initSpartanConfigSettings() {
 		List<String> list = new ArrayList<>();
 		list.add("timer");
@@ -283,6 +297,17 @@ public class VulcanReplay extends JavaPlugin {
 
 		config.addDefault("General.Recording-Length", 2);
 		config.addDefault("General.Overwrite", false);
+	}
+
+	/**
+	 * Register Plugin Commands
+	 */
+	private void registerCommands() {
+		this.getCommand("replayreload").setExecutor(new ReloadCommand());
+	}
+
+	public static VulcanReplay getInstance() {
+		return instance;
 	}
 
 }

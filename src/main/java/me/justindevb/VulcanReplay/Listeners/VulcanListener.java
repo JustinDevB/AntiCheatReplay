@@ -1,7 +1,7 @@
 package me.justindevb.VulcanReplay.Listeners;
 
 import java.io.File;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,15 +83,24 @@ public class VulcanListener extends ListenerBase implements Listener {
 			vulcanReplay.log("Vulcan API is enabled", false);
 			return;
 		}
+		
 
 		vulcanReplay.log("Vulcan API is disabled in Vulcan's config.yml. This must be true for this plugin to work!",
 				true);
+		vulcanReplay.log("We went ahead and changed it to true, but you need to reboot your server for it to take effect!", true);
+		vulcan.set("settings.enable-api", true);
+		try {
+			vulcan.save(file);
+		} catch (IOException e) {
+			vulcanReplay.log("Error editing Vulcan config. You will have to manually do it", true);
+			e.printStackTrace();
+		}
 		Bukkit.getScheduler().runTask(vulcanReplay, () -> {
 			Bukkit.getPluginManager().disablePlugin(vulcanReplay);
 		});
 	}
 
-	private void initVulcanSpecificConfig() {
+	public void initVulcanSpecificConfig() {
 		this.disabledRecordings = vulcanReplay.getConfig().getStringList("Vulcan.Disabled-Recordings");
 	}
 

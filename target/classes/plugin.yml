@@ -1,7 +1,10 @@
 name: VulcanReplay
 main: me.justindevb.VulcanReplay.VulcanReplay
-version: 1.5
+version: 1.6
 author: JustinDevB
 depend: [AdvancedReplay]
 softdepend: [Vulcan, Spartan]
 api-version: 1.13
+commands:
+  replayreload:
+      description: Reload config

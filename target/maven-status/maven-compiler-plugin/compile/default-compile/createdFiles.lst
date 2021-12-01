@@ -16,4 +16,5 @@ me\justindevb\VulcanReplay\Listeners\SpartanListener.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$JSONObject.class
 me\justindevb\VulcanReplay\VulcanReplay$1.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$EmbedObject$Footer.class
+me\justindev\VulcanReplay\Commands\ReloadCommand.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook.class
