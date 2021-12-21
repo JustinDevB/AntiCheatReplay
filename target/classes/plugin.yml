@@ -1,6 +1,7 @@
 name: VulcanReplay
 main: me.justindevb.VulcanReplay.VulcanReplay
-version: 1.10
+version: 2.0
+load: POSTWORLD
 author: JustinDevB
 depend: [AdvancedReplay]
 softdepend: [Vulcan, Spartan, Matrix, GodsEye, Kauri, Atlas]

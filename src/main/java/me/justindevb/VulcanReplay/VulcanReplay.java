@@ -34,21 +34,23 @@ public class VulcanReplay extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		instance = this;
+		Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
+			instance = this;
 
-		checkRequiredPlugins();
+			checkRequiredPlugins();
 
-		registerListener();
+			registerListener();
 
-		initConfig();
+			initConfig();
 
-		checkForUpdate();
+			checkForUpdate();
 
-		handleReload();
+			handleReload();
 
-		registerCommands();
-		
-		initBstats();
+			registerCommands();
+			
+			initBstats();
+		});
 
 	}
 
