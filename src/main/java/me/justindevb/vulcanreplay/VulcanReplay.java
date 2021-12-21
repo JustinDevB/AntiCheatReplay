@@ -67,14 +67,11 @@ public class VulcanReplay extends JavaPlugin {
     private void findCompatAntiCheat() {
         if (checkVulcanInstalled()) {
             setAntiCheat(AntiCheat.VULCAN);
-            return;
         } else if (checkSpartanInstalled()) {
             setAntiCheat(AntiCheat.SPARTAN);
-            return;
         } else if(checkKauriInstalled()) {
             setAntiCheat(AntiCheat.KAURI);
-        }
-        disablePlugin();
+        } else disablePlugin();
     }
 
     /**
@@ -241,12 +238,15 @@ public class VulcanReplay extends JavaPlugin {
         switch (antiCheatType) {
             case VULCAN:
                 activeListener = new VulcanListener(this);
+                activeListener.register();
                 break;
             case SPARTAN:
                 activeListener = new SpartanListener(this);
+                activeListener.register();
                 break;
             case KAURI:
                 activeListener = new KauriListener(this);
+                activeListener.register();
                 break;
             case NONE:
                 disablePlugin();
