@@ -25,7 +25,7 @@ public class KauriListener extends ListenerBase implements AtlasListener {
         Atlas.getInstance().getEventManager().registerListeners(this, VulcanReplay.getInstance());
     }
 
-    @Listen(ignoreCancelled = true, priority = ListenerPriority.HIGHEST)
+    @Listen(priority = ListenerPriority.HIGHEST)
     public void onFlagEvent(KauriFlagEvent event) {
 
         final Player p = event.getPlayer();
@@ -41,7 +41,7 @@ public class KauriListener extends ListenerBase implements AtlasListener {
 
     }
 
-    @Listen(ignoreCancelled = true, priority = ListenerPriority.HIGHEST)
+    @Listen(priority = ListenerPriority.HIGHEST)
     public void onPunish(KauriPunishEvent event) {
         final Player p = event.getPlayer();
 

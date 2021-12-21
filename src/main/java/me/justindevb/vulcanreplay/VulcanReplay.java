@@ -71,6 +71,8 @@ public class VulcanReplay extends JavaPlugin {
         } else if (checkSpartanInstalled()) {
             setAntiCheat(AntiCheat.SPARTAN);
             return;
+        } else if(checkKauriInstalled()) {
+            setAntiCheat(AntiCheat.KAURI);
         }
         disablePlugin();
     }
@@ -183,8 +185,8 @@ public class VulcanReplay extends JavaPlugin {
     /**
      * Log a message to the console
      *
-     * @param Message to log
-     * @param Whether this is a severe message or not
+     * @param msg Message to log
+     * @param severe Whether this is a severe message or not
      */
     public void log(String msg, boolean severe) {
         if (severe)

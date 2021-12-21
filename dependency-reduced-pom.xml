@@ -54,6 +54,10 @@
       <id>Sparky</id>
       <url>https://nexus.sparky.ac/repository/Sparky/</url>
     </repository>
+    <repository>
+      <id>funkemunky-releases</id>
+      <url>https://nexus.funkemunky.cc/content/repositories/releases/</url>
+    </repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -85,6 +89,18 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>cc.funkemunky.plugins</groupId>
+      <artifactId>Atlas</artifactId>
+      <version>1.11.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>dev.brighten.kauri</groupId>
+      <artifactId>API</artifactId>
+      <version>2.12.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>me.vagdedes.spartan</groupId>
       <artifactId>SpartanAPI</artifactId>
       <version>1.0</version>
@@ -95,14 +111,14 @@
       <artifactId>VulcanAPI</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\VulcanAPI.jar</systemPath>
+      <systemPath>C:\Users\suckm\OneDrive\NerdStuff\plugins for later\Vulcan-2.3.1.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.github.Jumper251</groupId>
       <artifactId>AdvancedReplay</artifactId>
       <version>1.7</version>
       <scope>system</scope>
-      <systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\Replay.jar</systemPath>
+      <systemPath>C:\Users\suckm\OneDrive\NerdStuff\plugins for later\AdvancedReplay.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>
