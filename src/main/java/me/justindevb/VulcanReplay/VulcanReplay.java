@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bstats.bukkit.Metrics;
+import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -41,13 +42,13 @@ public class VulcanReplay extends JavaPlugin {
 
 		initConfig();
 
-		initBstats();
-
 		checkForUpdate();
 
 		handleReload();
 
 		registerCommands();
+		
+		initBstats();
 
 	}
 
@@ -191,10 +192,12 @@ public class VulcanReplay extends JavaPlugin {
 		findCompatAntiCheat();
 	}
 
-	@SuppressWarnings("unused")
 	private void initBstats() {
 		final int pluginId = 13402;
 		Metrics metrics = new Metrics(this, pluginId);
+		metrics.addCustomChart(new SimplePie("anticheat", () -> {
+	        return getAntiCheat().name;
+	    }));
 	}
 
 	public PlayerCache getCachedPlayer(UUID uuid) {
