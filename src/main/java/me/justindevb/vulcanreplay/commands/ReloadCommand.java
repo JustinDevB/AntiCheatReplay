@@ -1,10 +1,10 @@
-package me.justindev.VulcanReplay.Commands;
+package me.justindevb.vulcanreplay.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import me.justindevb.VulcanReplay.VulcanReplay;
+import me.justindevb.vulcanreplay.VulcanReplay;
 import net.md_5.bungee.api.ChatColor;
 
 public class ReloadCommand implements CommandExecutor {

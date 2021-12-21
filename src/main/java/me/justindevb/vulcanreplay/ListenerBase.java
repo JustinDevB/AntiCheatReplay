@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplay;
+package me.justindevb.vulcanreplay;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -20,8 +20,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.jumper251.replay.api.ReplayAPI;
-import me.justindevb.VulcanReplay.Util.DiscordWebhook;
-import me.justindevb.VulcanReplay.VulcanReplay.AntiCheat;
+import me.justindevb.vulcanreplay.util.DiscordWebhook;
+import me.justindevb.vulcanreplay.VulcanReplay.AntiCheat;
 
 public abstract class ListenerBase {
 	private VulcanReplay vulcanReplay;
@@ -101,6 +101,10 @@ public abstract class ListenerBase {
 			}
 		}.runTaskLater(vulcanReplay, 20L * 60L * delay);
 	}
+
+	public abstract void unregister();
+
+	public abstract void register();
 
 	/**
 	 * Get all players within X distance from the target player

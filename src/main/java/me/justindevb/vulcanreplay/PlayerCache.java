@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplay;
+package me.justindevb.vulcanreplay;
 
 import org.bukkit.entity.Player;
 

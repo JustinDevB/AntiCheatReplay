@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplay.Listeners;
+package me.justindevb.vulcanreplay.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,8 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import me.justindevb.VulcanReplay.PlayerCache;
-import me.justindevb.VulcanReplay.VulcanReplay;
+import me.justindevb.vulcanreplay.PlayerCache;
+import me.justindevb.vulcanreplay.VulcanReplay;
 
 public class PlayerListener implements Listener {
 

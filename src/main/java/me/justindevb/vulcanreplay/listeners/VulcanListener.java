@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplay.Listeners;
+package me.justindevb.vulcanreplay.listeners;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,13 +11,14 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 import me.frep.vulcan.api.event.VulcanFlagEvent;
 import me.frep.vulcan.api.event.VulcanPunishEvent;
 
-import me.justindevb.VulcanReplay.ListenerBase;
-import me.justindevb.VulcanReplay.VulcanReplay;
+import me.justindevb.vulcanreplay.ListenerBase;
+import me.justindevb.vulcanreplay.VulcanReplay;
 
 public class VulcanListener extends ListenerBase implements Listener {
 
@@ -30,6 +31,16 @@ public class VulcanListener extends ListenerBase implements Listener {
 
 		setupVulcan();
 
+	}
+
+	@Override
+	public void unregister() {
+		HandlerList.unregisterAll(this);
+	}
+
+	@Override
+	public void register() {
+		Bukkit.getPluginManager().registerEvents(this, VulcanReplay.getInstance());
 	}
 
 	private void setupVulcan() {

@@ -107,7 +107,7 @@
   </dependencies>
   <properties>
     <mavan.compiler.source>1.8</mavan.compiler.source>
-    <mainClass>me.justindevb.VulcanReplay.VulcanReplay</mainClass>
+    <mainClass>me.justindevb.vulcanreplay.VulcanReplay</mainClass>
     <author>JustinDevB</author>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
