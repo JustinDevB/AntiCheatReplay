@@ -17,6 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.justindev.VulcanReplay.Commands.ReloadCommand;
 import me.justindevb.VulcanReplay.Listeners.GodsEyeListener;
+import me.justindevb.VulcanReplay.Listeners.KauriListener;
 import me.justindevb.VulcanReplay.Listeners.MatrixListener;
 import me.justindevb.VulcanReplay.Listeners.PlayerListener;
 import me.justindevb.VulcanReplay.Listeners.SpartanListener;
@@ -32,10 +33,9 @@ public class VulcanReplay extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		instance = this;
 
 		checkRequiredPlugins();
-
-		instance = this;
 
 		registerListener();
 
@@ -65,6 +65,9 @@ public class VulcanReplay extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 	}
 
+	/**
+	 * Find a compatible AntiCheat and register support for it
+	 */
 	private void findCompatAntiCheat() {
 		if (checkVulcanInstalled()) {
 			setAntiCheat(AntiCheat.VULCAN);
@@ -77,6 +80,9 @@ public class VulcanReplay extends JavaPlugin {
 			return;
 		} else if (checkGodsEyeInstalled()) {
 			setAntiCheat(AntiCheat.GODSEYE);
+			return;
+		} else if (checkKauriInstalled()) {
+			setAntiCheat(AntiCheat.KAURI);
 			return;
 		}
 		disablePlugin();
@@ -144,6 +150,26 @@ public class VulcanReplay extends JavaPlugin {
 	}
 
 	/**
+	 * Check if Kauri is running on the server
+	 * 
+	 * @return
+	 */
+	private boolean checkKauriInstalled() {
+		Plugin kauri = Bukkit.getPluginManager().getPlugin("Kauri");
+		if (kauri == null || !kauri.isEnabled())
+			return false;
+
+		Plugin atlas = Bukkit.getPluginManager().getPlugin("Atlas");
+		if (atlas == null || !atlas.isEnabled()) {
+			VulcanReplay.getInstance().log("Atlas is required to use Kauri!", true);
+			return false;
+		}
+
+		log("Kauri detected, enabling support...", false);
+		return true;
+	}
+
+	/**
 	 * Initialize the Config
 	 */
 	private void initConfig() {
@@ -165,6 +191,7 @@ public class VulcanReplay extends JavaPlugin {
 		findCompatAntiCheat();
 	}
 
+	@SuppressWarnings("unused")
 	private void initBstats() {
 		final int pluginId = 13402;
 		Metrics metrics = new Metrics(this, pluginId);
@@ -245,7 +272,7 @@ public class VulcanReplay extends JavaPlugin {
 	}
 
 	public enum AntiCheat {
-		VULCAN("Vulcan"), SPARTAN("Spartan"), MATRIX("Matrix"), GODSEYE("GodsEye"), NONE("None");
+		VULCAN("Vulcan"), SPARTAN("Spartan"), MATRIX("Matrix"), GODSEYE("GodsEye"), KAURI("Kauri"), NONE("None");
 		public final String name;
 
 		private AntiCheat(String name) {
@@ -263,25 +290,19 @@ public class VulcanReplay extends JavaPlugin {
 
 		switch (antiCheatType) {
 		case VULCAN:
-			Listener vulcanListener = new VulcanListener(this);
-			Bukkit.getPluginManager().registerEvents(vulcanListener, this);
-			activeListener = vulcanListener;
+			activeListener = new VulcanListener(this);
 			break;
 		case SPARTAN:
-			Listener spartanListener = new SpartanListener(this);
-			Bukkit.getPluginManager().registerEvents(spartanListener, this);
-			activeListener = spartanListener;
+			activeListener = new SpartanListener(this);
 			break;
 		case MATRIX:
-			Listener matrixListener = new MatrixListener(this);
-			Bukkit.getPluginManager().registerEvents(matrixListener, this);
-			activeListener = matrixListener;
+			activeListener = new MatrixListener(this);
 			break;
 		case GODSEYE:
-			Listener godsEyeListener = new GodsEyeListener(this);
-			Bukkit.getPluginManager().registerEvents(godsEyeListener, this);
-			activeListener = godsEyeListener;
+			activeListener = new GodsEyeListener(this);
 			break;
+		case KAURI:
+			activeListener = new KauriListener(this);
 		case NONE:
 			disablePlugin();
 			break;
@@ -326,6 +347,7 @@ public class VulcanReplay extends JavaPlugin {
 		getConfig().addDefault("Vulcan.Disabled-Recordings", list);
 	}
 
+	@SuppressWarnings("unused")
 	private void initSpartanConfigSettings() {
 		List<String> list = new ArrayList<>();
 		list.add("timer");

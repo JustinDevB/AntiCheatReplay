@@ -1,5 +1,6 @@
 package me.justindevb.VulcanReplay.Listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,6 +15,7 @@ public class MatrixListener extends ListenerBase implements Listener {
 
 	public MatrixListener(VulcanReplay vulcanReplay) {
 		super(vulcanReplay);
+		Bukkit.getPluginManager().registerEvents(this, VulcanReplay.getInstance());
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)

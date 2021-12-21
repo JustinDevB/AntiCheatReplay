@@ -25,8 +25,10 @@ import me.justindevb.VulcanReplay.VulcanReplay.AntiCheat;
 
 public abstract class ListenerBase {
 	private VulcanReplay vulcanReplay;
+	@SuppressWarnings("unused")
 	private AntiCheat type = AntiCheat.NONE;
 	ReplayAPI replay;
+	@SuppressWarnings("unused")
 	private boolean saveRecording = false;
 
 	private boolean WEBHOOK_ENABLED = false;

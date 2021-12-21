@@ -27,6 +27,7 @@ public class VulcanListener extends ListenerBase implements Listener {
 	public VulcanListener(VulcanReplay vulcanReplay) {
 		super(vulcanReplay);
 		this.vulcanReplay = vulcanReplay;
+		Bukkit.getPluginManager().registerEvents(this, VulcanReplay.getInstance());
 
 		setupVulcan();
 

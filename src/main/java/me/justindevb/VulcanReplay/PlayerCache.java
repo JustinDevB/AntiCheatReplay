@@ -4,13 +4,11 @@ import org.bukkit.entity.Player;
 
 public class PlayerCache {
 	private Player player;
-	private VulcanReplay vulcanReplay;
 
 	private long loginTimeStamp;
 
 	public PlayerCache(Player player, VulcanReplay vulcanReplay) {
 		this.player = player;
-		this.vulcanReplay = vulcanReplay;
 
 		this.loginTimeStamp = System.currentTimeMillis();
 	}

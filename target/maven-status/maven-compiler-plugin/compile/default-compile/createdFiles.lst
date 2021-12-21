@@ -4,6 +4,7 @@ me\justindevb\VulcanReplay\VulcanReplay.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$EmbedObject$Author.class
 me\justindevb\VulcanReplay\Listeners\PlayerListener.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$EmbedObject$Thumbnail.class
+me\justindevb\VulcanReplay\Listeners\KauriListener.class
 me\justindevb\VulcanReplay\Listeners\VulcanListener.class
 me\justindevb\VulcanReplay\Util\UpdateChecker.class
 me\justindevb\VulcanReplay\ListenerBase$1.class

@@ -6,36 +6,41 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import godseye.GodsEyePlayerViolationEvent;
-import godseye.GodsEyePunishPlayerEvent;
+import dev.brighten.api.listener.KauriFlagEvent;
+import dev.brighten.api.listener.KauriPunishEvent;
 import me.justindevb.VulcanReplay.ListenerBase;
 import me.justindevb.VulcanReplay.VulcanReplay;
 
-public class GodsEyeListener extends ListenerBase implements Listener {
+public class KauriListener extends ListenerBase implements Listener {
 
-	public GodsEyeListener(VulcanReplay vulcanReplay) {
+	public KauriListener(VulcanReplay vulcanReplay) {
 		super(vulcanReplay);
 		Bukkit.getPluginManager().registerEvents(this, VulcanReplay.getInstance());
 	}
-	
-	@EventHandler(priority = EventPriority.HIGHEST) 
-	public void onFlagEvent(GodsEyePlayerViolationEvent event) {
-		Player p = event.getPlayer();
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onFlagEvent(KauriFlagEvent event) {
+
+		final Player p = event.getPlayer();
 
 		if (alertList.contains(p.getName()))
 			return;
 
 		alertList.add(p.getName());
 
-		startRecording(p, getReplayName(p, event.getDetection()));
+		final String replayName = p.getName() + "-" + event.getCheck().getName() + "-" + super.getTimeStamp();
+
+		startRecording(p, replayName);
+
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPunish(GodsEyePunishPlayerEvent event) {
+	public void onPunish(KauriPunishEvent event) {
 		final Player p = event.getPlayer();
 
 		if (!punishList.contains(p.getName()))
 			punishList.add(p.getName());
+
 	}
 
 }

@@ -1,5 +1,6 @@
 package me.justindevb.VulcanReplay.Listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,6 +15,7 @@ public class SpartanListener extends ListenerBase implements Listener {
 
 	public SpartanListener(VulcanReplay vulcanReplay) {
 		super(vulcanReplay);
+		Bukkit.getPluginManager().registerEvents(this, VulcanReplay.getInstance());
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
