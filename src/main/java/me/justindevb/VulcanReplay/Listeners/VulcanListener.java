@@ -50,9 +50,7 @@ public class VulcanListener extends ListenerBase implements Listener {
 
 		alertList.add(p.getName());
 
-		final String replayName = p.getName() + "-" + event.getCheck().getName() + "-" + super.getTimeStamp();
-
-		startRecording(p, replayName);
+		startRecording(p, getReplayName(p, event.getCheck().getName()));
 
 	}
 

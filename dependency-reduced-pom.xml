@@ -4,7 +4,7 @@
   <groupId>me.justindevb</groupId>
   <artifactId>VulcanReplay</artifactId>
   <name>VulcanReplay</name>
-  <version>1.6</version>
+  <version>1.8</version>
   <url>http://maven.apache.org</url>
   <build>
     <defaultGoal>clean package install</defaultGoal>
@@ -59,7 +59,7 @@
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.17.1-R0.1-SNAPSHOT</version>
+      <version>1.18.1-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -103,6 +103,20 @@
       <version>1.7</version>
       <scope>system</scope>
       <systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\Replay.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>matrix</groupId>
+      <artifactId>matrix</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\Matrix.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>godseye</groupId>
+      <artifactId>godseye</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\GodsEyeAPI.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>

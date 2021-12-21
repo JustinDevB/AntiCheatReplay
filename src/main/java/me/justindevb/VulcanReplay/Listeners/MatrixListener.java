@@ -7,16 +7,16 @@ import org.bukkit.event.Listener;
 
 import me.justindevb.VulcanReplay.ListenerBase;
 import me.justindevb.VulcanReplay.VulcanReplay;
-import me.vagdedes.spartan.api.PlayerViolationCommandEvent;
-import me.vagdedes.spartan.api.PlayerViolationEvent;
+import me.rerere.matrix.api.events.PlayerViolationCommandEvent;
+import me.rerere.matrix.api.events.PlayerViolationEvent;
 
-public class SpartanListener extends ListenerBase implements Listener {
+public class MatrixListener extends ListenerBase implements Listener {
 
-	public SpartanListener(VulcanReplay vulcanReplay) {
+	public MatrixListener(VulcanReplay vulcanReplay) {
 		super(vulcanReplay);
 	}
-
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onFlagEvent(PlayerViolationEvent event) {
 		Player p = event.getPlayer();
 
@@ -25,9 +25,11 @@ public class SpartanListener extends ListenerBase implements Listener {
 
 		alertList.add(p.getName());
 
-		startRecording(p, getReplayName(p, event.getHackType().toString()));
-	}
+		final String replayName = p.getName() + "-" + event.getHackType().toString() + "-" + getTimeStamp();
 
+		startRecording(p, replayName);
+	}
+	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPunish(PlayerViolationCommandEvent event) {
 		final Player p = event.getPlayer();
@@ -35,5 +37,7 @@ public class SpartanListener extends ListenerBase implements Listener {
 		if (!punishList.contains(p.getName()))
 			punishList.add(p.getName());
 	}
+	
+	
 
 }

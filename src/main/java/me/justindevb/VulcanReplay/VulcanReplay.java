@@ -7,7 +7,6 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bstats.bukkit.Metrics;
-import org.bstats.charts.DrilldownPie;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -17,6 +16,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.justindev.VulcanReplay.Commands.ReloadCommand;
+import me.justindevb.VulcanReplay.Listeners.GodsEyeListener;
+import me.justindevb.VulcanReplay.Listeners.MatrixListener;
 import me.justindevb.VulcanReplay.Listeners.PlayerListener;
 import me.justindevb.VulcanReplay.Listeners.SpartanListener;
 import me.justindevb.VulcanReplay.Listeners.VulcanListener;
@@ -71,6 +72,12 @@ public class VulcanReplay extends JavaPlugin {
 		} else if (checkSpartanInstalled()) {
 			setAntiCheat(AntiCheat.SPARTAN);
 			return;
+		} else if (checkMatrixInstalled()) {
+			setAntiCheat(AntiCheat.MATRIX);
+			return;
+		} else if (checkGodsEyeInstalled()) {
+			setAntiCheat(AntiCheat.GODSEYE);
+			return;
 		}
 		disablePlugin();
 	}
@@ -107,6 +114,32 @@ public class VulcanReplay extends JavaPlugin {
 		if (plugin == null || !plugin.isEnabled())
 			return false;
 		log("Spartan detected, enabling support..", false);
+		return true;
+	}
+
+	/**
+	 * Check if Matrix is running on the server
+	 * 
+	 * @return
+	 */
+	private boolean checkMatrixInstalled() {
+		Plugin plugin = Bukkit.getPluginManager().getPlugin("Matrix");
+		if (plugin == null || !plugin.isEnabled())
+			return false;
+		log("Matrix detected, enabling support..", false);
+		return true;
+	}
+
+	/**
+	 * Check if GodsEye is running on the server
+	 * 
+	 * @return
+	 */
+	private boolean checkGodsEyeInstalled() {
+		Plugin plugin = Bukkit.getPluginManager().getPlugin("GodsEye");
+		if (plugin == null || !plugin.isEnabled())
+			return false;
+		log("GodsEye detected, enabling support..", false);
 		return true;
 	}
 
@@ -212,7 +245,7 @@ public class VulcanReplay extends JavaPlugin {
 	}
 
 	public enum AntiCheat {
-		VULCAN("Vulcan"), SPARTAN("Spartan"), NONE("None");
+		VULCAN("Vulcan"), SPARTAN("Spartan"), MATRIX("Matrix"), GODSEYE("GodsEye"), NONE("None");
 		public final String name;
 
 		private AntiCheat(String name) {
@@ -238,6 +271,16 @@ public class VulcanReplay extends JavaPlugin {
 			Listener spartanListener = new SpartanListener(this);
 			Bukkit.getPluginManager().registerEvents(spartanListener, this);
 			activeListener = spartanListener;
+			break;
+		case MATRIX:
+			Listener matrixListener = new MatrixListener(this);
+			Bukkit.getPluginManager().registerEvents(matrixListener, this);
+			activeListener = matrixListener;
+			break;
+		case GODSEYE:
+			Listener godsEyeListener = new GodsEyeListener(this);
+			Bukkit.getPluginManager().registerEvents(godsEyeListener, this);
+			activeListener = godsEyeListener;
 			break;
 		case NONE:
 			disablePlugin();

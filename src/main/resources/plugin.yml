@@ -3,7 +3,7 @@ main: ${mainClass}
 version: ${project.version}
 author: ${author}
 depend: [AdvancedReplay]
-softdepend: [Vulcan, Spartan]
+softdepend: [Vulcan, Spartan, Matrix, GodsEye]
 api-version: 1.13
 commands:
   replayreload:

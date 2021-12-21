@@ -5,19 +5,19 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
+import godseye.GodsEyePlayerViolationEvent;
+import godseye.GodsEyePunishPlayerEvent;
 import me.justindevb.VulcanReplay.ListenerBase;
 import me.justindevb.VulcanReplay.VulcanReplay;
-import me.vagdedes.spartan.api.PlayerViolationCommandEvent;
-import me.vagdedes.spartan.api.PlayerViolationEvent;
 
-public class SpartanListener extends ListenerBase implements Listener {
+public class GodsEyeListener extends ListenerBase implements Listener {
 
-	public SpartanListener(VulcanReplay vulcanReplay) {
+	public GodsEyeListener(VulcanReplay vulcanReplay) {
 		super(vulcanReplay);
 	}
-
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onFlagEvent(PlayerViolationEvent event) {
+	
+	@EventHandler(priority = EventPriority.HIGHEST) 
+	public void onFlagEvent(GodsEyePlayerViolationEvent event) {
 		Player p = event.getPlayer();
 
 		if (alertList.contains(p.getName()))
@@ -25,11 +25,11 @@ public class SpartanListener extends ListenerBase implements Listener {
 
 		alertList.add(p.getName());
 
-		startRecording(p, getReplayName(p, event.getHackType().toString()));
+		startRecording(p, getReplayName(p, event.getDetection()));
 	}
-
+	
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPunish(PlayerViolationCommandEvent event) {
+	public void onPunish(GodsEyePunishPlayerEvent event) {
 		final Player p = event.getPlayer();
 
 		if (!punishList.contains(p.getName()))

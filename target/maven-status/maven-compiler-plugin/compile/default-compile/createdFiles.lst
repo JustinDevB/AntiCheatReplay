@@ -1,3 +1,4 @@
+me\justindevb\VulcanReplay\Listeners\MatrixListener.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$1.class
 me\justindevb\VulcanReplay\VulcanReplay.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$EmbedObject$Author.class
@@ -11,6 +12,7 @@ me\justindevb\VulcanReplay\VulcanReplay$AntiCheat.class
 me\justindevb\VulcanReplay\ListenerBase.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$EmbedObject.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$EmbedObject$Image.class
+me\justindevb\VulcanReplay\Listeners\GodsEyeListener.class
 me\justindevb\VulcanReplay\PlayerCache.class
 me\justindevb\VulcanReplay\Listeners\SpartanListener.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$JSONObject.class

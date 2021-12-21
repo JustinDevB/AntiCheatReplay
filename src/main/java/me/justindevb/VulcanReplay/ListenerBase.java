@@ -45,7 +45,7 @@ public abstract class ListenerBase {
 		this.vulcanReplay = vulcanReplay;
 		this.type = vulcanReplay.getAntiCheat();
 		this.replay = ReplayAPI.getInstance();
-		
+
 		initConfigFields();
 	}
 
@@ -136,13 +136,13 @@ public abstract class ListenerBase {
 	}
 
 	/**
-	 * Random number between 1 and 100
+	 * Random number between 1 and 999
 	 * 
 	 * @return
 	 */
 	private int getRandomSalt() {
 		Random rand = new Random();
-		int n = 100 - 1 + 1;
+		int n = 999 - 1 + 1;
 		int val = rand.nextInt() % n;
 		return Math.abs(val);
 	}
@@ -193,7 +193,18 @@ public abstract class ListenerBase {
 		return part[0] + "." + getRandomSalt();
 
 	}
-	
+
+	/**
+	 * Return the name of the recording
+	 * 
+	 * @param p
+	 * @param violation
+	 * @return Recording Name
+	 */
+	protected String getReplayName(Player p, String violation) {
+		return p.getName() + "-" + violation + "-" + getTimeStamp();
+	}
+
 	/**
 	 * Initialize our config values
 	 */
