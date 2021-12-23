@@ -48,7 +48,7 @@ public class VulcanReplay extends JavaPlugin {
 			handleReload();
 
 			registerCommands();
-			
+
 			initBstats();
 		});
 
@@ -198,12 +198,25 @@ public class VulcanReplay extends JavaPlugin {
 		final int pluginId = 13402;
 		Metrics metrics = new Metrics(this, pluginId);
 		metrics.addCustomChart(new SimplePie("anticheat", () -> {
-	        return getAntiCheat().name;
-	    }));
+			return getAntiCheat().name;
+		}));
 	}
 
+	/**
+	 * Return a player in the Player cache if they exist. If not, add them to the
+	 * cache
+	 * 
+	 * @param UUID of Player to fetch
+	 * @return PlayerCache representing the Player
+	 */
 	public PlayerCache getCachedPlayer(UUID uuid) {
-		return this.playerCache.get(uuid);
+		if (this.playerCache.containsKey(uuid))
+			return this.playerCache.get(uuid);
+
+		final PlayerCache cachedPlayer = new PlayerCache(Bukkit.getPlayer(uuid), this);
+		this.playerCache.put(uuid, cachedPlayer);
+		return cachedPlayer;
+
 	}
 
 	/**
