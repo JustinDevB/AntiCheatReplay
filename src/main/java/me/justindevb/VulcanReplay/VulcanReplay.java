@@ -31,7 +31,7 @@ public class VulcanReplay extends JavaPlugin {
 	private HashMap<UUID, PlayerCache> playerCache = new HashMap<>();
 	private AntiCheat antiCheatType = AntiCheat.NONE;
 	private static VulcanReplay instance = null;
-	private Listener activeListener;
+	private Listener activeListener = null;
 
 	@Override
 	public void onEnable() {
@@ -189,8 +189,8 @@ public class VulcanReplay extends JavaPlugin {
 		saveConfig();
 	}
 
-	public void reloadReplayConfig() {	
-		if (activeListener instanceof KauriListener)
+	public void reloadReplayConfig() {
+		if (activeListener == null)
 			Atlas.getInstance().getEventManager().unregisterAll(this);
 		else
 			HandlerList.unregisterAll(activeListener);
@@ -325,6 +325,7 @@ public class VulcanReplay extends JavaPlugin {
 			break;
 		case KAURI:
 			new KauriListener(this);
+			activeListener = null;
 		case NONE:
 			disablePlugin();
 			break;
