@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import cc.funkemunky.api.Atlas;
 import me.justindev.VulcanReplay.Commands.ReloadCommand;
 import me.justindevb.VulcanReplay.Listeners.GodsEyeListener;
 import me.justindevb.VulcanReplay.Listeners.KauriListener;
@@ -188,8 +189,11 @@ public class VulcanReplay extends JavaPlugin {
 		saveConfig();
 	}
 
-	public void reloadReplayConfig() {
-		HandlerList.unregisterAll(activeListener);
+	public void reloadReplayConfig() {	
+		if (activeListener instanceof KauriListener)
+			Atlas.getInstance().getEventManager().unregisterAll(this);
+		else
+			HandlerList.unregisterAll(activeListener);
 		reloadConfig();
 		findCompatAntiCheat();
 	}
@@ -320,7 +324,7 @@ public class VulcanReplay extends JavaPlugin {
 			activeListener = new GodsEyeListener(this);
 			break;
 		case KAURI:
-			activeListener = new KauriListener(this);
+			new KauriListener(this);
 		case NONE:
 			disablePlugin();
 			break;

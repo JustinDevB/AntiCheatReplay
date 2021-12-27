@@ -4,7 +4,7 @@ version: 2.0
 load: POSTWORLD
 author: JustinDevB
 depend: [AdvancedReplay]
-softdepend: [Vulcan, Spartan, Matrix, GodsEye, Kauri, Atlas]
+softdepend: [Vulcan, Spartan, Matrix, GodsEye, Atlas, Kauri]
 api-version: 1.13
 commands:
   replayreload:

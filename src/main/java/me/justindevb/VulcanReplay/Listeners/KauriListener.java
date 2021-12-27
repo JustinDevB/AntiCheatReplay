@@ -1,24 +1,24 @@
 package me.justindevb.VulcanReplay.Listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
 
+import cc.funkemunky.api.Atlas;
+import cc.funkemunky.api.events.AtlasListener;
+import cc.funkemunky.api.events.Listen;
+import cc.funkemunky.api.events.ListenerPriority;
 import dev.brighten.api.listener.KauriFlagEvent;
 import dev.brighten.api.listener.KauriPunishEvent;
 import me.justindevb.VulcanReplay.ListenerBase;
 import me.justindevb.VulcanReplay.VulcanReplay;
 
-public class KauriListener extends ListenerBase implements Listener {
+public class KauriListener extends ListenerBase implements AtlasListener {
 
 	public KauriListener(VulcanReplay vulcanReplay) {
 		super(vulcanReplay);
-		Bukkit.getPluginManager().registerEvents(this, VulcanReplay.getInstance());
+		Atlas.getInstance().getEventManager().registerListeners(this, VulcanReplay.getInstance());
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@Listen(ignoreCancelled = true, priority = ListenerPriority.HIGHEST)
 	public void onFlagEvent(KauriFlagEvent event) {
 
 		final Player p = event.getPlayer();
@@ -34,7 +34,7 @@ public class KauriListener extends ListenerBase implements Listener {
 
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@Listen(ignoreCancelled = true, priority = ListenerPriority.HIGHEST)
 	public void onPunish(KauriPunishEvent event) {
 		final Player p = event.getPlayer();
 
