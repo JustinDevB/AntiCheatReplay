@@ -4,7 +4,7 @@
   <groupId>me.justindevb</groupId>
   <artifactId>VulcanReplay</artifactId>
   <name>VulcanReplay</name>
-  <version>2.0</version>
+  <version>2.1</version>
   <url>http://maven.apache.org</url>
   <build>
     <defaultGoal>clean package install</defaultGoal>
@@ -133,6 +133,13 @@
       <version>1</version>
       <scope>system</scope>
       <systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\GodsEyeAPI.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>karhu</groupId>
+      <artifactId>karhu</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\KarhuAPI.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>

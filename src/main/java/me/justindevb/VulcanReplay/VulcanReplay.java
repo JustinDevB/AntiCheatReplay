@@ -16,8 +16,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import cc.funkemunky.api.Atlas;
 import me.justindev.VulcanReplay.Commands.ReloadCommand;
 import me.justindevb.VulcanReplay.Listeners.GodsEyeListener;
+import me.justindevb.VulcanReplay.Listeners.KarhuListener;
 import me.justindevb.VulcanReplay.Listeners.KauriListener;
 import me.justindevb.VulcanReplay.Listeners.MatrixListener;
 import me.justindevb.VulcanReplay.Listeners.PlayerListener;
@@ -30,7 +32,7 @@ public class VulcanReplay extends JavaPlugin {
 	private HashMap<UUID, PlayerCache> playerCache = new HashMap<>();
 	private AntiCheat antiCheatType = AntiCheat.NONE;
 	private static VulcanReplay instance = null;
-	private Listener activeListener;
+	private Listener activeListener = null;
 
 	@Override
 	public void onEnable() {
@@ -86,6 +88,9 @@ public class VulcanReplay extends JavaPlugin {
 			return;
 		} else if (checkKauriInstalled()) {
 			setAntiCheat(AntiCheat.KAURI);
+			return;
+		} else if (checkKarhuInstalled()) {
+			setAntiCheat(AntiCheat.KARHU);
 			return;
 		}
 		disablePlugin();
@@ -173,6 +178,19 @@ public class VulcanReplay extends JavaPlugin {
 	}
 
 	/**
+	 * Check if Karhu is running on the server
+	 * 
+	 * @return
+	 */
+	private boolean checkKarhuInstalled() {
+		Plugin karhu = Bukkit.getPluginManager().getPlugin("KarhuLoader");
+		if (karhu == null || !karhu.isEnabled())
+			return false;
+		log("Karhu detected, enabling support...", false);
+		return true;
+	}
+
+	/**
 	 * Initialize the Config
 	 */
 	private void initConfig() {
@@ -189,7 +207,10 @@ public class VulcanReplay extends JavaPlugin {
 	}
 
 	public void reloadReplayConfig() {
-		HandlerList.unregisterAll(activeListener);
+		if (activeListener == null)
+			Atlas.getInstance().getEventManager().unregisterAll(this);
+		else
+			HandlerList.unregisterAll(activeListener);
 		reloadConfig();
 		findCompatAntiCheat();
 	}
@@ -290,7 +311,8 @@ public class VulcanReplay extends JavaPlugin {
 	}
 
 	public enum AntiCheat {
-		VULCAN("Vulcan"), SPARTAN("Spartan"), MATRIX("Matrix"), GODSEYE("GodsEye"), KAURI("Kauri"), NONE("None");
+		VULCAN("Vulcan"), SPARTAN("Spartan"), MATRIX("Matrix"), GODSEYE("GodsEye"), KAURI("Kauri"), KARHU("Karhu"),
+		NONE("None");
 		public final String name;
 
 		private AntiCheat(String name) {
@@ -320,7 +342,14 @@ public class VulcanReplay extends JavaPlugin {
 			activeListener = new GodsEyeListener(this);
 			break;
 		case KAURI:
-			activeListener = new KauriListener(this);
+			new KauriListener(this);
+			activeListener = null;
+			break;
+		case KARHU:
+			new KarhuListener(this);
+			// Karhu is posessed and has it's own Event System. Similar to Kauri, but worse.
+			// Not possible to reload the plugin if using Karhu
+			break;
 		case NONE:
 			disablePlugin();
 			break;
