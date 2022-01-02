@@ -11,6 +11,7 @@ me\justindevb\VulcanReplay\Listeners\GodsEyeListener.class
 me\justindevb\VulcanReplay\PlayerCache.class
 me\justindevb\VulcanReplay\Listeners\SpartanListener.class
 me\justindevb\VulcanReplay\VulcanReplay$1.class
+me\justindevb\VulcanReplay\Listeners\ThemisListener.class
 me\justindev\VulcanReplay\Commands\ReloadCommand.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$1.class

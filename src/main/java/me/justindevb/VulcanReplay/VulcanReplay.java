@@ -24,6 +24,7 @@ import me.justindevb.VulcanReplay.Listeners.KauriListener;
 import me.justindevb.VulcanReplay.Listeners.MatrixListener;
 import me.justindevb.VulcanReplay.Listeners.PlayerListener;
 import me.justindevb.VulcanReplay.Listeners.SpartanListener;
+import me.justindevb.VulcanReplay.Listeners.ThemisListener;
 import me.justindevb.VulcanReplay.Listeners.VulcanListener;
 import me.justindevb.VulcanReplay.Util.UpdateChecker;
 
@@ -76,24 +77,29 @@ public class VulcanReplay extends JavaPlugin {
 	private void findCompatAntiCheat() {
 		if (checkVulcanInstalled()) {
 			setAntiCheat(AntiCheat.VULCAN);
-			return;
-		} else if (checkSpartanInstalled()) {
+			// return;
+		}  if (checkSpartanInstalled()) {
 			setAntiCheat(AntiCheat.SPARTAN);
-			return;
-		} else if (checkMatrixInstalled()) {
+			// return;
+		}  if (checkMatrixInstalled()) {
 			setAntiCheat(AntiCheat.MATRIX);
-			return;
-		} else if (checkGodsEyeInstalled()) {
+			// return;
+		}  if (checkGodsEyeInstalled()) {
 			setAntiCheat(AntiCheat.GODSEYE);
-			return;
-		} else if (checkKauriInstalled()) {
+			// return;
+		}  if (checkKauriInstalled()) {
 			setAntiCheat(AntiCheat.KAURI);
-			return;
-		} else if (checkKarhuInstalled()) {
+			// return;
+		}  if (checkKarhuInstalled()) {
 			setAntiCheat(AntiCheat.KARHU);
-			return;
+			// return;
+		}  if (checkThemisInstalled()) {
+			setAntiCheat(AntiCheat.THEMIS);
+			// return;
 		}
-		disablePlugin();
+
+		if (getAntiCheat() == AntiCheat.NONE)
+			disablePlugin();
 	}
 
 	/**
@@ -191,6 +197,19 @@ public class VulcanReplay extends JavaPlugin {
 	}
 
 	/**
+	 * Check if Themis is running on the server
+	 * 
+	 * @return
+	 */
+	private boolean checkThemisInstalled() {
+		Plugin themis = Bukkit.getPluginManager().getPlugin("Themis");
+		if (themis == null || !themis.isEnabled())
+			return false;
+		log("Themis detected, enabling support...", false);
+		return true;
+	}
+
+	/**
 	 * Initialize the Config
 	 */
 	private void initConfig() {
@@ -201,6 +220,8 @@ public class VulcanReplay extends JavaPlugin {
 		initVulcanConfigSettings();
 
 		// initSpartanConfigSettings();
+		
+		initThemisConfigSettings();
 
 		getConfig().options().copyDefaults(true);
 		saveConfig();
@@ -312,7 +333,7 @@ public class VulcanReplay extends JavaPlugin {
 
 	public enum AntiCheat {
 		VULCAN("Vulcan"), SPARTAN("Spartan"), MATRIX("Matrix"), GODSEYE("GodsEye"), KAURI("Kauri"), KARHU("Karhu"),
-		NONE("None");
+		THEMIS("Themis"), NONE("None");
 		public final String name;
 
 		private AntiCheat(String name) {
@@ -349,6 +370,9 @@ public class VulcanReplay extends JavaPlugin {
 			new KarhuListener(this);
 			// Karhu is posessed and has it's own Event System. Similar to Kauri, but worse.
 			// Not possible to reload the plugin if using Karhu
+			// break;
+		case THEMIS:
+			activeListener = new ThemisListener(this);
 			break;
 		case NONE:
 			disablePlugin();
@@ -392,6 +416,12 @@ public class VulcanReplay extends JavaPlugin {
 		list.add("timer");
 		list.add("strafe");
 		getConfig().addDefault("Vulcan.Disabled-Recordings", list);
+	}
+	
+	private void initThemisConfigSettings() {
+		List<String> list = new ArrayList<>();
+		list.add("notify");
+		getConfig().addDefault("Themis.Disabled-Actions", list);
 	}
 
 	@SuppressWarnings("unused")
