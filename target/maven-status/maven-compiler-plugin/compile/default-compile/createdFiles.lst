@@ -5,8 +5,8 @@ me\justindevb\VulcanReplay\Listeners\KauriListener.class
 me\justindevb\VulcanReplay\Listeners\VulcanListener.class
 me\justindevb\VulcanReplay\Util\UpdateChecker.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$EmbedObject$Field.class
-me\justindevb\VulcanReplay\VulcanReplay$AntiCheat.class
 me\justindevb\VulcanReplay\ListenerBase.class
+me\justindevb\VulcanReplay\AntiCheat.class
 me\justindevb\VulcanReplay\Listeners\GodsEyeListener.class
 me\justindevb\VulcanReplay\PlayerCache.class
 me\justindevb\VulcanReplay\Listeners\SpartanListener.class
@@ -21,5 +21,6 @@ me\justindevb\VulcanReplay\Util\DiscordWebhook$EmbedObject$Thumbnail.class
 me\justindevb\VulcanReplay\ListenerBase$1.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$EmbedObject.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$EmbedObject$Image.class
+me\justindevb\VulcanReplay\Util\AntiCheatDetector.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$JSONObject.class
 me\justindevb\VulcanReplay\Util\DiscordWebhook$EmbedObject$Footer.class

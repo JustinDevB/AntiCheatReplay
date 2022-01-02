@@ -21,7 +21,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import me.jumper251.replay.api.ReplayAPI;
 import me.justindevb.VulcanReplay.Util.DiscordWebhook;
-import me.justindevb.VulcanReplay.VulcanReplay.AntiCheat;
 
 public abstract class ListenerBase {
 	private VulcanReplay vulcanReplay;

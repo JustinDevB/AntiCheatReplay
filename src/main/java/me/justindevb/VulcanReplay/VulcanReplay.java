@@ -26,6 +26,7 @@ import me.justindevb.VulcanReplay.Listeners.PlayerListener;
 import me.justindevb.VulcanReplay.Listeners.SpartanListener;
 import me.justindevb.VulcanReplay.Listeners.ThemisListener;
 import me.justindevb.VulcanReplay.Listeners.VulcanListener;
+import me.justindevb.VulcanReplay.Util.AntiCheatDetector;
 import me.justindevb.VulcanReplay.Util.UpdateChecker;
 
 public class VulcanReplay extends JavaPlugin {
@@ -74,29 +75,29 @@ public class VulcanReplay extends JavaPlugin {
 	/**
 	 * Find a compatible AntiCheat and register support for it
 	 */
+	// TODO: Attempt cleaning this up
 	private void findCompatAntiCheat() {
-		if (checkVulcanInstalled()) {
+		AntiCheatDetector detector = AntiCheatDetector.getInstance();
+		if (detector.checkVulcanInstalled())
 			setAntiCheat(AntiCheat.VULCAN);
-			// return;
-		}  if (checkSpartanInstalled()) {
+
+		if (detector.checkSpartanInstalled())
 			setAntiCheat(AntiCheat.SPARTAN);
-			// return;
-		}  if (checkMatrixInstalled()) {
+
+		if (detector.checkMatrixInstalled())
 			setAntiCheat(AntiCheat.MATRIX);
-			// return;
-		}  if (checkGodsEyeInstalled()) {
+
+		if (detector.checkGodsEyeInstalled())
 			setAntiCheat(AntiCheat.GODSEYE);
-			// return;
-		}  if (checkKauriInstalled()) {
+
+		if (detector.checkKauriInstalled())
 			setAntiCheat(AntiCheat.KAURI);
-			// return;
-		}  if (checkKarhuInstalled()) {
+
+		if (detector.checkKarhuInstalled())
 			setAntiCheat(AntiCheat.KARHU);
-			// return;
-		}  if (checkThemisInstalled()) {
+
+		if (detector.checkThemisInstalled())
 			setAntiCheat(AntiCheat.THEMIS);
-			// return;
-		}
 
 		if (getAntiCheat() == AntiCheat.NONE)
 			disablePlugin();
@@ -114,102 +115,6 @@ public class VulcanReplay extends JavaPlugin {
 	}
 
 	/**
-	 * Check if Vulcan is running on the server
-	 */
-	private boolean checkVulcanInstalled() {
-		Plugin plugin = Bukkit.getPluginManager().getPlugin("Vulcan");
-		if (plugin == null || !plugin.isEnabled())
-			return false;
-		log("Vulcan detected, enabling support..", false);
-		return true;
-	}
-
-	/**
-	 * Check if Spartan is running on the server
-	 * 
-	 * @return
-	 */
-	private boolean checkSpartanInstalled() {
-		Plugin plugin = Bukkit.getPluginManager().getPlugin("Spartan");
-		if (plugin == null || !plugin.isEnabled())
-			return false;
-		log("Spartan detected, enabling support..", false);
-		return true;
-	}
-
-	/**
-	 * Check if Matrix is running on the server
-	 * 
-	 * @return
-	 */
-	private boolean checkMatrixInstalled() {
-		Plugin plugin = Bukkit.getPluginManager().getPlugin("Matrix");
-		if (plugin == null || !plugin.isEnabled())
-			return false;
-		log("Matrix detected, enabling support..", false);
-		return true;
-	}
-
-	/**
-	 * Check if GodsEye is running on the server
-	 * 
-	 * @return
-	 */
-	private boolean checkGodsEyeInstalled() {
-		Plugin plugin = Bukkit.getPluginManager().getPlugin("GodsEye");
-		if (plugin == null || !plugin.isEnabled())
-			return false;
-		log("GodsEye detected, enabling support..", false);
-		return true;
-	}
-
-	/**
-	 * Check if Kauri is running on the server
-	 * 
-	 * @return
-	 */
-	private boolean checkKauriInstalled() {
-		Plugin kauri = Bukkit.getPluginManager().getPlugin("Kauri");
-		if (kauri == null || !kauri.isEnabled())
-			return false;
-
-		Plugin atlas = Bukkit.getPluginManager().getPlugin("Atlas");
-		if (atlas == null || !atlas.isEnabled()) {
-			VulcanReplay.getInstance().log("Atlas is required to use Kauri!", true);
-			return false;
-		}
-
-		log("Kauri detected, enabling support...", false);
-		return true;
-	}
-
-	/**
-	 * Check if Karhu is running on the server
-	 * 
-	 * @return
-	 */
-	private boolean checkKarhuInstalled() {
-		Plugin karhu = Bukkit.getPluginManager().getPlugin("KarhuLoader");
-		if (karhu == null || !karhu.isEnabled())
-			return false;
-		log("Karhu detected, enabling support...", false);
-		return true;
-	}
-
-	/**
-	 * Check if Themis is running on the server
-	 * 
-	 * @return
-	 */
-	private boolean checkThemisInstalled() {
-		Plugin themis = Bukkit.getPluginManager().getPlugin("Themis");
-		if (themis == null || !themis.isEnabled())
-			return false;
-		log("Themis detected, enabling support...", false);
-		return true;
-	}
-
-	/**
 	 * Initialize the Config
 	 */
 	private void initConfig() {
@@ -220,7 +125,7 @@ public class VulcanReplay extends JavaPlugin {
 		initVulcanConfigSettings();
 
 		// initSpartanConfigSettings();
-		
+
 		initThemisConfigSettings();
 
 		getConfig().options().copyDefaults(true);
@@ -331,16 +236,6 @@ public class VulcanReplay extends JavaPlugin {
 		});
 	}
 
-	public enum AntiCheat {
-		VULCAN("Vulcan"), SPARTAN("Spartan"), MATRIX("Matrix"), GODSEYE("GodsEye"), KAURI("Kauri"), KARHU("Karhu"),
-		THEMIS("Themis"), NONE("None");
-		public final String name;
-
-		private AntiCheat(String name) {
-			this.name = name;
-		}
-	}
-
 	/**
 	 * Set what anticheat plugin the server is using
 	 * 
@@ -417,7 +312,7 @@ public class VulcanReplay extends JavaPlugin {
 		list.add("strafe");
 		getConfig().addDefault("Vulcan.Disabled-Recordings", list);
 	}
-	
+
 	private void initThemisConfigSettings() {
 		List<String> list = new ArrayList<>();
 		list.add("notify");
