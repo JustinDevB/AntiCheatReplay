@@ -137,9 +137,17 @@ public abstract class ListenerBase {
 
 	}
 
+	/**
+	 * Return the Player's online timestamp. Calculated by abs((current time - the
+	 * time the player logged in) - recording length delay)
+	 * 
+	 * @param loginTime
+	 * @param currentTime
+	 * @return total time in minutes player was online
+	 */
 	private long getOnlineTime(long loginTime, long currentTime) {
 
-		return (TimeUnit.MILLISECONDS.toMinutes(currentTime - loginTime));
+		return (TimeUnit.MILLISECONDS.toMinutes(Math.abs((currentTime - loginTime) - this.delay)));
 	}
 
 	/**
