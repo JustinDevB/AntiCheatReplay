@@ -4,7 +4,7 @@ version: ${project.version}
 load: POSTWORLD
 author: ${author}
 depend: [AdvancedReplay]
-softdepend: [Vulcan, Spartan, Matrix, GodsEye, Atlas, Kauri, Karhu, Themis]
+softdepend: [Vulcan, Spartan, Matrix, GodsEye, Atlas, Kauri, Karhu, Themis, Soaroma]
 api-version: 1.13
 commands:
   replayreload:

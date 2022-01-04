@@ -23,6 +23,7 @@ import me.justindevb.VulcanReplay.Listeners.KarhuListener;
 import me.justindevb.VulcanReplay.Listeners.KauriListener;
 import me.justindevb.VulcanReplay.Listeners.MatrixListener;
 import me.justindevb.VulcanReplay.Listeners.PlayerListener;
+import me.justindevb.VulcanReplay.Listeners.SoaromaListener;
 import me.justindevb.VulcanReplay.Listeners.SpartanListener;
 import me.justindevb.VulcanReplay.Listeners.ThemisListener;
 import me.justindevb.VulcanReplay.Listeners.VulcanListener;
@@ -98,6 +99,9 @@ public class VulcanReplay extends JavaPlugin {
 
 		if (detector.checkThemisInstalled())
 			setAntiCheat(AntiCheat.THEMIS);
+		
+		if (detector.checkSoaromaInstalled())
+			setAntiCheat(AntiCheat.SOAROMA);
 
 		if (getAntiCheat() == AntiCheat.NONE)
 			disablePlugin();
@@ -268,6 +272,9 @@ public class VulcanReplay extends JavaPlugin {
 			// break;
 		case THEMIS:
 			activeListener = new ThemisListener(this);
+			break;
+		case SOAROMA:
+			activeListener = new SoaromaListener(this);
 			break;
 		case NONE:
 			disablePlugin();

@@ -148,6 +148,13 @@
       <scope>system</scope>
       <systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\ThemisAPI.jar</systemPath>
     </dependency>
+    <dependency>
+      <groupId>soaroma</groupId>
+      <artifactId>soaroma</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\Soaroma.jar</systemPath>
+    </dependency>
   </dependencies>
   <properties>
     <mavan.compiler.source>1.8</mavan.compiler.source>

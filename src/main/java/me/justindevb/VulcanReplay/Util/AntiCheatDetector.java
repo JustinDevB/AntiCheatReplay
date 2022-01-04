@@ -109,6 +109,19 @@ public class AntiCheatDetector {
 		vulcanReplay.log("Themis detected, enabling support...", false);
 		return true;
 	}
+	
+	/**
+	 * Check if Soaroma is running on the server
+	 * 
+	 * @return
+	 */
+	public boolean checkSoaromaInstalled() {
+		Plugin themis = Bukkit.getPluginManager().getPlugin("SoaromaSAC");
+		if (themis == null || !themis.isEnabled())
+			return false;
+		vulcanReplay.log("Soaroma detected, enabling support...", false);
+		return true;
+	}
 
 	public static AntiCheatDetector getInstance() {
 		if (instance == null)

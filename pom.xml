@@ -93,6 +93,14 @@
 		</dependency>
 
 		<dependency>
+			<groupId>soaroma</groupId>
+			<artifactId>soaroma</artifactId>
+			<version>1</version>
+			<scope>system</scope>
+			<systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\Soaroma.jar</systemPath>
+		</dependency>
+
+		<dependency>
 			<groupId>org.bstats</groupId>
 			<artifactId>bstats-bukkit</artifactId>
 			<version>2.2.1</version>

@@ -23,14 +23,14 @@ public class ThemisListener extends ListenerBase implements Listener {
 		super(vulcanReplay);
 		Bukkit.getPluginManager().registerEvents(this, VulcanReplay.getInstance());
 		this.vulcanReplay = vulcanReplay;
-		
+
 		setupThemis();
 	}
-	
+
 	private void setupThemis() {
 		initThemisSpecificConfig();
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onViolationEvent(ViolationEvent event) {
 		Player p = event.getPlayer();
@@ -42,20 +42,19 @@ public class ThemisListener extends ListenerBase implements Listener {
 
 		startRecording(p, getReplayName(p, event.getType().getCheckName()));
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onAction(ActionEvent event) {
 		final Player p = event.getPlayer();
-		
+
 		if (disabledActions.contains(event.getActionName().toLowerCase())) {
-			vulcanReplay.log("Cancelled Action", true);
 			return;
 		}
-		
+
 		if (!punishList.contains(p.getName()))
 			punishList.add(p.getName());
 	}
-	
+
 	private void initThemisSpecificConfig() {
 		this.disabledActions = vulcanReplay.getConfig().getStringList("Themis.Disabled-Actions");
 	}
