@@ -4,7 +4,7 @@
   <groupId>me.justindevb</groupId>
   <artifactId>VulcanReplay</artifactId>
   <name>VulcanReplay</name>
-  <version>2.2</version>
+  <version>2.4</version>
   <url>http://maven.apache.org</url>
   <build>
     <defaultGoal>clean package install</defaultGoal>
@@ -154,6 +154,13 @@
       <version>1</version>
       <scope>system</scope>
       <systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\Soaroma.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>flappy</groupId>
+      <artifactId>flappy</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\FlappyAnticheat.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>

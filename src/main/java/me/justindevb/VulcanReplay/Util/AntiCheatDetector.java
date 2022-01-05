@@ -116,10 +116,23 @@ public class AntiCheatDetector {
 	 * @return
 	 */
 	public boolean checkSoaromaInstalled() {
-		Plugin themis = Bukkit.getPluginManager().getPlugin("SoaromaSAC");
-		if (themis == null || !themis.isEnabled())
+		Plugin soaroma = Bukkit.getPluginManager().getPlugin("SoaromaSAC");
+		if (soaroma == null || !soaroma.isEnabled())
 			return false;
 		vulcanReplay.log("Soaroma detected, enabling support...", false);
+		return true;
+	}
+	
+	/**
+	 * Check if FlappyAC is running on the server
+	 * 
+	 * @return
+	 */
+	public boolean checkFlappyInstalled() {
+		Plugin flappy = Bukkit.getPluginManager().getPlugin("FlappyAnticheat");
+		if (flappy == null || !flappy.isEnabled())
+			return false;
+		vulcanReplay.log("FlappyAC detected, enabling support...", false);
 		return true;
 	}
 

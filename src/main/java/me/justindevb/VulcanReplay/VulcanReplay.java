@@ -18,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import cc.funkemunky.api.Atlas;
 import me.justindev.VulcanReplay.Commands.ReloadCommand;
+import me.justindevb.VulcanReplay.Listeners.FlappyACListener;
 import me.justindevb.VulcanReplay.Listeners.GodsEyeListener;
 import me.justindevb.VulcanReplay.Listeners.KarhuListener;
 import me.justindevb.VulcanReplay.Listeners.KauriListener;
@@ -99,9 +100,12 @@ public class VulcanReplay extends JavaPlugin {
 
 		if (detector.checkThemisInstalled())
 			setAntiCheat(AntiCheat.THEMIS);
-		
+
 		if (detector.checkSoaromaInstalled())
 			setAntiCheat(AntiCheat.SOAROMA);
+
+		if (detector.checkFlappyInstalled())
+			setAntiCheat(AntiCheat.FLAPPY);
 
 		if (getAntiCheat() == AntiCheat.NONE)
 			disablePlugin();
@@ -269,12 +273,15 @@ public class VulcanReplay extends JavaPlugin {
 			new KarhuListener(this);
 			// Karhu is posessed and has it's own Event System. Similar to Kauri, but worse.
 			// Not possible to reload the plugin if using Karhu
-			// break;
+			break;
 		case THEMIS:
 			activeListener = new ThemisListener(this);
 			break;
 		case SOAROMA:
 			activeListener = new SoaromaListener(this);
+			break;
+		case FLAPPY:
+			activeListener = new FlappyACListener(this);
 			break;
 		case NONE:
 			disablePlugin();
