@@ -4,7 +4,7 @@
   <groupId>me.justindevb</groupId>
   <artifactId>VulcanReplay</artifactId>
   <name>VulcanReplay</name>
-  <version>2.4</version>
+  <version>2.5</version>
   <url>http://maven.apache.org</url>
   <build>
     <defaultGoal>clean package install</defaultGoal>
@@ -57,6 +57,10 @@
     <repository>
       <id>funkemunky-releases</id>
       <url>https://nexus.funkemunky.cc/content/repositories/releases/</url>
+    </repository>
+    <repository>
+      <id>alessiodp-repo</id>
+      <url>https://repo.alessiodp.com/releases/</url>
     </repository>
   </repositories>
   <dependencies>

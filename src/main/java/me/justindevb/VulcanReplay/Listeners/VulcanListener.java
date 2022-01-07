@@ -46,10 +46,10 @@ public class VulcanListener extends ListenerBase implements Listener {
 
 		final Player p = event.getPlayer();
 
-		if (alertList.contains(p.getName()))
+		if (alertList.contains(p.getUniqueId()))
 			return;
 
-		alertList.add(p.getName());
+		alertList.add(p.getUniqueId());
 
 		startRecording(p, getReplayName(p, event.getCheck().getName()));
 
@@ -59,8 +59,8 @@ public class VulcanListener extends ListenerBase implements Listener {
 	public void onPunish(VulcanPunishEvent event) {
 		final Player p = event.getPlayer();
 
-		if (!punishList.contains(p.getName()))
-			punishList.add(p.getName());
+		if (!punishList.contains(p.getUniqueId()))
+			punishList.add(p.getUniqueId());
 
 	}
 

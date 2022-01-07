@@ -20,18 +20,18 @@ public class KarhuListener extends ListenerBase implements me.liwk.karhu.api.eve
 		if (event instanceof KarhuAlertEvent) {
 			Player p = ((KarhuAlertEvent) event).getPlayer();
 
-			if (alertList.contains(p.getName()))
+			if (alertList.contains(p.getUniqueId()))
 				return;
 
-			alertList.add(p.getName());
+			alertList.add(p.getUniqueId());
 			startRecording(p,
 					this.getReplayName(p, ((KarhuAlertEvent) event).getCheck().getName()).replaceAll(" ", "-"));
 
 		} else if (event instanceof KarhuBanEvent) {
 			final Player p = ((KarhuBanEvent) event).getPlayer();
 
-			if (!punishList.contains(p.getName()))
-				punishList.add(p.getName());
+			if (!punishList.contains(p.getUniqueId()))
+				punishList.add(p.getUniqueId());
 		}
 	}
 

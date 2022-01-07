@@ -23,6 +23,7 @@ import me.justindevb.VulcanReplay.Listeners.GodsEyeListener;
 import me.justindevb.VulcanReplay.Listeners.KarhuListener;
 import me.justindevb.VulcanReplay.Listeners.KauriListener;
 import me.justindevb.VulcanReplay.Listeners.MatrixListener;
+import me.justindevb.VulcanReplay.Listeners.OreAnnouncerListener;
 import me.justindevb.VulcanReplay.Listeners.PlayerListener;
 import me.justindevb.VulcanReplay.Listeners.SoaromaListener;
 import me.justindevb.VulcanReplay.Listeners.SpartanListener;
@@ -72,6 +73,7 @@ public class VulcanReplay extends JavaPlugin {
 
 	private void registerListener() {
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
+		//Bukkit.getPluginManager().registerEvents(new OreAnnouncerListener(this), this);
 	}
 
 	/**

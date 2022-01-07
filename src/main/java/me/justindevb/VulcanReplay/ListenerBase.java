@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
@@ -20,6 +21,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.jumper251.replay.api.ReplayAPI;
+import me.justindevb.VulcanReplay.API.Events.RecordingSaveEvent;
+import me.justindevb.VulcanReplay.API.Events.RecordingStartEvent;
 import me.justindevb.VulcanReplay.Util.DiscordWebhook;
 
 public abstract class ListenerBase {
@@ -39,8 +42,8 @@ public abstract class ListenerBase {
 	private long delay = 2;
 	private boolean OVERWRITE = false;
 
-	protected LinkedList<String> alertList = new LinkedList<>();
-	protected LinkedList<String> punishList = new LinkedList<>();
+	protected LinkedList<UUID> alertList = new LinkedList<>();
+	protected LinkedList<UUID> punishList = new LinkedList<>();
 
 	public ListenerBase(VulcanReplay vulcanReplay) {
 		this.vulcanReplay = vulcanReplay;
@@ -57,6 +60,11 @@ public abstract class ListenerBase {
 	 * @param Name   of the recording when saving
 	 */
 	protected void startRecording(Player p, String replayName) {
+		RecordingStartEvent startEvent = new RecordingStartEvent(p, replayName);
+		Bukkit.getPluginManager().callEvent(startEvent);
+		if (startEvent.isCancelled())
+			return;
+
 		vulcanReplay.log("Starting recording of player: " + p.getName(), false);
 		Bukkit.getScheduler().runTask(vulcanReplay, () -> {
 
@@ -82,20 +90,26 @@ public abstract class ListenerBase {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				if (punishList.contains(p.getName())) {
+				if (punishList.contains(p.getUniqueId())) {
+					RecordingSaveEvent saveEvent = new RecordingSaveEvent(p, replayName);
+					Bukkit.getPluginManager().callEvent(saveEvent);
+
+					if (saveEvent.isCancelled())
+						return;
+
 					replay.stopReplay(replayName, true);
 					vulcanReplay.log("Saving recording of attempted hack...", false);
 					vulcanReplay.log("Saved as: " + replayName, false);
 					sendDiscordWebhook(replayName, p, getOnlineTime(loginTime, System.currentTimeMillis()));
-					punishList.remove(p.getName());
+					punishList.remove(p.getUniqueId());
 
-					if (alertList.contains(p.getName()))
-						alertList.remove(p.getName());
+					if (alertList.contains(p.getUniqueId()))
+						alertList.remove(p.getUniqueId());
 
 				} else {
 					replay.stopReplay(replayName, false);
-					if (alertList.contains(p.getName()))
-						alertList.remove(p.getName());
+					if (alertList.contains(p.getUniqueId()))
+						alertList.remove(p.getUniqueId());
 					vulcanReplay.log("Not saving recording...", false);
 				}
 

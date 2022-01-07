@@ -35,10 +35,10 @@ public class ThemisListener extends ListenerBase implements Listener {
 	public void onViolationEvent(ViolationEvent event) {
 		Player p = event.getPlayer();
 
-		if (alertList.contains(p.getName()))
+		if (alertList.contains(p.getUniqueId()))
 			return;
 
-		alertList.add(p.getName());
+		alertList.add(p.getUniqueId());
 
 		startRecording(p, getReplayName(p, event.getType().getCheckName()));
 	}
@@ -51,8 +51,8 @@ public class ThemisListener extends ListenerBase implements Listener {
 			return;
 		}
 
-		if (!punishList.contains(p.getName()))
-			punishList.add(p.getName());
+		if (!punishList.contains(p.getUniqueId()))
+			punishList.add(p.getUniqueId());
 	}
 
 	private void initThemisSpecificConfig() {

@@ -36,10 +36,10 @@ public class SoaromaListener extends ListenerBase implements Listener {
 
 		final Player p = event.getFlaggedPlayer();
 
-		if (alertList.contains(p.getName()))
+		if (alertList.contains(p.getUniqueId()))
 			return;
 
-		alertList.add(p.getName());
+		alertList.add(p.getUniqueId());
 
 		startRecording(p, getReplayName(p, event.getCheckFlagged()));
 
@@ -49,8 +49,8 @@ public class SoaromaListener extends ListenerBase implements Listener {
 	public void onPunish(PunishmentEvent event) {
 		final Player p = event.getPunishedPlayer();
 
-		if (!punishList.contains(p.getName()))
-			punishList.add(p.getName());
+		if (!punishList.contains(p.getUniqueId()))
+			punishList.add(p.getUniqueId());
 
 	}
 

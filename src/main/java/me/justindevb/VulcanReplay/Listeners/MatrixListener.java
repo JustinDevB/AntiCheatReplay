@@ -22,10 +22,10 @@ public class MatrixListener extends ListenerBase implements Listener {
 	public void onFlagEvent(PlayerViolationEvent event) {
 		Player p = event.getPlayer();
 
-		if (alertList.contains(p.getName()))
+		if (alertList.contains(p.getUniqueId()))
 			return;
 
-		alertList.add(p.getName());
+		alertList.add(p.getUniqueId());
 
 		final String replayName = p.getName() + "-" + event.getHackType().toString() + "-" + getTimeStamp();
 
@@ -36,8 +36,8 @@ public class MatrixListener extends ListenerBase implements Listener {
 	public void onPunish(PlayerViolationCommandEvent event) {
 		final Player p = event.getPlayer();
 
-		if (!punishList.contains(p.getName()))
-			punishList.add(p.getName());
+		if (!punishList.contains(p.getUniqueId()))
+			punishList.add(p.getUniqueId());
 	}
 	
 	

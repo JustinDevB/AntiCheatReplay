@@ -22,10 +22,10 @@ public class GodsEyeListener extends ListenerBase implements Listener {
 	public void onFlagEvent(GodsEyePlayerViolationEvent event) {
 		Player p = event.getPlayer();
 
-		if (alertList.contains(p.getName()))
+		if (alertList.contains(p.getUniqueId()))
 			return;
 
-		alertList.add(p.getName());
+		alertList.add(p.getUniqueId());
 
 		startRecording(p, getReplayName(p, event.getDetection()));
 	}
@@ -34,8 +34,8 @@ public class GodsEyeListener extends ListenerBase implements Listener {
 	public void onPunish(GodsEyePunishPlayerEvent event) {
 		final Player p = event.getPlayer();
 
-		if (!punishList.contains(p.getName()))
-			punishList.add(p.getName());
+		if (!punishList.contains(p.getUniqueId()))
+			punishList.add(p.getUniqueId());
 	}
 
 }
