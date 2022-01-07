@@ -73,7 +73,8 @@ public class VulcanReplay extends JavaPlugin {
 
 	private void registerListener() {
 		Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
-		//Bukkit.getPluginManager().registerEvents(new OreAnnouncerListener(this), this);
+		// Bukkit.getPluginManager().registerEvents(new OreAnnouncerListener(this),
+		// this);
 	}
 
 	/**
@@ -252,6 +253,7 @@ public class VulcanReplay extends JavaPlugin {
 	 * @param type
 	 */
 	private void setAntiCheat(AntiCheat type) {
+		// TODO: Figure out a better way to reload
 		this.antiCheatType = type;
 
 		switch (antiCheatType) {
