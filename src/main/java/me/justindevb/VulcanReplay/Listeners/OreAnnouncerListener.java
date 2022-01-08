@@ -3,7 +3,6 @@ package me.justindevb.VulcanReplay.Listeners;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import com.alessiodp.oreannouncer.api.events.bukkit.common.BukkitOreAnnouncerAdvancedAlertEvent;
@@ -23,7 +22,7 @@ public class OreAnnouncerListener extends ListenerBase implements Listener {
 		vulcanReplay.log("Enabled Listener", true);
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler
 	public void onPlayerBreak(BukkitOreAnnouncerAlertEvent event) {
 		vulcanReplay.log("OreAnnounce", true);
 		Player p = Bukkit.getPlayer(event.getPlayer().getPlayerUUID());
@@ -41,12 +40,12 @@ public class OreAnnouncerListener extends ListenerBase implements Listener {
 		}
 	}
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler
 	public void onBreak(BukkitOreAnnouncerBlockDestroyEvent event) {
 		vulcanReplay.log("OreBreakEvent", true);
 	}
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler
 	public void onAdvanced(BukkitOreAnnouncerAdvancedAlertEvent event) {
 		vulcanReplay.log("Advanced Event", true);
 	}

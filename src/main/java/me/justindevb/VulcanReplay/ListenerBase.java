@@ -61,7 +61,9 @@ public abstract class ListenerBase {
 	 */
 	protected void startRecording(Player p, String replayName) {
 		RecordingStartEvent startEvent = new RecordingStartEvent(p, replayName);
-		Bukkit.getPluginManager().callEvent(startEvent);
+		Bukkit.getScheduler().scheduleSyncDelayedTask(vulcanReplay, () -> {
+			Bukkit.getPluginManager().callEvent(startEvent);
+		});
 		if (startEvent.isCancelled())
 			return;
 
@@ -92,7 +94,9 @@ public abstract class ListenerBase {
 			public void run() {
 				if (punishList.contains(p.getUniqueId())) {
 					RecordingSaveEvent saveEvent = new RecordingSaveEvent(p, replayName);
-					Bukkit.getPluginManager().callEvent(saveEvent);
+					Bukkit.getScheduler().scheduleSyncDelayedTask(vulcanReplay, () -> {
+						Bukkit.getPluginManager().callEvent(saveEvent);
+					});
 
 					if (saveEvent.isCancelled())
 						return;
@@ -224,14 +228,20 @@ public abstract class ListenerBase {
 	}
 
 	/**
-	 * Return the name of the recording
+	 * Return the name of the recording. Will be trimmed to never be longer than 40
+	 * characters
 	 * 
 	 * @param p
 	 * @param violation
 	 * @return Recording Name
 	 */
 	protected String getReplayName(Player p, String violation) {
-		return p.getName() + "-" + violation + "-" + getTimeStamp();
+		String timeStamp = getTimeStamp();
+
+		if (violation.length() <= 8) // Max character space we have for a violation is 8 characters
+			return p.getName() + "-" + violation + "-" + timeStamp;
+
+		return p.getName() + "-" + violation.substring(0, 8) + "-" + timeStamp;
 	}
 
 	/**
