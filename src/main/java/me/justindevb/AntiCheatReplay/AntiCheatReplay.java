@@ -1,5 +1,13 @@
 package me.justindevb.anticheatreplay;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +31,6 @@ import me.justindevb.anticheatreplay.Listeners.GodsEyeListener;
 import me.justindevb.anticheatreplay.Listeners.KarhuListener;
 import me.justindevb.anticheatreplay.Listeners.KauriListener;
 import me.justindevb.anticheatreplay.Listeners.MatrixListener;
-import me.justindevb.anticheatreplay.Listeners.OreAnnouncerListener;
 import me.justindevb.anticheatreplay.Listeners.PlayerListener;
 import me.justindevb.anticheatreplay.Listeners.SoaromaListener;
 import me.justindevb.anticheatreplay.Listeners.SpartanListener;
@@ -129,6 +136,7 @@ public class AntiCheatReplay extends JavaPlugin {
 	 * Initialize the Config
 	 */
 	private void initConfig() {
+
 		initGeneralConfigSettings();
 
 		initDiscordConfigSettings();
@@ -141,6 +149,8 @@ public class AntiCheatReplay extends JavaPlugin {
 
 		getConfig().options().copyDefaults(true);
 		saveConfig();
+
+		updateConfig();
 	}
 
 	public void reloadReplayConfig() {
@@ -363,6 +373,37 @@ public class AntiCheatReplay extends JavaPlugin {
 
 	public static AntiCheatReplay getInstance() {
 		return instance;
+	}
+
+	/**
+	 * Update from VulcanReplay to AntiCheatReplay
+	 */
+	private void updateConfig() {
+		String separator = System.getProperty("file.separator");
+		File file = new File(this.getDataFolder().getParentFile(), "VulcanReplay" + separator + "config.yml");
+		if (file.exists()) {
+			
+			log("Outdated config found...", true);
+			log("Copying old config to new plugin folder...", true);
+			
+			File config = new File(this.getDataFolder().getParentFile(), "VulcanReplay" + separator + "config.yml");
+			File movedConfig = new File(this.getDataFolder().getParentFile(), "VulcanReplay" + separator + "configOLD.yml");
+			Path src = Paths.get(config.toURI());
+			Path movedSrc = Paths.get(movedConfig.toURI());
+			File dstFile = new File(this.getDataFolder() + separator + "config.yml");
+			Path dst = Paths.get(dstFile.toURI());
+			
+			try {
+				Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);
+				Files.move(src, movedSrc, StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				log("Error copying config from VulcanReplay" + separator + "config.yml ->" + "AntiCheatReplay"
+						+ separator + "config.yml", true);
+				e.printStackTrace();
+				return;
+			}
+			log("Successfully copied config", false);
+		}
 	}
 
 }
