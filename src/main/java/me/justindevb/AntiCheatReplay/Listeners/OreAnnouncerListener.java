@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplay.Listeners;
+package me.justindevb.AntiCheatReplay.Listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -9,45 +9,45 @@ import com.alessiodp.oreannouncer.api.events.bukkit.common.BukkitOreAnnouncerAdv
 import com.alessiodp.oreannouncer.api.events.bukkit.common.BukkitOreAnnouncerAlertEvent;
 import com.alessiodp.oreannouncer.api.events.bukkit.common.BukkitOreAnnouncerBlockDestroyEvent;
 
-import me.justindevb.VulcanReplay.ListenerBase;
-import me.justindevb.VulcanReplay.VulcanReplay;
+import me.justindevb.AntiCheatReplay.ListenerBase;
+import me.justindevb.AntiCheatReplay.AntiCheatReplay;
 
 public class OreAnnouncerListener extends ListenerBase implements Listener {
 
-	private final VulcanReplay vulcanReplay;
+	private final AntiCheatReplay AntiCheatReplay;
 
-	public OreAnnouncerListener(VulcanReplay vulcanReplay) {
-		super(vulcanReplay);
-		this.vulcanReplay = vulcanReplay;
-		vulcanReplay.log("Enabled Listener", true);
+	public OreAnnouncerListener(AntiCheatReplay AntiCheatReplay) {
+		super(AntiCheatReplay);
+		this.AntiCheatReplay = AntiCheatReplay;
+		AntiCheatReplay.log("Enabled Listener", true);
 	}
 
 	@EventHandler
 	public void onPlayerBreak(BukkitOreAnnouncerAlertEvent event) {
-		vulcanReplay.log("OreAnnounce", true);
+		AntiCheatReplay.log("OreAnnounce", true);
 		Player p = Bukkit.getPlayer(event.getPlayer().getPlayerUUID());
 
 		if (alertList.contains(p.getUniqueId()))
 			return;
-		vulcanReplay.log("Added to alert List", true);
+		AntiCheatReplay.log("Added to alert List", true);
 		alertList.add(p.getUniqueId());
 
 		startRecording(p, getReplayName(p, event.getPlayer().getName()));
 		
 		if (!punishList.contains(p.getUniqueId())) {
 			punishList.add(p.getUniqueId());
-			vulcanReplay.log("Added to punish list", true);
+			AntiCheatReplay.log("Added to punish list", true);
 		}
 	}
 	
 	@EventHandler
 	public void onBreak(BukkitOreAnnouncerBlockDestroyEvent event) {
-		vulcanReplay.log("OreBreakEvent", true);
+		AntiCheatReplay.log("OreBreakEvent", true);
 	}
 	
 	@EventHandler
 	public void onAdvanced(BukkitOreAnnouncerAdvancedAlertEvent event) {
-		vulcanReplay.log("Advanced Event", true);
+		AntiCheatReplay.log("Advanced Event", true);
 	}
 
 }

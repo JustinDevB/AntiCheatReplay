@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplay;
+package me.justindevb.AntiCheatReplay;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -21,12 +21,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.jumper251.replay.api.ReplayAPI;
-import me.justindevb.VulcanReplay.API.Events.RecordingSaveEvent;
-import me.justindevb.VulcanReplay.API.Events.RecordingStartEvent;
-import me.justindevb.VulcanReplay.Util.DiscordWebhook;
+import me.justindevb.AntiCheatReplay.API.Events.RecordingSaveEvent;
+import me.justindevb.AntiCheatReplay.API.Events.RecordingStartEvent;
+import me.justindevb.AntiCheatReplay.Util.DiscordWebhook;
 
 public abstract class ListenerBase {
-	private VulcanReplay vulcanReplay;
+	private AntiCheatReplay AntiCheatReplay;
 	@SuppressWarnings("unused")
 	private AntiCheat type = AntiCheat.NONE;
 	ReplayAPI replay;
@@ -45,9 +45,9 @@ public abstract class ListenerBase {
 	protected LinkedList<UUID> alertList = new LinkedList<>();
 	protected LinkedList<UUID> punishList = new LinkedList<>();
 
-	public ListenerBase(VulcanReplay vulcanReplay) {
-		this.vulcanReplay = vulcanReplay;
-		this.type = vulcanReplay.getAntiCheat();
+	public ListenerBase(AntiCheatReplay AntiCheatReplay) {
+		this.AntiCheatReplay = AntiCheatReplay;
+		this.type = AntiCheatReplay.getAntiCheat();
 		this.replay = ReplayAPI.getInstance();
 
 		initConfigFields();
@@ -61,14 +61,14 @@ public abstract class ListenerBase {
 	 */
 	protected void startRecording(Player p, String replayName) {
 		RecordingStartEvent startEvent = new RecordingStartEvent(p, replayName);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(vulcanReplay, () -> {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(AntiCheatReplay, () -> {
 			Bukkit.getPluginManager().callEvent(startEvent);
 		});
 		if (startEvent.isCancelled())
 			return;
 
-		vulcanReplay.log("Starting recording of player: " + p.getName(), false);
-		Bukkit.getScheduler().runTask(vulcanReplay, () -> {
+		AntiCheatReplay.log("Starting recording of player: " + p.getName(), false);
+		Bukkit.getScheduler().runTask(AntiCheatReplay, () -> {
 
 			replay.recordReplay(replayName, Bukkit.getConsoleSender(), getNearbyPlayers(p));
 		});
@@ -87,14 +87,14 @@ public abstract class ListenerBase {
 	 * @param Name   of recording if saving
 	 */
 	private void runLogic(Player p, String replayName) {
-		PlayerCache cachedPlayer = vulcanReplay.getCachedPlayer(p.getUniqueId());
+		PlayerCache cachedPlayer = AntiCheatReplay.getCachedPlayer(p.getUniqueId());
 		long loginTime = cachedPlayer.getLoginTimeStamp();
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (punishList.contains(p.getUniqueId())) {
 					RecordingSaveEvent saveEvent = new RecordingSaveEvent(p, replayName);
-					Bukkit.getScheduler().scheduleSyncDelayedTask(vulcanReplay, () -> {
+					Bukkit.getScheduler().scheduleSyncDelayedTask(AntiCheatReplay, () -> {
 						Bukkit.getPluginManager().callEvent(saveEvent);
 					});
 
@@ -102,8 +102,8 @@ public abstract class ListenerBase {
 						return;
 
 					replay.stopReplay(replayName, true);
-					vulcanReplay.log("Saving recording of attempted hack...", false);
-					vulcanReplay.log("Saved as: " + replayName, false);
+					AntiCheatReplay.log("Saving recording of attempted hack...", false);
+					AntiCheatReplay.log("Saved as: " + replayName, false);
 					sendDiscordWebhook(replayName, p, getOnlineTime(loginTime, System.currentTimeMillis()));
 					punishList.remove(p.getUniqueId());
 
@@ -114,11 +114,11 @@ public abstract class ListenerBase {
 					replay.stopReplay(replayName, false);
 					if (alertList.contains(p.getUniqueId()))
 						alertList.remove(p.getUniqueId());
-					vulcanReplay.log("Not saving recording...", false);
+					AntiCheatReplay.log("Not saving recording...", false);
 				}
 
 			}
-		}.runTaskLater(vulcanReplay, 20L * 60L * delay);
+		}.runTaskLater(AntiCheatReplay, 20L * 60L * delay);
 	}
 
 	/**
@@ -190,7 +190,7 @@ public abstract class ListenerBase {
 		if (!WEBHOOK_ENABLED)
 			return;
 
-		Bukkit.getScheduler().runTaskAsynchronously(vulcanReplay, () -> {
+		Bukkit.getScheduler().runTaskAsynchronously(AntiCheatReplay, () -> {
 			final DiscordWebhook webhook = new DiscordWebhook(WEBHOOK_URL);
 			webhook.setAvatarUrl(WEBHOOK_AVATAR);
 			webhook.setUsername(WEBHOOK_USERNAME);
@@ -201,13 +201,13 @@ public abstract class ListenerBase {
 							.addField("Online for:", minutesOnline + " minutes", true)
 							.addField("Recording saved as:", recording, true)
 							.addField("View with: ", "/replay play " + recording, true));
-			vulcanReplay.log("Sending WebHook request...", false);
+			AntiCheatReplay.log("Sending WebHook request...", false);
 			try {
 				webhook.execute();
-				vulcanReplay.log(ChatColor.DARK_GREEN + "Webhook sent!", false);
+				AntiCheatReplay.log(ChatColor.DARK_GREEN + "Webhook sent!", false);
 			} catch (final IOException e) {
 				e.printStackTrace();
-				vulcanReplay.log(ChatColor.DARK_RED + "There was an error trying to send the request!", false);
+				AntiCheatReplay.log(ChatColor.DARK_RED + "There was an error trying to send the request!", false);
 			}
 		});
 	}
@@ -248,7 +248,7 @@ public abstract class ListenerBase {
 	 * Initialize our config values
 	 */
 	private void initConfigFields() {
-		FileConfiguration config = vulcanReplay.getConfig();
+		FileConfiguration config = AntiCheatReplay.getConfig();
 		this.WEBHOOK_URL = config.getString("Discord.Webhook");
 		this.WEBHOOK_AVATAR = config.getString("Discord.Avatar");
 		this.WEBHOOK_USERNAME = config.getString("Discord.Username");

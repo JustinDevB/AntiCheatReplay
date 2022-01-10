@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplay;
+package me.justindevb.AntiCheatReplay;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,26 +17,26 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import cc.funkemunky.api.Atlas;
-import me.justindev.VulcanReplay.Commands.ReloadCommand;
-import me.justindevb.VulcanReplay.Listeners.FlappyACListener;
-import me.justindevb.VulcanReplay.Listeners.GodsEyeListener;
-import me.justindevb.VulcanReplay.Listeners.KarhuListener;
-import me.justindevb.VulcanReplay.Listeners.KauriListener;
-import me.justindevb.VulcanReplay.Listeners.MatrixListener;
-import me.justindevb.VulcanReplay.Listeners.OreAnnouncerListener;
-import me.justindevb.VulcanReplay.Listeners.PlayerListener;
-import me.justindevb.VulcanReplay.Listeners.SoaromaListener;
-import me.justindevb.VulcanReplay.Listeners.SpartanListener;
-import me.justindevb.VulcanReplay.Listeners.ThemisListener;
-import me.justindevb.VulcanReplay.Listeners.VulcanListener;
-import me.justindevb.VulcanReplay.Util.AntiCheatDetector;
-import me.justindevb.VulcanReplay.Util.UpdateChecker;
+import me.justindev.AntiCheatReplay.Commands.ReloadCommand;
+import me.justindevb.AntiCheatReplay.Listeners.FlappyACListener;
+import me.justindevb.AntiCheatReplay.Listeners.GodsEyeListener;
+import me.justindevb.AntiCheatReplay.Listeners.KarhuListener;
+import me.justindevb.AntiCheatReplay.Listeners.KauriListener;
+import me.justindevb.AntiCheatReplay.Listeners.MatrixListener;
+import me.justindevb.AntiCheatReplay.Listeners.OreAnnouncerListener;
+import me.justindevb.AntiCheatReplay.Listeners.PlayerListener;
+import me.justindevb.AntiCheatReplay.Listeners.SoaromaListener;
+import me.justindevb.AntiCheatReplay.Listeners.SpartanListener;
+import me.justindevb.AntiCheatReplay.Listeners.ThemisListener;
+import me.justindevb.AntiCheatReplay.Listeners.VulcanListener;
+import me.justindevb.AntiCheatReplay.Util.AntiCheatDetector;
+import me.justindevb.AntiCheatReplay.Util.UpdateChecker;
 
-public class VulcanReplay extends JavaPlugin {
+public class AntiCheatReplay extends JavaPlugin {
 
 	private HashMap<UUID, PlayerCache> playerCache = new HashMap<>();
 	private AntiCheat antiCheatType = AntiCheat.NONE;
-	private static VulcanReplay instance = null;
+	private static AntiCheatReplay instance = null;
 	private Listener activeListener = null;
 
 	@Override
@@ -115,7 +115,7 @@ public class VulcanReplay extends JavaPlugin {
 	}
 
 	/**
-	 * Check if ReplayAPI is running on the server. If not disable VulcanReplay
+	 * Check if ReplayAPI is running on the server. If not disable AntiCheatReplay
 	 */
 	private void checkReplayAPI() {
 		Plugin plugin = Bukkit.getPluginManager().getPlugin("AdvancedReplay");
@@ -320,7 +320,7 @@ public class VulcanReplay extends JavaPlugin {
 		config.addDefault(path + "Enabled", true);
 		config.addDefault(path + "Webhook", "Enter webhook here");
 		config.addDefault(path + "Avatar", "https://i.imgur.com/JPG1Kwk.png");
-		config.addDefault(path + "Username", "VulcanReplay");
+		config.addDefault(path + "Username", "AntiCheatReplay");
 		config.addDefault(path + "Server-Name", "Server");
 	}
 
@@ -361,7 +361,7 @@ public class VulcanReplay extends JavaPlugin {
 		this.getCommand("replayreload").setExecutor(new ReloadCommand());
 	}
 
-	public static VulcanReplay getInstance() {
+	public static AntiCheatReplay getInstance() {
 		return instance;
 	}
 

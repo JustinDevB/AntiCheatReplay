@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplay.Listeners;
+package me.justindevb.AntiCheatReplay.Listeners;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +12,17 @@ import org.bukkit.event.Listener;
 import com.gmail.olexorus.themis.api.ActionEvent;
 import com.gmail.olexorus.themis.api.ViolationEvent;
 
-import me.justindevb.VulcanReplay.ListenerBase;
-import me.justindevb.VulcanReplay.VulcanReplay;
+import me.justindevb.AntiCheatReplay.ListenerBase;
+import me.justindevb.AntiCheatReplay.AntiCheatReplay;
 
 public class ThemisListener extends ListenerBase implements Listener {
-	private final VulcanReplay vulcanReplay;
+	private final AntiCheatReplay AntiCheatReplay;
 	private List<String> disabledActions = new ArrayList<>();
 
-	public ThemisListener(VulcanReplay vulcanReplay) {
-		super(vulcanReplay);
-		Bukkit.getPluginManager().registerEvents(this, VulcanReplay.getInstance());
-		this.vulcanReplay = vulcanReplay;
+	public ThemisListener(AntiCheatReplay AntiCheatReplay) {
+		super(AntiCheatReplay);
+		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
+		this.AntiCheatReplay = AntiCheatReplay;
 
 		setupThemis();
 	}
@@ -56,7 +56,7 @@ public class ThemisListener extends ListenerBase implements Listener {
 	}
 
 	private void initThemisSpecificConfig() {
-		this.disabledActions = vulcanReplay.getConfig().getStringList("Themis.Disabled-Actions");
+		this.disabledActions = AntiCheatReplay.getConfig().getStringList("Themis.Disabled-Actions");
 	}
 
 }

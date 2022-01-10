@@ -4,16 +4,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>me.justindevb</groupId>
-	<artifactId>VulcanReplay</artifactId>
-	<version>2.5.1</version>
+	<artifactId>AntiCheatReplay</artifactId>
+	<version>2.5.2</version>
 	<packaging>jar</packaging>
 
-	<name>VulcanReplay</name>
+	<name>AntiCheatReplay</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<mainClass>me.justindevb.VulcanReplay.VulcanReplay</mainClass>
+		<mainClass>me.justindevb.AntiCheatReplay.AntiCheatReplay</mainClass>
 		<author>JustinDevB</author>
 		<mavan.compiler.source>1.8</mavan.compiler.source>
 	</properties>

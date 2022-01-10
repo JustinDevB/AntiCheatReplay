@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplay.Listeners;
+package me.justindevb.AntiCheatReplay.Listeners;
 
 import org.bukkit.entity.Player;
 
@@ -8,14 +8,14 @@ import cc.funkemunky.api.events.Listen;
 import cc.funkemunky.api.events.ListenerPriority;
 import dev.brighten.api.listener.KauriFlagEvent;
 import dev.brighten.api.listener.KauriPunishEvent;
-import me.justindevb.VulcanReplay.ListenerBase;
-import me.justindevb.VulcanReplay.VulcanReplay;
+import me.justindevb.AntiCheatReplay.ListenerBase;
+import me.justindevb.AntiCheatReplay.AntiCheatReplay;
 
 public class KauriListener extends ListenerBase implements AtlasListener {
 
-	public KauriListener(VulcanReplay vulcanReplay) {
-		super(vulcanReplay);
-		Atlas.getInstance().getEventManager().registerListeners(this, VulcanReplay.getInstance());
+	public KauriListener(AntiCheatReplay AntiCheatReplay) {
+		super(AntiCheatReplay);
+		Atlas.getInstance().getEventManager().registerListeners(this, AntiCheatReplay.getInstance());
 	}
 
 	@Listen(ignoreCancelled = true, priority = ListenerPriority.HIGHEST)

@@ -1,4 +1,4 @@
-package me.justindevb.VulcanReplay;
+package me.justindevb.AntiCheatReplay;
 
 import org.bukkit.entity.Player;
 
@@ -7,7 +7,7 @@ public class PlayerCache {
 
 	private long loginTimeStamp;
 
-	public PlayerCache(Player player, VulcanReplay vulcanReplay) {
+	public PlayerCache(Player player, AntiCheatReplay AntiCheatReplay) {
 		this.player = player;
 
 		this.loginTimeStamp = System.currentTimeMillis();

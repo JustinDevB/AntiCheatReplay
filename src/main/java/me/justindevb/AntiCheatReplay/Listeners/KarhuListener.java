@@ -1,9 +1,9 @@
-package me.justindevb.VulcanReplay.Listeners;
+package me.justindevb.AntiCheatReplay.Listeners;
 
 import org.bukkit.entity.Player;
 
-import me.justindevb.VulcanReplay.ListenerBase;
-import me.justindevb.VulcanReplay.VulcanReplay;
+import me.justindevb.AntiCheatReplay.ListenerBase;
+import me.justindevb.AntiCheatReplay.AntiCheatReplay;
 import me.liwk.karhu.api.KarhuAPI;
 import me.liwk.karhu.api.event.KarhuEvent;
 import me.liwk.karhu.api.event.impl.KarhuAlertEvent;
@@ -11,8 +11,8 @@ import me.liwk.karhu.api.event.impl.KarhuBanEvent;
 
 public class KarhuListener extends ListenerBase implements me.liwk.karhu.api.event.KarhuListener {
 
-	public KarhuListener(VulcanReplay vulcanReplay) {
-		super(vulcanReplay);
+	public KarhuListener(AntiCheatReplay AntiCheatReplay) {
+		super(AntiCheatReplay);
 		KarhuAPI.getEventRegistry().addListener(this);
 	}
 

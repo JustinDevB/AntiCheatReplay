@@ -48,7 +48,7 @@ Discord: # Send a recording notification to a Discord Channel
   Enabled: true
   Webhook: Enter webhook here
   Avatar: Enter link to a discord avatar
-  Username: VulcanReplay
+  Username: AntiCheatReplay
   Server-Name: Server
 
 Usage:​
