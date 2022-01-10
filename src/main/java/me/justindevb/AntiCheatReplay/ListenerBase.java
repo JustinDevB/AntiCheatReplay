@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay;
+package me.justindevb.anticheatreplay;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -21,12 +21,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import me.jumper251.replay.api.ReplayAPI;
-import me.justindevb.AntiCheatReplay.API.Events.RecordingSaveEvent;
-import me.justindevb.AntiCheatReplay.API.Events.RecordingStartEvent;
-import me.justindevb.AntiCheatReplay.Util.DiscordWebhook;
+import me.justindevb.anticheatreplay.API.Events.RecordingSaveEvent;
+import me.justindevb.anticheatreplay.API.Events.RecordingStartEvent;
+import me.justindevb.anticheatreplay.Util.DiscordWebhook;
 
 public abstract class ListenerBase {
-	private AntiCheatReplay AntiCheatReplay;
+	private AntiCheatReplay acReplay;
 	@SuppressWarnings("unused")
 	private AntiCheat type = AntiCheat.NONE;
 	ReplayAPI replay;
@@ -45,9 +45,9 @@ public abstract class ListenerBase {
 	protected LinkedList<UUID> alertList = new LinkedList<>();
 	protected LinkedList<UUID> punishList = new LinkedList<>();
 
-	public ListenerBase(AntiCheatReplay AntiCheatReplay) {
-		this.AntiCheatReplay = AntiCheatReplay;
-		this.type = AntiCheatReplay.getAntiCheat();
+	public ListenerBase(AntiCheatReplay acReplay) {
+		this.acReplay = acReplay;
+		this.type = acReplay.getAntiCheat();
 		this.replay = ReplayAPI.getInstance();
 
 		initConfigFields();
@@ -61,14 +61,14 @@ public abstract class ListenerBase {
 	 */
 	protected void startRecording(Player p, String replayName) {
 		RecordingStartEvent startEvent = new RecordingStartEvent(p, replayName);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(AntiCheatReplay, () -> {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(acReplay, () -> {
 			Bukkit.getPluginManager().callEvent(startEvent);
 		});
 		if (startEvent.isCancelled())
 			return;
 
-		AntiCheatReplay.log("Starting recording of player: " + p.getName(), false);
-		Bukkit.getScheduler().runTask(AntiCheatReplay, () -> {
+		acReplay.log("Starting recording of player: " + p.getName(), false);
+		Bukkit.getScheduler().runTask(acReplay, () -> {
 
 			replay.recordReplay(replayName, Bukkit.getConsoleSender(), getNearbyPlayers(p));
 		});
@@ -87,14 +87,14 @@ public abstract class ListenerBase {
 	 * @param Name   of recording if saving
 	 */
 	private void runLogic(Player p, String replayName) {
-		PlayerCache cachedPlayer = AntiCheatReplay.getCachedPlayer(p.getUniqueId());
+		PlayerCache cachedPlayer = acReplay.getCachedPlayer(p.getUniqueId());
 		long loginTime = cachedPlayer.getLoginTimeStamp();
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				if (punishList.contains(p.getUniqueId())) {
 					RecordingSaveEvent saveEvent = new RecordingSaveEvent(p, replayName);
-					Bukkit.getScheduler().scheduleSyncDelayedTask(AntiCheatReplay, () -> {
+					Bukkit.getScheduler().scheduleSyncDelayedTask(acReplay, () -> {
 						Bukkit.getPluginManager().callEvent(saveEvent);
 					});
 
@@ -102,8 +102,8 @@ public abstract class ListenerBase {
 						return;
 
 					replay.stopReplay(replayName, true);
-					AntiCheatReplay.log("Saving recording of attempted hack...", false);
-					AntiCheatReplay.log("Saved as: " + replayName, false);
+					acReplay.log("Saving recording of attempted hack...", false);
+					acReplay.log("Saved as: " + replayName, false);
 					sendDiscordWebhook(replayName, p, getOnlineTime(loginTime, System.currentTimeMillis()));
 					punishList.remove(p.getUniqueId());
 
@@ -114,11 +114,11 @@ public abstract class ListenerBase {
 					replay.stopReplay(replayName, false);
 					if (alertList.contains(p.getUniqueId()))
 						alertList.remove(p.getUniqueId());
-					AntiCheatReplay.log("Not saving recording...", false);
+					acReplay.log("Not saving recording...", false);
 				}
 
 			}
-		}.runTaskLater(AntiCheatReplay, 20L * 60L * delay);
+		}.runTaskLaterAsynchronously(acReplay, 20L * 60L * delay);
 	}
 
 	/**
@@ -190,7 +190,7 @@ public abstract class ListenerBase {
 		if (!WEBHOOK_ENABLED)
 			return;
 
-		Bukkit.getScheduler().runTaskAsynchronously(AntiCheatReplay, () -> {
+		Bukkit.getScheduler().runTaskAsynchronously(acReplay, () -> {
 			final DiscordWebhook webhook = new DiscordWebhook(WEBHOOK_URL);
 			webhook.setAvatarUrl(WEBHOOK_AVATAR);
 			webhook.setUsername(WEBHOOK_USERNAME);
@@ -201,13 +201,13 @@ public abstract class ListenerBase {
 							.addField("Online for:", minutesOnline + " minutes", true)
 							.addField("Recording saved as:", recording, true)
 							.addField("View with: ", "/replay play " + recording, true));
-			AntiCheatReplay.log("Sending WebHook request...", false);
+			acReplay.log("Sending WebHook request...", false);
 			try {
 				webhook.execute();
-				AntiCheatReplay.log(ChatColor.DARK_GREEN + "Webhook sent!", false);
+				acReplay.log(ChatColor.DARK_GREEN + "Webhook sent!", false);
 			} catch (final IOException e) {
 				e.printStackTrace();
-				AntiCheatReplay.log(ChatColor.DARK_RED + "There was an error trying to send the request!", false);
+				acReplay.log(ChatColor.DARK_RED + "There was an error trying to send the request!", false);
 			}
 		});
 	}
@@ -248,7 +248,7 @@ public abstract class ListenerBase {
 	 * Initialize our config values
 	 */
 	private void initConfigFields() {
-		FileConfiguration config = AntiCheatReplay.getConfig();
+		FileConfiguration config = acReplay.getConfig();
 		this.WEBHOOK_URL = config.getString("Discord.Webhook");
 		this.WEBHOOK_AVATAR = config.getString("Discord.Avatar");
 		this.WEBHOOK_USERNAME = config.getString("Discord.Username");

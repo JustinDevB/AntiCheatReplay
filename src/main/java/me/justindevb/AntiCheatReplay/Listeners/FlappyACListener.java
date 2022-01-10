@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay.Listeners;
+package me.justindevb.anticheatreplay.Listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -9,13 +9,13 @@ import org.bukkit.event.Listener;
 import com.justdoom.flappyanticheat.customevents.FlagEvent;
 import com.justdoom.flappyanticheat.customevents.PunishEvent;
 
-import me.justindevb.AntiCheatReplay.ListenerBase;
-import me.justindevb.AntiCheatReplay.AntiCheatReplay;
+import me.justindevb.anticheatreplay.ListenerBase;
+import me.justindevb.anticheatreplay.AntiCheatReplay;
 
 public class FlappyACListener extends ListenerBase implements Listener {
 
-	public FlappyACListener(AntiCheatReplay AntiCheatReplay) {
-		super(AntiCheatReplay);
+	public FlappyACListener(AntiCheatReplay acReplay) {
+		super(acReplay);
 		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
 	}
 	

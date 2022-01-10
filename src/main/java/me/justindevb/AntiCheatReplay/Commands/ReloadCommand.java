@@ -1,11 +1,11 @@
-package me.justindev.AntiCheatReplay.Commands;
+package me.justindevb.anticheatreplay.Commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import me.justindevb.AntiCheatReplay.AntiCheat;
-import me.justindevb.AntiCheatReplay.AntiCheatReplay;
+import me.justindevb.anticheatreplay.AntiCheat;
+import me.justindevb.anticheatreplay.AntiCheatReplay;
 import net.md_5.bungee.api.ChatColor;
 
 public class ReloadCommand implements CommandExecutor {

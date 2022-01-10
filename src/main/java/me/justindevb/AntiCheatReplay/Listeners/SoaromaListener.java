@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay.Listeners;
+package me.justindevb.anticheatreplay.Listeners;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,18 +11,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import me.justindevb.AntiCheatReplay.ListenerBase;
-import me.justindevb.AntiCheatReplay.AntiCheatReplay;
+import me.justindevb.anticheatreplay.ListenerBase;
+import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.korbsti.soaromaac.api.PunishmentEvent;
 import me.korbsti.soaromaac.api.SoaromaFlagEvent;
 
 public class SoaromaListener extends ListenerBase implements Listener {
-	private final AntiCheatReplay AntiCheatReplay;
+	private final AntiCheatReplay acReplay;
 
-	public SoaromaListener(AntiCheatReplay AntiCheatReplay) {
-		super(AntiCheatReplay);
+	public SoaromaListener(AntiCheatReplay acReplay) {
+		super(acReplay);
 		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
-		this.AntiCheatReplay = AntiCheatReplay;
+		this.acReplay = acReplay;
 
 		setupSoaroma();
 	}
@@ -58,36 +58,36 @@ public class SoaromaListener extends ListenerBase implements Listener {
 	 * Check to see if Soaromoa's API is enabled
 	 */
 	private void checkSoaromaAPI() {
-		AntiCheatReplay.log("Checking if Soaroma API is enabled", false);
-		File file = new File(AntiCheatReplay.getDataFolder().getParentFile(),
+		acReplay.log("Checking if Soaroma API is enabled", false);
+		File file = new File(acReplay.getDataFolder().getParentFile(),
 				"SoaromaSAC" + System.getProperty("file.separator") + "main.yml");
 		if (!file.exists()) {
-			AntiCheatReplay.log("Soaroma is not installed!", true);
+			acReplay.log("Soaroma is not installed!", true);
 			return;
 		}
 
 		FileConfiguration soaroma = YamlConfiguration.loadConfiguration(file);
 
 		if (soaroma.getBoolean("other.enableAPI")) {
-			AntiCheatReplay.log("Soaroma API is enabled", false);
+			acReplay.log("Soaroma API is enabled", false);
 			return;
 		}
 
-		AntiCheatReplay.log("Soaroma API is disabled in Soaroma's config.yml. This must be true for this plugin to work!",
+		acReplay.log("Soaroma API is disabled in Soaroma's config.yml. This must be true for this plugin to work!",
 				true);
-		AntiCheatReplay.log(
+		acReplay.log(
 				"We went ahead and changed it to true, but you need to reboot your server for it to take effect!",
 				true);
 		soaroma.set("other.enableAPI", true);
 		try {
 			soaroma.save(file);
 		} catch (IOException e) {
-			AntiCheatReplay.log("Error editing Soaroma config. You will have to manually do it", true);
+			acReplay.log("Error editing Soaroma config. You will have to manually do it", true);
 			e.printStackTrace();
 		}
 
-		Bukkit.getScheduler().runTask(AntiCheatReplay, () -> {
-			Bukkit.getPluginManager().disablePlugin(AntiCheatReplay);
+		Bukkit.getScheduler().runTask(acReplay, () -> {
+			Bukkit.getPluginManager().disablePlugin(acReplay);
 		});
 
 	}

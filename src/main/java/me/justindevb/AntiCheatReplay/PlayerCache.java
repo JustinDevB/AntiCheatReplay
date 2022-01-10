@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay;
+package me.justindevb.anticheatreplay;
 
 import org.bukkit.entity.Player;
 
@@ -7,7 +7,7 @@ public class PlayerCache {
 
 	private long loginTimeStamp;
 
-	public PlayerCache(Player player, AntiCheatReplay AntiCheatReplay) {
+	public PlayerCache(Player player, AntiCheatReplay acReplay) {
 		this.player = player;
 
 		this.loginTimeStamp = System.currentTimeMillis();

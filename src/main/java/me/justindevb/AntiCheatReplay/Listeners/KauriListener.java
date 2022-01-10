@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay.Listeners;
+package me.justindevb.anticheatreplay.Listeners;
 
 import org.bukkit.entity.Player;
 
@@ -8,13 +8,13 @@ import cc.funkemunky.api.events.Listen;
 import cc.funkemunky.api.events.ListenerPriority;
 import dev.brighten.api.listener.KauriFlagEvent;
 import dev.brighten.api.listener.KauriPunishEvent;
-import me.justindevb.AntiCheatReplay.ListenerBase;
-import me.justindevb.AntiCheatReplay.AntiCheatReplay;
+import me.justindevb.anticheatreplay.ListenerBase;
+import me.justindevb.anticheatreplay.AntiCheatReplay;
 
 public class KauriListener extends ListenerBase implements AtlasListener {
 
-	public KauriListener(AntiCheatReplay AntiCheatReplay) {
-		super(AntiCheatReplay);
+	public KauriListener(AntiCheatReplay acReplay) {
+		super(acReplay);
 		Atlas.getInstance().getEventManager().registerListeners(this, AntiCheatReplay.getInstance());
 	}
 

@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay.Listeners;
+package me.justindevb.anticheatreplay.Listeners;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +12,17 @@ import org.bukkit.event.Listener;
 import com.gmail.olexorus.themis.api.ActionEvent;
 import com.gmail.olexorus.themis.api.ViolationEvent;
 
-import me.justindevb.AntiCheatReplay.ListenerBase;
-import me.justindevb.AntiCheatReplay.AntiCheatReplay;
+import me.justindevb.anticheatreplay.ListenerBase;
+import me.justindevb.anticheatreplay.AntiCheatReplay;
 
 public class ThemisListener extends ListenerBase implements Listener {
-	private final AntiCheatReplay AntiCheatReplay;
+	private final AntiCheatReplay acReplay;
 	private List<String> disabledActions = new ArrayList<>();
 
-	public ThemisListener(AntiCheatReplay AntiCheatReplay) {
-		super(AntiCheatReplay);
+	public ThemisListener(AntiCheatReplay acReplay) {
+		super(acReplay);
 		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
-		this.AntiCheatReplay = AntiCheatReplay;
+		this.acReplay = acReplay;
 
 		setupThemis();
 	}
@@ -56,7 +56,7 @@ public class ThemisListener extends ListenerBase implements Listener {
 	}
 
 	private void initThemisSpecificConfig() {
-		this.disabledActions = AntiCheatReplay.getConfig().getStringList("Themis.Disabled-Actions");
+		this.disabledActions = acReplay.getConfig().getStringList("Themis.Disabled-Actions");
 	}
 
 }

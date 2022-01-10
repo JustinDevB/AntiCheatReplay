@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay.API.Events;
+package me.justindevb.anticheatreplay.API.Events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;

@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay.Listeners;
+package me.justindevb.anticheatreplay.Listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,13 +8,13 @@ import org.bukkit.event.Listener;
 
 import godseye.GodsEyePlayerViolationEvent;
 import godseye.GodsEyePunishPlayerEvent;
-import me.justindevb.AntiCheatReplay.ListenerBase;
-import me.justindevb.AntiCheatReplay.AntiCheatReplay;
+import me.justindevb.anticheatreplay.ListenerBase;
+import me.justindevb.anticheatreplay.AntiCheatReplay;
 
 public class GodsEyeListener extends ListenerBase implements Listener {
 
-	public GodsEyeListener(AntiCheatReplay AntiCheatReplay) {
-		super(AntiCheatReplay);
+	public GodsEyeListener(AntiCheatReplay acReplay) {
+		super(acReplay);
 		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
 	}
 	

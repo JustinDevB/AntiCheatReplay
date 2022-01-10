@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay.Util;
+package me.justindevb.anticheatreplay.Util;
 
 import java.io.IOException;
 import java.io.InputStream;

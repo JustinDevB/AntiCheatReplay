@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay;
+package me.justindevb.anticheatreplay;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,20 +17,20 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import cc.funkemunky.api.Atlas;
-import me.justindev.AntiCheatReplay.Commands.ReloadCommand;
-import me.justindevb.AntiCheatReplay.Listeners.FlappyACListener;
-import me.justindevb.AntiCheatReplay.Listeners.GodsEyeListener;
-import me.justindevb.AntiCheatReplay.Listeners.KarhuListener;
-import me.justindevb.AntiCheatReplay.Listeners.KauriListener;
-import me.justindevb.AntiCheatReplay.Listeners.MatrixListener;
-import me.justindevb.AntiCheatReplay.Listeners.OreAnnouncerListener;
-import me.justindevb.AntiCheatReplay.Listeners.PlayerListener;
-import me.justindevb.AntiCheatReplay.Listeners.SoaromaListener;
-import me.justindevb.AntiCheatReplay.Listeners.SpartanListener;
-import me.justindevb.AntiCheatReplay.Listeners.ThemisListener;
-import me.justindevb.AntiCheatReplay.Listeners.VulcanListener;
-import me.justindevb.AntiCheatReplay.Util.AntiCheatDetector;
-import me.justindevb.AntiCheatReplay.Util.UpdateChecker;
+import me.justindevb.anticheatreplay.Commands.ReloadCommand;
+import me.justindevb.anticheatreplay.Listeners.FlappyACListener;
+import me.justindevb.anticheatreplay.Listeners.GodsEyeListener;
+import me.justindevb.anticheatreplay.Listeners.KarhuListener;
+import me.justindevb.anticheatreplay.Listeners.KauriListener;
+import me.justindevb.anticheatreplay.Listeners.MatrixListener;
+import me.justindevb.anticheatreplay.Listeners.OreAnnouncerListener;
+import me.justindevb.anticheatreplay.Listeners.PlayerListener;
+import me.justindevb.anticheatreplay.Listeners.SoaromaListener;
+import me.justindevb.anticheatreplay.Listeners.SpartanListener;
+import me.justindevb.anticheatreplay.Listeners.ThemisListener;
+import me.justindevb.anticheatreplay.Listeners.VulcanListener;
+import me.justindevb.anticheatreplay.Util.AntiCheatDetector;
+import me.justindevb.anticheatreplay.Util.UpdateChecker;
 
 public class AntiCheatReplay extends JavaPlugin {
 

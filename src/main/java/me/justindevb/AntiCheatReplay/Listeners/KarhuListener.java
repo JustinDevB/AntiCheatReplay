@@ -1,9 +1,9 @@
-package me.justindevb.AntiCheatReplay.Listeners;
+package me.justindevb.anticheatreplay.Listeners;
 
 import org.bukkit.entity.Player;
 
-import me.justindevb.AntiCheatReplay.ListenerBase;
-import me.justindevb.AntiCheatReplay.AntiCheatReplay;
+import me.justindevb.anticheatreplay.ListenerBase;
+import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.liwk.karhu.api.KarhuAPI;
 import me.liwk.karhu.api.event.KarhuEvent;
 import me.liwk.karhu.api.event.impl.KarhuAlertEvent;
@@ -11,8 +11,8 @@ import me.liwk.karhu.api.event.impl.KarhuBanEvent;
 
 public class KarhuListener extends ListenerBase implements me.liwk.karhu.api.event.KarhuListener {
 
-	public KarhuListener(AntiCheatReplay AntiCheatReplay) {
-		super(AntiCheatReplay);
+	public KarhuListener(AntiCheatReplay acReplay) {
+		super(acReplay);
 		KarhuAPI.getEventRegistry().addListener(this);
 	}
 

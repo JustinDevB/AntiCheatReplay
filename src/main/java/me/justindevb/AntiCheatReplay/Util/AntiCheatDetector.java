@@ -1,17 +1,17 @@
-package me.justindevb.AntiCheatReplay.Util;
+package me.justindevb.anticheatreplay.Util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-import me.justindevb.AntiCheatReplay.AntiCheatReplay;
+import me.justindevb.anticheatreplay.AntiCheatReplay;
 
 public class AntiCheatDetector {
 	private static AntiCheatDetector instance = null;
-	private final AntiCheatReplay AntiCheatReplay;
+	private final AntiCheatReplay acReplay;
 
 	private AntiCheatDetector() {
 		instance = this;
-		AntiCheatReplay = AntiCheatReplay.getInstance();
+		acReplay = AntiCheatReplay.getInstance();
 	}
 
 	/**
@@ -21,7 +21,7 @@ public class AntiCheatDetector {
 		Plugin plugin = Bukkit.getPluginManager().getPlugin("Vulcan");
 		if (plugin == null || !plugin.isEnabled())
 			return false;
-		AntiCheatReplay.log("Vulcan detected, enabling support..", false);
+		acReplay.log("Vulcan detected, enabling support..", false);
 		return true;
 	}
 
@@ -34,7 +34,7 @@ public class AntiCheatDetector {
 		Plugin plugin = Bukkit.getPluginManager().getPlugin("Spartan");
 		if (plugin == null || !plugin.isEnabled())
 			return false;
-		AntiCheatReplay.log("Spartan detected, enabling support..", false);
+		acReplay.log("Spartan detected, enabling support..", false);
 		return true;
 	}
 
@@ -47,7 +47,7 @@ public class AntiCheatDetector {
 		Plugin plugin = Bukkit.getPluginManager().getPlugin("Matrix");
 		if (plugin == null || !plugin.isEnabled())
 			return false;
-		AntiCheatReplay.log("Matrix detected, enabling support..", false);
+		acReplay.log("Matrix detected, enabling support..", false);
 		return true;
 	}
 
@@ -60,7 +60,7 @@ public class AntiCheatDetector {
 		Plugin plugin = Bukkit.getPluginManager().getPlugin("GodsEye");
 		if (plugin == null || !plugin.isEnabled())
 			return false;
-		AntiCheatReplay.log("GodsEye detected, enabling support..", false);
+		acReplay.log("GodsEye detected, enabling support..", false);
 		return true;
 	}
 
@@ -76,11 +76,11 @@ public class AntiCheatDetector {
 
 		Plugin atlas = Bukkit.getPluginManager().getPlugin("Atlas");
 		if (atlas == null || !atlas.isEnabled()) {
-			AntiCheatReplay.log("Atlas is required to use Kauri!", true);
+			acReplay.log("Atlas is required to use Kauri!", true);
 			return false;
 		}
 
-		AntiCheatReplay.log("Kauri detected, enabling support...", false);
+		acReplay.log("Kauri detected, enabling support...", false);
 		return true;
 	}
 
@@ -93,7 +93,7 @@ public class AntiCheatDetector {
 		Plugin karhu = Bukkit.getPluginManager().getPlugin("KarhuLoader");
 		if (karhu == null || !karhu.isEnabled())
 			return false;
-		AntiCheatReplay.log("Karhu detected, enabling support...", false);
+		acReplay.log("Karhu detected, enabling support...", false);
 		return true;
 	}
 
@@ -106,7 +106,7 @@ public class AntiCheatDetector {
 		Plugin themis = Bukkit.getPluginManager().getPlugin("Themis");
 		if (themis == null || !themis.isEnabled())
 			return false;
-		AntiCheatReplay.log("Themis detected, enabling support...", false);
+		acReplay.log("Themis detected, enabling support...", false);
 		return true;
 	}
 	
@@ -119,7 +119,7 @@ public class AntiCheatDetector {
 		Plugin soaroma = Bukkit.getPluginManager().getPlugin("SoaromaSAC");
 		if (soaroma == null || !soaroma.isEnabled())
 			return false;
-		AntiCheatReplay.log("Soaroma detected, enabling support...", false);
+		acReplay.log("Soaroma detected, enabling support...", false);
 		return true;
 	}
 	
@@ -132,7 +132,7 @@ public class AntiCheatDetector {
 		Plugin flappy = Bukkit.getPluginManager().getPlugin("FlappyAnticheat");
 		if (flappy == null || !flappy.isEnabled())
 			return false;
-		AntiCheatReplay.log("FlappyAC detected, enabling support...", false);
+		acReplay.log("FlappyAC detected, enabling support...", false);
 		return true;
 	}
 

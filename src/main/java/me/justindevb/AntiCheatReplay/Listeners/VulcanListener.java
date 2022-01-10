@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay.Listeners;
+package me.justindevb.anticheatreplay.Listeners;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,17 +16,17 @@ import org.bukkit.event.Listener;
 import me.frep.vulcan.api.event.VulcanFlagEvent;
 import me.frep.vulcan.api.event.VulcanPunishEvent;
 
-import me.justindevb.AntiCheatReplay.ListenerBase;
-import me.justindevb.AntiCheatReplay.AntiCheatReplay;
+import me.justindevb.anticheatreplay.ListenerBase;
+import me.justindevb.anticheatreplay.AntiCheatReplay;
 
 public class VulcanListener extends ListenerBase implements Listener {
 
-	private final AntiCheatReplay AntiCheatReplay;
+	private final AntiCheatReplay acReplay;
 	private List<String> disabledRecordings = new ArrayList<>();
 
-	public VulcanListener(AntiCheatReplay AntiCheatReplay) {
-		super(AntiCheatReplay);
-		this.AntiCheatReplay = AntiCheatReplay;
+	public VulcanListener(AntiCheatReplay acReplay) {
+		super(acReplay);
+		this.acReplay = acReplay;
 		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
 
 		setupVulcan();
@@ -68,41 +68,43 @@ public class VulcanListener extends ListenerBase implements Listener {
 	 * Check to see if the Vulcan API is enabled in Vulcan's config.yml
 	 */
 	private void checkVulcanApi() {
-		AntiCheatReplay.log("Checking if Vulcan API is enabled", false);
-		File file = new File(AntiCheatReplay.getDataFolder().getParentFile(),
+		Bukkit.getScheduler().runTaskAsynchronously(acReplay, () -> {
+		acReplay.log("Checking if Vulcan API is enabled", false);
+		File file = new File(acReplay.getDataFolder().getParentFile(),
 				"Vulcan" + System.getProperty("file.separator") + "config.yml");
 		if (!file.exists()) {
-			AntiCheatReplay.log("Vulcan is not installed!", true);
+			acReplay.log("Vulcan is not installed!", true);
 			return;
 		}
 
 		FileConfiguration vulcan = YamlConfiguration.loadConfiguration(file);
 
 		if (vulcan.getBoolean("settings.enable-api")) {
-			AntiCheatReplay.log("Vulcan API is enabled", false);
+			acReplay.log("Vulcan API is enabled", false);
 			return;
 		}
 
-		AntiCheatReplay.log("Vulcan API is disabled in Vulcan's config.yml. This must be true for this plugin to work!",
+		acReplay.log("Vulcan API is disabled in Vulcan's config.yml. This must be true for this plugin to work!",
 				true);
-		AntiCheatReplay.log(
+		acReplay.log(
 				"We went ahead and changed it to true, but you need to reboot your server for it to take effect!",
 				true);
 		vulcan.set("settings.enable-api", true);
 		try {
 			vulcan.save(file);
 		} catch (IOException e) {
-			AntiCheatReplay.log("Error editing Vulcan config. You will have to manually do it", true);
+			acReplay.log("Error editing Vulcan config. You will have to manually do it", true);
 			e.printStackTrace();
 		}
 
-		Bukkit.getScheduler().runTask(AntiCheatReplay, () -> {
-			Bukkit.getPluginManager().disablePlugin(AntiCheatReplay);
+		Bukkit.getScheduler().runTask(acReplay, () -> {
+			Bukkit.getPluginManager().disablePlugin(acReplay);
 		});
+	});
 	}
 
 	public void initVulcanSpecificConfig() {
-		this.disabledRecordings = AntiCheatReplay.getConfig().getStringList("Vulcan.Disabled-Recordings");
+		this.disabledRecordings = acReplay.getConfig().getStringList("Vulcan.Disabled-Recordings");
 	}
 
 }

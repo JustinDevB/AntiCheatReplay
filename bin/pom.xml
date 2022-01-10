@@ -13,11 +13,11 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<mainClass>me.justindevb.anticheatreplay.AntiCheatReplay</mainClass>
+		<mainClass>me.justindevb.AntiCheatReplay.AntiCheatReplay</mainClass>
 		<author>JustinDevB</author>
 		<mavan.compiler.source>1.8</mavan.compiler.source>
 	</properties>
- 
+
 	<repositories>
 		<repository>
 			<id>spigot-repo</id>

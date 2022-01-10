@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay.Listeners;
+package me.justindevb.anticheatreplay.Listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -6,15 +6,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import me.justindevb.AntiCheatReplay.ListenerBase;
-import me.justindevb.AntiCheatReplay.AntiCheatReplay;
+import me.justindevb.anticheatreplay.ListenerBase;
+import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.rerere.matrix.api.events.PlayerViolationCommandEvent;
 import me.rerere.matrix.api.events.PlayerViolationEvent;
 
 public class MatrixListener extends ListenerBase implements Listener {
 
-	public MatrixListener(AntiCheatReplay AntiCheatReplay) {
-		super(AntiCheatReplay);
+	public MatrixListener(AntiCheatReplay acReplay) {
+		super(acReplay);
 		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
 	}
 	

@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay;
+package me.justindevb.anticheatreplay;
 
 
 public enum AntiCheat {

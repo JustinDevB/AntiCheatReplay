@@ -1,4 +1,4 @@
-package me.justindevb.AntiCheatReplay.Util;
+package me.justindevb.anticheatreplay.Util;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.Color;
