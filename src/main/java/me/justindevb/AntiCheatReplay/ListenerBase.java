@@ -24,6 +24,7 @@ import me.jumper251.replay.api.ReplayAPI;
 import me.justindevb.anticheatreplay.API.Events.RecordingSaveEvent;
 import me.justindevb.anticheatreplay.API.Events.RecordingStartEvent;
 import me.justindevb.anticheatreplay.Util.DiscordWebhook;
+import me.justindevb.anticheatreplay.Util.Messages;
 
 public abstract class ListenerBase {
 	private AntiCheatReplay acReplay;
@@ -195,12 +196,12 @@ public abstract class ListenerBase {
 			webhook.setAvatarUrl(WEBHOOK_AVATAR);
 			webhook.setUsername(WEBHOOK_USERNAME);
 			webhook.addEmbed(
-					new DiscordWebhook.EmbedObject().setTitle("Instant Replay").setDescription("Recording created")
+					new DiscordWebhook.EmbedObject().setTitle(Messages.TITLE).setDescription(Messages.DESCRIPTION)
 							.setThumbnail("http://cravatar.eu/avatar/" + player.getName() + "/64.png")
-							.setColor(new Color(0, 255, 0)).addField("Server: ", SERVER_NAME, true)
-							.addField("Online for:", minutesOnline + " minutes", true)
-							.addField("Recording saved as:", recording, true)
-							.addField("View with: ", "/replay play " + recording, true));
+							.setColor(new Color(0, 255, 0)).addField(Messages.SERVER, SERVER_NAME, true)
+							.addField(Messages.ONLINE_FOR, minutesOnline + " " + Messages.ONLINE_FOR_MINUTES, true)
+							.addField(Messages.RECORDING_NAME, recording, true)
+							.addField(Messages.COMMAND + " ", "/replay play " + recording, true));
 			acReplay.log("Sending WebHook request...", false);
 			try {
 				webhook.execute();

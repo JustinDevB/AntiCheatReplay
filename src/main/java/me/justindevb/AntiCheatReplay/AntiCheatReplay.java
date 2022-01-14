@@ -37,6 +37,7 @@ import me.justindevb.anticheatreplay.Listeners.SpartanListener;
 import me.justindevb.anticheatreplay.Listeners.ThemisListener;
 import me.justindevb.anticheatreplay.Listeners.VulcanListener;
 import me.justindevb.anticheatreplay.Util.AntiCheatDetector;
+import me.justindevb.anticheatreplay.Util.Messages;
 import me.justindevb.anticheatreplay.Util.UpdateChecker;
 
 public class AntiCheatReplay extends JavaPlugin {
@@ -151,6 +152,8 @@ public class AntiCheatReplay extends JavaPlugin {
 		saveConfig();
 
 		updateConfig();
+		
+		new Messages();
 	}
 
 	public void reloadReplayConfig() {
@@ -160,6 +163,8 @@ public class AntiCheatReplay extends JavaPlugin {
 			HandlerList.unregisterAll(activeListener);
 		reloadConfig();
 		findCompatAntiCheat();
+		new Messages();
+		log("Reloaded Messages.yml", false);
 	}
 
 	private void initBstats() {
