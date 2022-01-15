@@ -17,7 +17,7 @@
 		<author>JustinDevB</author>
 		<mavan.compiler.source>1.8</mavan.compiler.source>
 	</properties>
- 
+
 	<repositories>
 		<repository>
 			<id>spigot-repo</id>
@@ -147,6 +147,15 @@
 			<artifactId>oreannouncer-api</artifactId>
 			<version>2.8.3</version>
 		</dependency>
+
+		<dependency>
+			<groupId>anticheatreloaded</groupId>
+			<artifactId>anticheatreloaded</artifactId>
+			<version>1</version>
+			<scope>system</scope>
+			<systemPath>C:\Users\Justin\Desktop\DebugServer\plugins\AntiCheatReloaded.jar</systemPath>
+		</dependency>
+
 	</dependencies>
 
 	<build>

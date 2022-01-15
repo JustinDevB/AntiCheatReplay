@@ -109,7 +109,7 @@ public class AntiCheatDetector {
 		acReplay.log("Themis detected, enabling support...", false);
 		return true;
 	}
-	
+
 	/**
 	 * Check if Soaroma is running on the server
 	 * 
@@ -122,7 +122,7 @@ public class AntiCheatDetector {
 		acReplay.log("Soaroma detected, enabling support...", false);
 		return true;
 	}
-	
+
 	/**
 	 * Check if FlappyAC is running on the server
 	 * 
@@ -133,6 +133,19 @@ public class AntiCheatDetector {
 		if (flappy == null || !flappy.isEnabled())
 			return false;
 		acReplay.log("FlappyAC detected, enabling support...", false);
+		return true;
+	}
+
+	/**
+	 * Check if AntiCheatReloaded is running on the server
+	 * 
+	 * @return
+	 */
+	public boolean checkAntiCheatReloadedInstalled() {
+		Plugin acr = Bukkit.getPluginManager().getPlugin("AntiCheatReloaded");
+		if (acr == null || !acr.isEnabled())
+			return false;
+		acReplay.log("AntiCheatReloaded detected, enabling support...", false);
 		return true;
 	}
 

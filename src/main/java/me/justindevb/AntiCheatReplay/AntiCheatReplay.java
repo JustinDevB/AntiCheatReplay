@@ -2,9 +2,7 @@ package me.justindevb.anticheatreplay;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -26,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import cc.funkemunky.api.Atlas;
 import me.justindevb.anticheatreplay.Commands.ReloadCommand;
+import me.justindevb.anticheatreplay.Listeners.AntiCheatReloadedListener;
 import me.justindevb.anticheatreplay.Listeners.FlappyACListener;
 import me.justindevb.anticheatreplay.Listeners.GodsEyeListener;
 import me.justindevb.anticheatreplay.Listeners.KarhuListener;
@@ -152,7 +151,7 @@ public class AntiCheatReplay extends JavaPlugin {
 		saveConfig();
 
 		updateConfig();
-		
+
 		new Messages();
 	}
 
@@ -302,6 +301,9 @@ public class AntiCheatReplay extends JavaPlugin {
 		case FLAPPY:
 			activeListener = new FlappyACListener(this);
 			break;
+
+		case ANTICHEATRELOADED:
+			activeListener = new AntiCheatReloadedListener(this);
 		case NONE:
 			disablePlugin();
 			break;
@@ -387,17 +389,18 @@ public class AntiCheatReplay extends JavaPlugin {
 		String separator = System.getProperty("file.separator");
 		File file = new File(this.getDataFolder().getParentFile(), "VulcanReplay" + separator + "config.yml");
 		if (file.exists()) {
-			
+
 			log("Outdated config found...", true);
 			log("Copying old config to new plugin folder...", true);
-			
+
 			File config = new File(this.getDataFolder().getParentFile(), "VulcanReplay" + separator + "config.yml");
-			File movedConfig = new File(this.getDataFolder().getParentFile(), "VulcanReplay" + separator + "configOLD.yml");
+			File movedConfig = new File(this.getDataFolder().getParentFile(),
+					"VulcanReplay" + separator + "configOLD.yml");
 			Path src = Paths.get(config.toURI());
 			Path movedSrc = Paths.get(movedConfig.toURI());
 			File dstFile = new File(this.getDataFolder() + separator + "config.yml");
 			Path dst = Paths.get(dstFile.toURI());
-			
+
 			try {
 				Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);
 				Files.move(src, movedSrc, StandardCopyOption.REPLACE_EXISTING);
