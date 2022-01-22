@@ -1,8 +1,7 @@
 This plugin allows for you to record a player that your AntiCheat has punished from your server and watch the hack at a later time. The hacker could be the only person online and you would still have video evidence of them hacking.
 
  AntiCheats:
-<details>
-  <summary>Premium AntiCheats</summary>
+ Premium AntiCheats:
   [Vulcan](https://www.spigotmc.org/resources/fundraiser-vulcan-anti-cheat-advanced-cheat-detection-1-7-1-17-1.83626/)
   [Spartan](https://www.spigotmc.org/resources/spartan-anti-cheat-advanced-cheat-detection-hack-blocker-1-7-2-1-18.25638/)
   [Matrix](https://matrix.rip/)
@@ -11,25 +10,23 @@ This plugin allows for you to record a player that your AntiCheat has punished f
   [Karhu](https://karhu.cc/)
   [Verus](https://verus.ac/)
   [Intave](https://intave.de/)
-</details>
+  [Sparky](https://www.mc-market.org/threads/603663/)
 
-<details>
-  <summary>Free AntiCheats</summary>
+ Free AntiCheats:
   [Themis](https://www.spigotmc.org/resources/themis-anti-cheat-1-17-1-18-bedrock-support-paper-compatibility-free-optimized.90766/)
   [Soaroma](https://www.spigotmc.org/resources/soaromasac-lightweight-cheat-detection-system.87702/)
   [FlappyAC](https://www.spigotmc.org/resources/flappy-anticheat-1-13-1-17.92180/)
   [AntiCheatReloaded](https://www.spigotmc.org/resources/anticheatreloaded.23799/)
-</details>
+
 
 Feel free to request other AntiCheats to be supported.​
 
 Videos:
-<details>
-<summary>Videos of AntiCheat Replay recording hackers</summary>
-[![Video 1]](https://youtu.be/P88KS4W8IGI)
-[![Video 2]](https://youtu.be/YDNmiOYlvq8)
-[![Video 3]](https://youtu.be/znMqh0mWuyI)
-</details>
+
+[[AntiCheatReplayExample1]](https://youtu.be/P88KS4W8IGI) <br>
+[[AntiCheatReplayExample2]](https://youtu.be/YDNmiOYlvq8) <br>
+[[AntiCheatReplayExample3]](https://youtu.be/znMqh0mWuyI)
+
 
 With this you can have video proof of someone hacking on your server when they appeal and claim to be "hitting grass"
 
