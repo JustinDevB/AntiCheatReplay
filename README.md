@@ -1,22 +1,22 @@
 This plugin allows for you to record a player that your AntiCheat has punished from your server and watch the hack at a later time. The hacker could be the only person online and you would still have video evidence of them hacking.
 
- AntiCheats:
- Premium AntiCheats:
-  [Vulcan](https://www.spigotmc.org/resources/fundraiser-vulcan-anti-cheat-advanced-cheat-detection-1-7-1-17-1.83626/)
-  [Spartan](https://www.spigotmc.org/resources/spartan-anti-cheat-advanced-cheat-detection-hack-blocker-1-7-2-1-18.25638/)
-  [Matrix](https://matrix.rip/)
-  [GodsEye](https://www.spigotmc.org/resources/godseye-anticheat-advanced-detection.69595/)
-  [Kauri](https://www.spigotmc.org/resources/kauri-anticheat-best-in-class-performance-patches-log4j-removes-closet-cheaters-1-7-10-1-18-1.53721/)
-  [Karhu](https://karhu.cc/)
-  [Verus](https://verus.ac/)
-  [Intave](https://intave.de/)
-  [Sparky](https://www.mc-market.org/threads/603663/)
+ AntiCheats: <br>
+ Premium AntiCheats: <br>
+  [Vulcan](https://www.spigotmc.org/resources/fundraiser-vulcan-anti-cheat-advanced-cheat-detection-1-7-1-17-1.83626/) <br>
+  [Spartan](https://www.spigotmc.org/resources/spartan-anti-cheat-advanced-cheat-detection-hack-blocker-1-7-2-1-18.25638/) <br>
+  [Matrix](https://matrix.rip/) <br>
+  [GodsEye](https://www.spigotmc.org/resources/godseye-anticheat-advanced-detection.69595/) <br>
+  [Kauri](https://www.spigotmc.org/resources/kauri-anticheat-best-in-class-performance-patches-log4j-removes-closet-cheaters-1-7-10-1-18-1.53721/) <br>
+  [Karhu](https://karhu.cc/) <br>
+  [Verus](https://verus.ac/) <br>
+  [Intave](https://intave.de/) <br>
+  [Sparky](https://www.mc-market.org/threads/603663/) <br>
 
- Free AntiCheats:
-  [Themis](https://www.spigotmc.org/resources/themis-anti-cheat-1-17-1-18-bedrock-support-paper-compatibility-free-optimized.90766/)
-  [Soaroma](https://www.spigotmc.org/resources/soaromasac-lightweight-cheat-detection-system.87702/)
-  [FlappyAC](https://www.spigotmc.org/resources/flappy-anticheat-1-13-1-17.92180/)
-  [AntiCheatReloaded](https://www.spigotmc.org/resources/anticheatreloaded.23799/)
+ Free AntiCheats: <br>
+  [Themis](https://www.spigotmc.org/resources/themis-anti-cheat-1-17-1-18-bedrock-support-paper-compatibility-free-optimized.90766/) <br>
+  [Soaroma](https://www.spigotmc.org/resources/soaromasac-lightweight-cheat-detection-system.87702/) <br>
+  [FlappyAC](https://www.spigotmc.org/resources/flappy-anticheat-1-13-1-17.92180/) <br>
+  [AntiCheatReloaded](https://www.spigotmc.org/resources/anticheatreloaded.23799/) <br>
 
 
 Feel free to request other AntiCheats to be supported.​
