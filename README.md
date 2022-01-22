@@ -31,7 +31,7 @@ Videos:
 With this you can have video proof of someone hacking on your server when they appeal and claim to be "hitting grass"
 
 Features Discord Integration. Optionally send a message to a Discord Channel whenever a recording is created.
-Capture.PNG​
+![Discord Webhook Example](https://www.spigotmc.org/attachments/capture-png.665322/)
 
 Requires a supported AntiCheat and AdvancedReplay to be installed and running on your server.
 
