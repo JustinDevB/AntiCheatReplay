@@ -39,6 +39,10 @@
 			<id>alessiodp-repo</id>
 			<url>https://repo.alessiodp.com/releases/</url>
 		</repository>
+		<repository>
+			<id>sparky-repo</id>
+			<url>https://nexus.sparky.ac/repository/Sparky/</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -229,6 +233,16 @@
 			<version>1</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/bin/VerusAPI.jar</systemPath>
+		</dependency>
+		<!--
+			Sparky Anticheat
+			Maven: https://nexus.sparky.ac/repository/Sparky/
+			From: https://github.com/Sparky-Tech/SparkyAPIV2/
+		-->
+		<dependency>
+			<groupId>ac.sparky</groupId>
+			<artifactId>SparkyAPI</artifactId>
+			<version>2.2</version>
 		</dependency>
 	</dependencies>
 
