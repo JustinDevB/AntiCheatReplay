@@ -40,7 +40,7 @@
 			<url>https://repo.alessiodp.com/releases/</url>
 		</repository>
 		<repository>
-			<id>Sparky</id>
+			<id>sparky-repo</id>
 			<url>https://nexus.sparky.ac/repository/Sparky/</url>
 		</repository>
 	</repositories>
