@@ -54,22 +54,19 @@ public enum AntiCheat {
     FLAPPY("FlappyAC", "FlappyAnticheat", null, FlappyACListener::new),
    // ARTEMIS("Artemis", "Loader", null, ArtemisListener::new),
     ANTICHEATRELOADED("AntiCheatReloaded", "AntiCheatReloaded", null, AntiCheatReloadedListener::new),
-    VERUS("Verus", "Verus", new Function<AntiCheatReplay, Boolean> () {
-        @Override
-        public Boolean apply(AntiCheatReplay antiCheatReplay) {
-            Plugin verus = Bukkit.getPluginManager().getPlugin("Verus");
-            if (verus == null || !verus.isEnabled())
-                return false;
+    VERUS("Verus", "Verus", antiCheatReplay -> {
+        Plugin verus = Bukkit.getPluginManager().getPlugin("Verus");
+        if (verus == null || !verus.isEnabled())
+            return false;
 
-            Plugin verusAPI = Bukkit.getPluginManager().getPlugin("VerusAPI");
-            if (verusAPI == null || !verusAPI.isEnabled()) {
-                antiCheatReplay.log("VerusAPI is required to use Verus!", true);
-                return false;
-            }
-
-            antiCheatReplay.log("Verus detected, enabling support...", false);
-            return true;
+        Plugin verusAPI = Bukkit.getPluginManager().getPlugin("VerusAPI");
+        if (verusAPI == null || !verusAPI.isEnabled()) {
+            antiCheatReplay.log("VerusAPI is required to use Verus!", true);
+            return false;
         }
+
+        antiCheatReplay.log("Verus detected, enabling support...", false);
+        return true;
     }, VerusListener::new),
     SPARKY("Sparky", "Sparky", null, SparkyListener::new);
 
@@ -83,15 +80,12 @@ public enum AntiCheat {
         this.pluginName = pluginName;
 
         if (checker == null) {
-            checker = new Function<AntiCheatReplay, Boolean>() {
-                @Override
-                public Boolean apply(AntiCheatReplay antiCheatReplay) {
-                    Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
-                    if (plugin == null || !plugin.isEnabled())
-                        return false;
-                    antiCheatReplay.log(name + " detected, enabling support..", false);
-                    return true;
-                }
+            checker = antiCheatReplay -> {
+                Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
+                if (plugin == null || !plugin.isEnabled())
+                    return false;
+                antiCheatReplay.log(name + " detected, enabling support..", false);
+                return true;
             };
         }
         this.checker = checker;
