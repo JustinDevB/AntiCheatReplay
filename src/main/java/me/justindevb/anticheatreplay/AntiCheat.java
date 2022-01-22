@@ -70,7 +70,9 @@ public enum AntiCheat {
             antiCheatReplay.log("Verus detected, enabling support...", false);
             return true;
         }
-    }, VerusListener::new);
+    }, VerusListener::new),
+    SPARKY("Sparky", "Sparky", null, SparkyListener::new);
+
     private final String name;
     private final String pluginName;
     private final Function<AntiCheatReplay, Boolean> checker;
