@@ -68,7 +68,8 @@ public enum AntiCheat {
         antiCheatReplay.log("Verus detected, enabling support...", false);
         return true;
     }, VerusListener::new),
-    SPARKY("Sparky", "Sparky", null, SparkyListener::new);
+    SPARKY("Sparky", "Sparky", null, SparkyListener::new),
+    INTAVE("Intave", "Intave", null, IntaveListener::new);
 
     private final String name;
     private final String pluginName;

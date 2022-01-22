@@ -116,6 +116,8 @@ public class AntiCheatReplay extends JavaPlugin {
 
 		initThemisConfigSettings();
 
+		initIntaveConfigSettings();
+
 		getConfig().options().copyDefaults(true);
 		saveConfig();
 
@@ -275,6 +277,14 @@ public class AntiCheatReplay extends JavaPlugin {
 		list.add("timer");
 		list.add("strafe");
 		getConfig().addDefault("Spartan.Disabled-Recordings", list);
+	}
+
+	private void initIntaveConfigSettings() {
+		List<String> list = new ArrayList<>();
+		list.add("intave");
+		list.add("ban");
+		list.add("kick");
+		getConfig().addDefault("Intave.Punish-Commands", list);
 	}
 
 	private void initGeneralConfigSettings() {

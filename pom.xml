@@ -234,6 +234,21 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/bin/VerusAPI.jar</systemPath>
 		</dependency>
+
+
+		<!--
+			Intave Anticheat
+			Maven: n/a
+			From: https://discord.com/invite/8wtmW53
+		-->
+		<dependency>
+			<groupId>intave</groupId>
+			<artifactId>intave</artifactId>
+			<version>1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/bin/Intave-14-Access.jar</systemPath>
+		</dependency>
+
 		<!--
 			Sparky Anticheat
 			Maven: https://nexus.sparky.ac/repository/Sparky/
