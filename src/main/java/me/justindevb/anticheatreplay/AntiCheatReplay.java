@@ -9,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.logging.Level;
 
+import dev.brighten.api.KauriAPI;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
@@ -19,7 +20,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import cc.funkemunky.api.Atlas;
 import me.justindevb.anticheatreplay.commands.ReloadCommand;
 import me.justindevb.anticheatreplay.listeners.PlayerListener;
 import me.justindevb.anticheatreplay.utils.Messages;
@@ -29,6 +29,7 @@ public class AntiCheatReplay extends JavaPlugin {
 
 	private HashMap<UUID, PlayerCache> playerCache = new HashMap<>();
 	private static AntiCheatReplay instance = null;
+	private AntiCheat anticheat = null;
 
 	private final Map<AntiCheat, ListenerBase> activeListeners = new EnumMap<>(AntiCheat.class);
 
@@ -80,6 +81,7 @@ public class AntiCheatReplay extends JavaPlugin {
 			if (value.getChecker().apply(this)) {
 				final ListenerBase base = value.getInstantiator().apply(this);
 				activeListeners.put(value, base);
+				this.anticheat = AntiCheat.valueOf(value.getName().toUpperCase());
 			}
 		}
 
@@ -124,7 +126,7 @@ public class AntiCheatReplay extends JavaPlugin {
 
 	public void reloadReplayConfig() {
 		if (activeListeners.isEmpty())
-			Atlas.getInstance().getEventManager().unregisterAll(this);
+			KauriAPI.INSTANCE.unregisterEvents(this);
 		else {
 			for (ListenerBase value : activeListeners.values()) {
 				if (value instanceof Listener) {
@@ -143,10 +145,9 @@ public class AntiCheatReplay extends JavaPlugin {
 	private void initBstats() {
 		final int pluginId = 13402;
 		Metrics metrics = new Metrics(this, pluginId);
-
-		for (AntiCheat antiCheat : activeListeners.keySet()) {
-			metrics.addCustomChart(new SimplePie("anticheat-" + antiCheat.getName().toLowerCase(Locale.ROOT), antiCheat::getName));
-		};
+		metrics.addCustomChart(new SimplePie("anticheat", () -> {
+			return this.anticheat.getName();
+		}));
 
 	}
 
@@ -330,6 +331,11 @@ public class AntiCheatReplay extends JavaPlugin {
 
 	public boolean isChecking(final AntiCheat antiCheat) {
 		return activeListeners.containsKey(antiCheat);
+	}
+
+
+	public AntiCheat getAntiCheat() {
+		return this.anticheat;
 	}
 
 

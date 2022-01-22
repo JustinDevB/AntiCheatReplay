@@ -17,12 +17,12 @@ public class ReloadCommand implements CommandExecutor {
 			return true;
 		}
 
-		if (AntiCheatReplay.getInstance().isChecking(AntiCheat.KARHU)) {
+		/*if (AntiCheatReplay.getInstance().isChecking(AntiCheat.KARHU)) {
 			sender.sendMessage(ChatColor.DARK_RED
 					+ "It is currently not possible to reload this plugin while using Karhu. Please reboot your server instead...");
 			return true;
 		}
-
+*/
 		AntiCheatReplay.getInstance().reloadReplayConfig();
 		sender.sendMessage(ChatColor.DARK_GREEN + "[AntiCheatReplay] Reloaded config");
 		AntiCheatReplay.getInstance().log("Reloaded config", false);
