@@ -38,8 +38,8 @@ Requires a supported AntiCheat and AdvancedReplay to be installed and running on
 NOTE: Your AntiCheat has to be configured to punish someone in order to record. If players never get punished you will not get a recording.
 
 
-Setup:
-Vulcan: Set "enable-api" in Vulcan's config to "true"
+Setup: <br>
+Vulcan: Set "enable-api" in Vulcan's config to "true" <br>
 Soaroma: Set "enableAPI" in Soaroma's config to "true"
 
 For best results, follow this configuration guide for Advanced Replay:
