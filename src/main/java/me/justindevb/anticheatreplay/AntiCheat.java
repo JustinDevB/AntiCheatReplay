@@ -12,46 +12,46 @@ public enum AntiCheat {
     SPARTAN("Spartan", "Spartan", null, SpartanListener::new),
     MATRIX("Matrix", "Matrix", null, MatrixListener::new),
     GODSEYE("GodsEye", "GodsEye", null, GodsEyeListener::new),
-   /* KAURI("Kauri", "Kauri", new Function<AntiCheatReplay, Boolean>() {
-        @Override
-        public Boolean apply(AntiCheatReplay antiCheatReplay) {
-            Plugin kauri = Bukkit.getPluginManager().getPlugin("Kauri");
-            if (kauri == null || !kauri.isEnabled())
-                return false;
+    /*   KAURI("Kauri", "Kauri", new Function<AntiCheatReplay, Boolean>() {
+           @Override
+           public Boolean apply(AntiCheatReplay antiCheatReplay) {
+               Plugin kauri = Bukkit.getPluginManager().getPlugin("Kauri");
+               if (kauri == null || !kauri.isEnabled())
+                   return false;
 
-            Plugin atlas = Bukkit.getPluginManager().getPlugin("Atlas");
-            if (atlas == null || !atlas.isEnabled()) {
-                antiCheatReplay.log("Atlas is required to use Kauri!", true);
-                return false;
-            }
+               Plugin atlas = Bukkit.getPluginManager().getPlugin("Atlas");
+               if (atlas == null || !atlas.isEnabled()) {
+                   antiCheatReplay.log("Atlas is required to use Kauri!", true);
+                   return false;
+               }
 
-            antiCheatReplay.log("Kauri detected, enabling support...", false);
-            return true;
-        }
-    }, KauriListener::new),
+               antiCheatReplay.log("Kauri detected, enabling support...", false);
+               return true;
+           }
+       }, KauriListener::new),
 
 
-    KARHU("Karhu", "Karhu", new Function<AntiCheatReplay, Boolean>() {
-        @Override
-        public Boolean apply(AntiCheatReplay antiCheatReplay) {
-            Plugin karhu = Bukkit.getPluginManager().getPlugin("Karhu");
-            if (karhu == null || !karhu.isEnabled())
-                return false;
+       KARHU("Karhu", "Karhu", new Function<AntiCheatReplay, Boolean>() {
+           @Override
+           public Boolean apply(AntiCheatReplay antiCheatReplay) {
+               Plugin karhu = Bukkit.getPluginManager().getPlugin("Karhu");
+               if (karhu == null || !karhu.isEnabled())
+                   return false;
 
-            Plugin karhuAPI = Bukkit.getPluginManager().getPlugin("KarhuAPI");
-            if (karhuAPI == null || !karhuAPI.isEnabled()) {
-                antiCheatReplay.log("KarhuAPI is required to use Kauri", true);
-                return false;
-            }
+               Plugin karhuAPI = Bukkit.getPluginManager().getPlugin("KarhuAPI");
+               if (karhuAPI == null || !karhuAPI.isEnabled()) {
+                   antiCheatReplay.log("KarhuAPI is required to use Kauri", true);
+                   return false;
+               }
 
-            antiCheatReplay.log("Karhu detected, enabling support...", false);
-            return true;
-        }
+               antiCheatReplay.log("Karhu detected, enabling support...", false);
+               return true;
+           }
 
-  }, KarhuListener::new), */
+     }, KarhuListener::new), */
     THEMIS("Themis", "Themis", null, ThemisListener::new),
     SOAROMA("Soaroma", "SoaromaSAC", null, SoaromaListener::new),
-    FLAPPY("FlappyAC", "FlappyAnticheat", null, FlappyACListener::new),
+    FLAPPYAC("FlappyAC", "FlappyAnticheat", null, FlappyACListener::new),
    // ARTEMIS("Artemis", "Loader", null, ArtemisListener::new),
     ANTICHEATRELOADED("AntiCheatReloaded", "AntiCheatReloaded", null, AntiCheatReloadedListener::new),
     VERUS("Verus", "Verus", antiCheatReplay -> {

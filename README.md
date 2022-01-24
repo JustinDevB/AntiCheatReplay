@@ -101,3 +101,23 @@ https://discord.gg/vK3wksVdpb
 
 Disclaimer:
 This plugin should be used in conjunction with the logs that are provided by your AntiCheat. This should not be your only proof that a player is hacking
+
+Adding an AntiCheat:<br>
+Create an Enum in AntiCheat.java with the format ANTICHEAT(String name, String pluginName, Function checker, Function instantiator); <br>
+
+Where ANTICHEAT is the Name of your AntiCheat, name should match ANTICHEAT, this is what gets reported to bStats. <br>
+
+pluginName is what your plugin is referred to internally and shows up as when you do /pl on a server. <br>
+
+checker can be null if you do not require any extra plugin for your AntiCheat to run. (Ignore ProtocolLib, we already require it) <br>
+
+instantiator should just call your Listener class. Example:  YourAntiCheatListener::new <br>
+
+Create a Listener: <br>
+In the package me.justindevb.anticheatreplay.listeners create YourAntiCheatListener.java <br>
+This class must extends ListenerBase and implement Listener. View another Listener class to see how to build this out. <br>
+
+Final step:<br>
+Add your plugin(s) as a softdepend in the plugin.yml
+
+
