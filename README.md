@@ -17,6 +17,7 @@ This plugin allows for you to record a player that your AntiCheat has punished f
   [Soaroma](https://www.spigotmc.org/resources/soaromasac-lightweight-cheat-detection-system.87702/) <br>
   [FlappyAC](https://www.spigotmc.org/resources/flappy-anticheat-1-13-1-17.92180/) <br>
   [AntiCheatReloaded](https://www.spigotmc.org/resources/anticheatreloaded.23799/) <br>
+  [LightAntiCheat](https://www.spigotmc.org/resources/lightanticheat.96341/) <br>
 
 
 Feel free to request other AntiCheats to be supported.​
@@ -102,7 +103,7 @@ https://discord.gg/vK3wksVdpb
 Disclaimer:
 This plugin should be used in conjunction with the logs that are provided by your AntiCheat. This should not be your only proof that a player is hacking
 
-Adding an AntiCheat:<br>
+## Adding an AntiCheat:<br>
 Create an Enum in AntiCheat.java with the format ANTICHEAT(String name, String pluginName, Function checker, Function instantiator); <br>
 
 Where ANTICHEAT is the Name of your AntiCheat, name should match ANTICHEAT, this is what gets reported to bStats. <br>
