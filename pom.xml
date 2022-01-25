@@ -250,6 +250,19 @@
 		</dependency>
 
 		<!--
+			LightAnticheat
+			Maven: n/a
+			From: https://www.spigotmc.org/resources/lightanticheat.96341/
+		-->
+		<dependency>
+			<groupId>lightanticheat</groupId>
+			<artifactId>lightanticheat</artifactId>
+			<version>1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/bin/LightAntiCheat.jar</systemPath>
+		</dependency>
+
+		<!--
 			Sparky Anticheat
 			Maven: https://nexus.sparky.ac/repository/Sparky/
 			From: https://github.com/Sparky-Tech/SparkyAPIV2/
