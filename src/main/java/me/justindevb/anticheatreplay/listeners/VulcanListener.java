@@ -41,7 +41,6 @@ public class VulcanListener extends ListenerBase implements Listener {
     @EventHandler
     public void onFlagEvent(VulcanFlagEvent event) {
         String fullName = event.getCheck().getName() + event.getCheck().getType();
-        acReplay.log("FullName: " + fullName, true);
         if (disabledRecordings.contains(event.getCheck().getName().toLowerCase())
                 || disabledRecordings.contains(fullName.toLowerCase()))
             return;
