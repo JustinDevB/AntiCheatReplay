@@ -1,5 +1,6 @@
 package me.justindevb.anticheatreplay.commands;
 
+import me.justindevb.anticheatreplay.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,7 +14,7 @@ public class ReloadCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (!sender.hasPermission("AntiCheatReplay.reload")) {
-			sender.sendMessage(ChatColor.DARK_RED + "You do not have permission for this!");
+			sender.sendMessage(ChatColor.DARK_RED + Messages.COMMAND_NO_PERMISSION);
 			return true;
 		}
 

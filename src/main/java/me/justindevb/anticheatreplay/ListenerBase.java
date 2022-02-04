@@ -33,6 +33,8 @@ public abstract class ListenerBase {
 	@SuppressWarnings("unused")
 	private boolean saveRecording = false;
 
+	private boolean SAVE_ON_KICK = false;
+
 	private boolean WEBHOOK_ENABLED = false;
 	private String WEBHOOK_URL = "";
 	private String WEBHOOK_AVATAR = "";
@@ -41,6 +43,10 @@ public abstract class ListenerBase {
 	private double PLAYER_RANGE = 0D;
 	private long delay = 2;
 	private boolean OVERWRITE = false;
+
+	private int RED = 0;
+	private int GREEN = 255;
+	private int BLUE = 0;
 
 	protected LinkedList<UUID> alertList = new LinkedList<>();
 	protected LinkedList<UUID> punishList = new LinkedList<>();
@@ -59,8 +65,8 @@ public abstract class ListenerBase {
 	/**
 	 * Begin recording the selected player
 	 * 
-	 * @param Player to record
-	 * @param Name   of the recording when saving
+	 * @param p Player to record
+	 * @param replayName  Name of the recording when saving
 	 */
 	protected void startRecording(Player p, String replayName) {
 		RecordingStartEvent startEvent = new RecordingStartEvent(p, replayName);
@@ -76,7 +82,27 @@ public abstract class ListenerBase {
 			replay.recordReplay(replayName, Bukkit.getConsoleSender(), getNearbyPlayers(p));
 		});
 
+
 		runLogic(p, replayName);
+	}
+
+	protected void reportPlayer(Player reporter, Player target, String reason) {
+		if (alertList.contains(target.getUniqueId()))
+			return;
+		alertList.add(target.getUniqueId());
+		acReplay.log("Starting recording of player: " + target.getName(), false);
+		Bukkit.getScheduler().runTask(acReplay, () -> {
+			replay.recordReplay(target.getName() + " report", Bukkit.getConsoleSender(), getNearbyPlayers(target));
+		});
+
+		Bukkit.getScheduler().runTaskLaterAsynchronously(acReplay, () -> {
+			replay.stopReplay(target.getName() + "-report", true);
+			acReplay.log("Saved a player report:", false);
+			acReplay.log(reporter.getName() + " reported " + target.getName() + " for " + reason, false);
+
+			if (alertList.contains(target.getUniqueId()))
+				alertList.remove(target.getUniqueId());
+		}, 20L * 60L * delay);
 	}
 
 	protected void saveRecording() {
@@ -86,8 +112,8 @@ public abstract class ListenerBase {
 	/**
 	 * Determine if we will save a player recording or not
 	 * 
-	 * @param Player to record
-	 * @param Name   of recording if saving
+	 * @param p Player to record
+	 * @param replayName name of recording if saving
 	 */
 	private void runLogic(Player p, String replayName) {
 		PlayerCache cachedPlayer = acReplay.getCachedPlayer(p.getUniqueId());
@@ -123,6 +149,7 @@ public abstract class ListenerBase {
 			}
 		}.runTaskLaterAsynchronously(acReplay, 20L * 60L * delay);
 	}
+
 
 	/**
 	 * Get all players within X distance from the target player
@@ -186,8 +213,8 @@ public abstract class ListenerBase {
 	/**
 	 * Send a recording notification to Discord
 	 * 
-	 * @param Name   of the Recording
-	 * @param Player that was recorded
+	 * @param recording Name of the Recording
+	 * @param player that was recorded
 	 */
 	private void sendDiscordWebhook(String recording, Player player, long minutesOnline) {
 		if (!WEBHOOK_ENABLED)
@@ -200,7 +227,7 @@ public abstract class ListenerBase {
 			webhook.addEmbed(
 					new DiscordWebhook.EmbedObject().setTitle(Messages.TITLE).setDescription(Messages.DESCRIPTION)
 							.setThumbnail("http://cravatar.eu/avatar/" + player.getName() + "/64.png")
-							.setColor(new Color(0, 255, 0)).addField(Messages.SERVER, SERVER_NAME, true)
+							.setColor(new Color(this.RED, this.GREEN, this.BLUE)).addField(Messages.SERVER, SERVER_NAME, true)
 							.addField(Messages.ONLINE_FOR, minutesOnline + " " + Messages.ONLINE_FOR_MINUTES, true)
 							.addField(Messages.RECORDING_NAME, recording, true)
 							.addField(Messages.COMMAND + " ", "/replay play " + recording, true));
@@ -209,8 +236,10 @@ public abstract class ListenerBase {
 				webhook.execute();
 				acReplay.log(ChatColor.DARK_GREEN + "Webhook sent!", false);
 			} catch (final IOException e) {
+				acReplay.log(ChatColor.DARK_RED + "There was an error trying to send the request!", true);
+				acReplay.log(ChatColor.DARK_RED + "Webhook URL is most likely incorrect", false);
 				e.printStackTrace();
-				acReplay.log(ChatColor.DARK_RED + "There was an error trying to send the request!", false);
+
 			}
 		});
 	}
@@ -260,6 +289,9 @@ public abstract class ListenerBase {
 		this.PLAYER_RANGE = config.getDouble("General.Nearby-Range");
 		this.delay = config.getLong("General.Recording-Length");
 		this.OVERWRITE = config.getBoolean("General.Overwrite");
+		this.RED = config.getInt("Discord.Red");
+		this.GREEN = config.getInt("Discord.Green");
+		this.BLUE = config.getInt("Discord.Blue");
 	}
 
 }

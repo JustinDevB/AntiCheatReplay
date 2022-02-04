@@ -2,6 +2,7 @@ package me.justindevb.anticheatreplay;
 
 import dev.brighten.api.KauriAPI;
 import me.justindevb.anticheatreplay.commands.ReloadCommand;
+import me.justindevb.anticheatreplay.commands.ReportCommand;
 import me.justindevb.anticheatreplay.listeners.PlayerListener;
 import me.justindevb.anticheatreplay.utils.Messages;
 import me.justindevb.anticheatreplay.utils.UpdateChecker;
@@ -153,6 +154,10 @@ public class AntiCheatReplay extends JavaPlugin {
             return this.anticheat.getName();
         }));
 
+        metrics.addCustomChart(new SimplePie("discord-hook", () -> {
+            return String.valueOf(getConfig().getBoolean("Discord.Enabled"));
+        }));
+
     }
 
     /**
@@ -223,7 +228,7 @@ public class AntiCheatReplay extends JavaPlugin {
             if (this.getDescription().getVersion().equals(version))
                 log("You are up to date!", false);
             else
-                getLogger().log(Level.INFO, "There is an update available! Download at: https://www.spigotmc.org/resources/vulcan-replay.97845/");
+                getLogger().log(Level.INFO, "There is an update available! Download at: https://www.spigotmc.org/resources/anticheat-replay.97845/");
         });
     }
 
@@ -257,6 +262,9 @@ public class AntiCheatReplay extends JavaPlugin {
         config.addDefault(path + "Avatar", "https://i.imgur.com/JPG1Kwk.png");
         config.addDefault(path + "Username", "AntiCheatReplay");
         config.addDefault(path + "Server-Name", "Server");
+        config.addDefault(path + "Red", 0);
+        config.addDefault(path + "Green", 255);
+        config.addDefault(path + "Blue", 0);
     }
 
     private void initVulcanConfigSettings() {
@@ -302,6 +310,7 @@ public class AntiCheatReplay extends JavaPlugin {
      */
     private void registerCommands() {
         this.getCommand("replayreload").setExecutor(new ReloadCommand());
+        this.getCommand("report").setExecutor(new ReportCommand(this));
     }
 
     /**

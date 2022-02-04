@@ -9,3 +9,5 @@ api-version: 1.13
 commands:
   replayreload:
       description: Reload config
+  report:
+      description: Report a player of suspected hacks
