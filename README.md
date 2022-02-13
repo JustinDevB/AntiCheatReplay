@@ -10,7 +10,7 @@ This plugin allows for you to record a player that your AntiCheat has punished f
   [Karhu](https://karhu.cc/) <br>
   [Verus](https://verus.ac/) <br>
   [Intave](https://intave.de/) <br>
-  [Sparky](https://www.mc-market.org/threads/603663/) <br>
+  [Sparky](https://sparky.ac/) <br>
 
  Free AntiCheats: <br>
   [Themis](https://www.spigotmc.org/resources/themis-anti-cheat-1-17-1-18-bedrock-support-paper-compatibility-free-optimized.90766/) <br>
