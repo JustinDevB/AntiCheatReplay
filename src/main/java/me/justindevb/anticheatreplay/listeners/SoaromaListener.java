@@ -45,7 +45,7 @@ public class SoaromaListener extends ListenerBase implements Listener {
 
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPunish(PunishmentEvent event) {
 		final Player p = event.getPunishedPlayer();
 

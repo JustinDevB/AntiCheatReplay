@@ -70,7 +70,8 @@ public enum AntiCheat {
     }, VerusListener::new),
     SPARKY("Sparky", "Sparky", null, SparkyListener::new),
     INTAVE("Intave", "Intave", null, IntaveListener::new),
-    LIGHTANTICHEAT("LightAntiCheat", "LightAntiCheat", null, LightAntiCheatListener::new);
+    LIGHTANTICHEAT("LightAntiCheat", "LightAntiCheat", null, LightAntiCheatListener::new),
+    ANTIHAXERMAN("AntiHaxerman", "AntiHaxerman", null, AntiHaxermanListener::new);
 
     private final String name;
     private final String pluginName;

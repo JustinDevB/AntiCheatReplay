@@ -303,6 +303,7 @@ public class AntiCheatReplay extends JavaPlugin {
 
         config.addDefault("General.Recording-Length", 2);
         config.addDefault("General.Overwrite", false);
+        config.addDefault("General.Notify-Staff", true);
     }
 
     /**

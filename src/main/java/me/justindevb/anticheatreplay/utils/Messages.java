@@ -24,6 +24,8 @@ public class Messages {
 	public static String COMMAND_NO_PERMISSION;
 	public static String COMMAND_REPORT_NOTIFY;
 	public static String COMMAND_REPORT_SELF_REPORT;
+	public static String REPORT_SUBMITTED;
+	public static String NOTIFY_RECORDING;
 
 	public Messages() {
 		Bukkit.getScheduler().runTaskAsynchronously(AntiCheatReplay.getInstance(), () -> {
@@ -43,6 +45,9 @@ public class Messages {
 			config.addDefault("Commands.No-Permission", "You do not have permission to do this!");
 			config.addDefault("Commands.Report.Report-Self", "You can't report yourself!");
 			config.addDefault("Commands.Report.Notify", "%r has reported %s for %t");
+			config.addDefault("Commands.Report.Success", "Report successfully submitted!");
+
+			config.addDefault("General.Notify-Recording", "A recording has been saved: %r");
 
 			try {
 				config.options().copyDefaults(true);
@@ -70,6 +75,8 @@ public class Messages {
 		COMMAND_NO_PERMISSION = config.getString("Commands.No-Permission");
 		COMMAND_REPORT_NOTIFY = config.getString("Commands.Report.Notify");
 		COMMAND_REPORT_SELF_REPORT = config.getString("Commands.Report.Report-Self");
+		REPORT_SUBMITTED = config.getString("Commands.Report.Success");
+		NOTIFY_RECORDING = config.getString("General.Notify-Recording");
 	}
 
 }

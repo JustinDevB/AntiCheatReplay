@@ -35,6 +35,8 @@ public abstract class ListenerBase {
 
 	private boolean SAVE_ON_KICK = false;
 
+	private boolean notifyStaff = false;
+
 	private boolean WEBHOOK_ENABLED = false;
 	private String WEBHOOK_URL = "";
 	private String WEBHOOK_AVATAR = "";
@@ -86,19 +88,28 @@ public abstract class ListenerBase {
 		runLogic(p, replayName);
 	}
 
+	/**
+	 * Handle a player that has been reported
+	 * @param reporter
+	 * @param target
+	 * @param reason
+	 */
 	protected void reportPlayer(Player reporter, Player target, String reason) {
 		if (alertList.contains(target.getUniqueId()))
 			return;
 		alertList.add(target.getUniqueId());
 		acReplay.log("Starting recording of player: " + target.getName(), false);
 		Bukkit.getScheduler().runTask(acReplay, () -> {
-			replay.recordReplay(target.getName() + " report", Bukkit.getConsoleSender(), getNearbyPlayers(target));
+			replay.recordReplay(target.getName() + "-report", Bukkit.getConsoleSender(), getNearbyPlayers(target));
 		});
 
 		Bukkit.getScheduler().runTaskLaterAsynchronously(acReplay, () -> {
 			replay.stopReplay(target.getName() + "-report", true);
 			acReplay.log("Saved a player report:", false);
 			acReplay.log(reporter.getName() + " reported " + target.getName() + " for " + reason, false);
+
+			PlayerCache cache = acReplay.getCachedPlayer(target.getUniqueId());
+			sendDiscordWebhook(target.getName() + "-report", target, getOnlineTime(cache.getLoginTimeStamp(), System.currentTimeMillis()));
 
 			if (alertList.contains(target.getUniqueId()))
 				alertList.remove(target.getUniqueId());
@@ -135,6 +146,15 @@ public abstract class ListenerBase {
 					acReplay.log("Saved as: " + replayName, false);
 					sendDiscordWebhook(replayName, p, getOnlineTime(loginTime, System.currentTimeMillis()));
 					punishList.remove(p.getUniqueId());
+
+					if (notifyStaff) {
+						String notification = Messages.NOTIFY_RECORDING;
+						notification = notification.replace("%r", replayName);
+						for (Player p : Bukkit.getOnlinePlayers()) {
+							if (p.hasPermission("AntiCheatReplay.recording-notify"))
+								p.sendMessage(notification);
+						}
+					}
 
 					if (alertList.contains(p.getUniqueId()))
 						alertList.remove(p.getUniqueId());
@@ -292,6 +312,7 @@ public abstract class ListenerBase {
 		this.RED = config.getInt("Discord.Red");
 		this.GREEN = config.getInt("Discord.Green");
 		this.BLUE = config.getInt("Discord.Blue");
+		this.notifyStaff = config.getBoolean("General.Notify-Staff");
 	}
 
 }

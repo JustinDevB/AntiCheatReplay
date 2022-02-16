@@ -2,6 +2,7 @@ package me.justindevb.anticheatreplay.commands;
 
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.justindevb.anticheatreplay.ListenerBase;
+import me.justindevb.anticheatreplay.api.events.PlayerReportEvent;
 import me.justindevb.anticheatreplay.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,8 +13,12 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class ReportCommand extends ListenerBase implements CommandExecutor {
+
+    private AntiCheatReplay acReplay;
+
     public ReportCommand(AntiCheatReplay acReplay) {
         super(acReplay);
+        this.acReplay = acReplay;
     }
 
 
@@ -49,9 +54,18 @@ public class ReportCommand extends ListenerBase implements CommandExecutor {
         String reason = "";
         if (strings.length == 1)
             reason = "No Reason Supplied";
-        else
+        else {
             for (int i = 1; i < strings.length; i++)
                 reason += strings[i] + " ";
+        }
+
+        PlayerReportEvent reportEvent = new PlayerReportEvent(p, Bukkit.getPlayer(strings[0]), reason);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(acReplay, () -> {
+           Bukkit.getPluginManager().callEvent(reportEvent);
+        });
+
+        if (reportEvent.isCancelled())
+            return true;
 
         String notification = Messages.COMMAND_REPORT_NOTIFY;
         notification = notification
@@ -66,6 +80,7 @@ public class ReportCommand extends ListenerBase implements CommandExecutor {
 
         reportPlayer(p, Bukkit.getPlayer(strings[0]), reason);
 
+        p.sendMessage(ChatColor.DARK_GREEN + Messages.REPORT_SUBMITTED);
 
         return true;
     }
