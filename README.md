@@ -18,6 +18,7 @@ This plugin allows for you to record a player that your AntiCheat has punished f
   [FlappyAC](https://www.spigotmc.org/resources/flappy-anticheat-1-13-1-17.92180/) <br>
   [AntiCheatReloaded](https://www.spigotmc.org/resources/anticheatreloaded.23799/) <br>
   [LightAntiCheat](https://www.spigotmc.org/resources/lightanticheat.96341/) <br>
+  [AntiHaxerman](https://www.spigotmc.org/resources/antihaxerman-3-2-reach.83198/) <br>
 
 
 Feel free to request other AntiCheats to be supported.​
