@@ -71,7 +71,8 @@ public enum AntiCheat {
     SPARKY("Sparky", "Sparky", null, SparkyListener::new),
     INTAVE("Intave", "Intave", null, IntaveListener::new),
     LIGHTANTICHEAT("LightAntiCheat", "LightAntiCheat", null, LightAntiCheatListener::new),
-    ANTIHAXERMAN("AntiHaxerman", "AntiHaxerman", null, AntiHaxermanListener::new);
+    ANTIHAXERMAN("AntiHaxerman", "AntiHaxerman", null, AntiHaxermanListener::new),
+    GRIMAC("GrimAC", "GrimAC", null, GrimACListener::new);
 
     private final String name;
     private final String pluginName;
