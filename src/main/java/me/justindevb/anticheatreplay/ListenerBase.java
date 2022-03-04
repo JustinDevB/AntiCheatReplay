@@ -33,8 +33,6 @@ public abstract class ListenerBase {
 	@SuppressWarnings("unused")
 	private boolean saveRecording = false;
 
-	private boolean SAVE_ON_KICK = false;
-
 	private boolean notifyStaff = false;
 
 	private boolean WEBHOOK_ENABLED = false;
@@ -45,6 +43,8 @@ public abstract class ListenerBase {
 	private double PLAYER_RANGE = 0D;
 	private long delay = 2;
 	private boolean OVERWRITE = false;
+	private boolean SAVE_ON_DISCONNECT = false;
+	private boolean ALWAYS_SAVE_RECORDING = false;
 
 	private int RED = 0;
 	private int GREEN = 255;
@@ -132,6 +132,12 @@ public abstract class ListenerBase {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
+				if (ALWAYS_SAVE_RECORDING)
+					punishList.add(p.getUniqueId());
+				if (!p.isOnline() || p == null) {
+					if (SAVE_ON_DISCONNECT)
+						punishList.add(p.getUniqueId());
+				}
 				if (punishList.contains(p.getUniqueId())) {
 					RecordingSaveEvent saveEvent = new RecordingSaveEvent(p, replayName);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(acReplay, () -> {
@@ -313,6 +319,8 @@ public abstract class ListenerBase {
 		this.GREEN = config.getInt("Discord.Green");
 		this.BLUE = config.getInt("Discord.Blue");
 		this.notifyStaff = config.getBoolean("General.Notify-Staff");
+		this.SAVE_ON_DISCONNECT = config.getBoolean("General.Save-Recording-On-Disconnect");
+		this.ALWAYS_SAVE_RECORDING = config.getBoolean("General.Always-Save-Recording");
 	}
 
 }

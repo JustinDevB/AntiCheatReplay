@@ -1,5 +1,6 @@
 package me.justindevb.anticheatreplay.listeners;
 
+import me.justindevb.anticheatreplay.ListenerBase;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,9 +15,11 @@ import me.justindevb.anticheatreplay.AntiCheatReplay;
 public class PlayerListener implements Listener {
 
 	private AntiCheatReplay acReplay;
+	private boolean saveOnDisconnect = false;
 
 	public PlayerListener(AntiCheatReplay acReplay) {
 		this.acReplay = acReplay;
+		this.saveOnDisconnect = acReplay.getConfig().getBoolean("General.Save-Recording-On-Disconnect");
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -33,5 +36,4 @@ public class PlayerListener implements Listener {
 			acReplay.removeCachedPlayer(p.getUniqueId());
 		}, 10L);
 	}
-
 }
