@@ -256,7 +256,7 @@ public abstract class ListenerBase {
 							.setColor(new Color(this.RED, this.GREEN, this.BLUE)).addField(Messages.SERVER, SERVER_NAME, true)
 							.addField(Messages.ONLINE_FOR, minutesOnline + " " + Messages.ONLINE_FOR_MINUTES, true)
 							.addField(Messages.RECORDING_NAME, recording, true)
-							.addField(Messages.COMMAND + " ", "/replay play " + recording, true));
+							.addField(Messages.COMMAND + " ", "`/replay play " + recording + "`", true));
 			acReplay.log("Sending WebHook request...", false);
 			try {
 				webhook.execute();
