@@ -43,6 +43,7 @@ NOTE: Your AntiCheat has to be configured to punish someone in order to record. 
 Setup: <br>
 Vulcan: Set "enable-api" in Vulcan's config to "true" <br>
 Soaroma: Set "enableAPI" in Soaroma's config to "true"
+Sparky: Set "API.Events" in Sparky's config to "true" 
 
 For best results, follow this configuration guide for Advanced Replay:
 
