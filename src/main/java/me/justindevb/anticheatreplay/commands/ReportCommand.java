@@ -2,6 +2,7 @@ package me.justindevb.anticheatreplay.commands;
 
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.justindevb.anticheatreplay.ListenerBase;
+import me.justindevb.anticheatreplay.PlayerCache;
 import me.justindevb.anticheatreplay.api.events.PlayerReportEvent;
 import me.justindevb.anticheatreplay.utils.Messages;
 import org.bukkit.Bukkit;
@@ -15,10 +16,13 @@ import org.jetbrains.annotations.NotNull;
 public class ReportCommand extends ListenerBase implements CommandExecutor {
 
     private AntiCheatReplay acReplay;
+    private long reportCooldown = 3;
 
     public ReportCommand(AntiCheatReplay acReplay) {
         super(acReplay);
         this.acReplay = acReplay;
+
+        this.reportCooldown = acReplay.getConfig().getLong("General.Report-Cooldown");
     }
 
 
@@ -30,9 +34,15 @@ public class ReportCommand extends ListenerBase implements CommandExecutor {
         }
 
         Player p = (Player) commandSender;
+        PlayerCache cachedPlayer = acReplay.getCachedPlayer(p.getUniqueId());
 
         if (!p.hasPermission("AntiCheatReplay.report")) {
             p.sendMessage(ChatColor.DARK_RED + Messages.COMMAND_NO_PERMISSION);
+            return true;
+        }
+
+        if (cachedPlayer.isReportCooldown()) {
+            p.sendMessage(ChatColor.DARK_RED + Messages.COMMAND_REPORT_COOLDOWN);
             return true;
         }
 
@@ -81,6 +91,12 @@ public class ReportCommand extends ListenerBase implements CommandExecutor {
         reportPlayer(p, Bukkit.getPlayer(strings[0]), reason);
 
         p.sendMessage(ChatColor.DARK_GREEN + Messages.REPORT_SUBMITTED);
+
+        cachedPlayer.setReportCooldown(true);
+
+        Bukkit.getScheduler().runTaskLaterAsynchronously(acReplay, () -> {
+            cachedPlayer.setReportCooldown(false);
+        }, 20L * 60L * this.reportCooldown);
 
         return true;
     }

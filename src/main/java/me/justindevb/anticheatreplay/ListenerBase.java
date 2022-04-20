@@ -28,9 +28,7 @@ import me.justindevb.anticheatreplay.utils.Messages;
 
 public abstract class ListenerBase {
 	private AntiCheatReplay acReplay;
-	@SuppressWarnings("unused")
-	ReplayAPI replay;
-	@SuppressWarnings("unused")
+	private ReplayAPI replay;
 	private boolean saveRecording = false;
 
 	private boolean notifyStaff = false;

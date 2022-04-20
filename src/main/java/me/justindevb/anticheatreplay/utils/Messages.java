@@ -24,6 +24,7 @@ public class Messages {
 	public static String COMMAND_NO_PERMISSION;
 	public static String COMMAND_REPORT_NOTIFY;
 	public static String COMMAND_REPORT_SELF_REPORT;
+	public static String COMMAND_REPORT_COOLDOWN;
 	public static String REPORT_SUBMITTED;
 	public static String NOTIFY_RECORDING;
 
@@ -46,8 +47,10 @@ public class Messages {
 			config.addDefault("Commands.Report.Report-Self", "You can't report yourself!");
 			config.addDefault("Commands.Report.Notify", "%r has reported %s for %t");
 			config.addDefault("Commands.Report.Success", "Report successfully submitted!");
+			config.addDefault("Commands.Report.Cooldown", "You have run that too recently!");
 
 			config.addDefault("General.Notify-Recording", "A recording has been saved: %r");
+
 
 			try {
 				config.options().copyDefaults(true);
@@ -77,6 +80,7 @@ public class Messages {
 		COMMAND_REPORT_SELF_REPORT = config.getString("Commands.Report.Report-Self");
 		REPORT_SUBMITTED = config.getString("Commands.Report.Success");
 		NOTIFY_RECORDING = config.getString("General.Notify-Recording");
+		COMMAND_REPORT_COOLDOWN = config.getString("Commands.Report.Cooldown");
 	}
 
 }

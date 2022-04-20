@@ -32,6 +32,5 @@ public class GrimACListener extends ListenerBase implements Listener {
                 punishList.add(p.getUniqueId());
         }
 
-
     }
 }
