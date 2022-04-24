@@ -1,5 +1,6 @@
 package me.justindevb.anticheatreplay.listeners;
 
+import ac.grim.grimac.utils.events.CommandExecuteEvent;
 import ac.grim.grimac.utils.events.FlagEvent;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.justindevb.anticheatreplay.ListenerBase;
@@ -8,10 +9,23 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GrimACListener extends ListenerBase implements Listener {
+    private final AntiCheatReplay acReplay;
+    private List<String> punishCommands = new ArrayList<>();
+
     public GrimACListener(AntiCheatReplay acReplay) {
         super(acReplay);
+        this.acReplay = acReplay;
         Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
+
+        setupGrim();
+    }
+
+    private void setupGrim() {
+        initGrimSpecificConfig();
     }
 
 
@@ -19,18 +33,47 @@ public class GrimACListener extends ListenerBase implements Listener {
     public void onFlag(FlagEvent event) {
         Player p = event.getPlayer().bukkitPlayer;
 
-        if (event.isAlert()) {
-            if (alertList.contains(p.getUniqueId()))
-                return;
+        if (alertList.contains(p.getUniqueId()))
+            return;
 
-            alertList.add(p.getUniqueId());
+        alertList.add(p.getUniqueId());
 
-            startRecording(p, getReplayName(p, event.getCheckName()));
+        startRecording(p, getReplayName(p, event.getCheckName()));
 
-        } else if (event.isSetback()) {   //Temporary punish event until Grim defines punishments
-            if (!punishList.contains(p.getUniqueId()))
-                punishList.add(p.getUniqueId());
-        }
 
+        if (!punishList.contains(p.getUniqueId()))
+            punishList.add(p.getUniqueId());
     }
+
+    @EventHandler
+    public void onCommand(CommandExecuteEvent event) {
+        if (!parseCommand(event.getCommand()))
+            return;
+
+        final Player p = event.getPlayer().bukkitPlayer;
+
+        if (!punishList.contains(p.getUniqueId()))
+            punishList.add(p.getUniqueId());
+    }
+
+    /**
+     * Check if CommandExecute returns a command that should save a recording
+     * @param command
+     * @return
+     */
+    private boolean parseCommand(String command) {
+        command = command.toLowerCase();
+        String[] parts = command.split(" ");
+        for (String commands : punishCommands) {
+            if (parts[0].contentEquals(commands.toLowerCase()))
+                return true;
+        }
+        return false;
+    }
+
+    private void initGrimSpecificConfig() {
+        this.punishCommands = acReplay.getConfig().getStringList("Grim.Punish-Commands");
+    }
+
 }
+

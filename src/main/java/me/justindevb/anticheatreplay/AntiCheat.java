@@ -72,7 +72,8 @@ public enum AntiCheat {
     INTAVE("Intave", "Intave", null, IntaveListener::new),
     LIGHTANTICHEAT("LightAntiCheat", "LightAntiCheat", null, LightAntiCheatListener::new),
     ANTIHAXERMAN("AntiHaxerman", "AntiHaxerman", null, AntiHaxermanListener::new),
-    GRIMAC("GrimAC", "GrimAC", null, GrimACListener::new);
+    GRIMAC("GrimAC", "GrimAC", null, GrimACListener::new),
+    REFLEX("Reflex", "Reflex", null, ReflexListener::new);
 
     private final String name;
     private final String pluginName;

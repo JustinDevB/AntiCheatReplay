@@ -5,7 +5,7 @@
 
 	<groupId>me.justindevb</groupId>
 	<artifactId>AntiCheatReplay</artifactId>
-	<version>2.6.8</version>
+	<version>2.7.0</version>
 	<packaging>jar</packaging>
 
 	<name>AntiCheatReplay</name>
@@ -42,6 +42,11 @@
 		<repository>
 			<id>sparky-repo</id>
 			<url>https://nexus.sparky.ac/repository/Sparky/</url>
+		</repository>
+		<repository>
+			<id>reflex.public</id>
+			<name>Public Reflex Repository</name>
+			<url>https://archiva.reflex.rip/repository/public/</url>
 		</repository>
 	</repositories>
 
@@ -297,6 +302,18 @@
 			<version>1</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/bin/GrimAC.jar</systemPath>
+		</dependency>
+
+		<!--
+			Reflex
+			Maven: https://github.com/MeGysssTaa/ReflexIssueTracker/wiki/Reflex-API#maven
+			From: https://www.spigotmc.org/resources/%E3%80%8Creflex%E3%80%8Dmachine-learning-cheat-detection-%C2%BB-1-8-1-17.21122/
+		-->
+		<dependency>
+			<groupId>rip.reflex</groupId>
+			<artifactId>ReflexAPI</artifactId>
+			<version>8</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
