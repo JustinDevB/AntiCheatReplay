@@ -156,7 +156,7 @@ public abstract class ListenerBase {
 						notification = notification.replace("%r", replayName);
 						for (Player p : Bukkit.getOnlinePlayers()) {
 							if (p.hasPermission("AntiCheatReplay.recording-notify"))
-								p.sendMessage(notification);
+								p.sendMessage(ChatColor.GOLD + notification);
 						}
 					}
 
