@@ -1,4 +1,4 @@
-package me.justindevb.anticheatreplay.listeners;
+package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import me.justindevb.anticheatreplay.AntiCheat;
 import org.bukkit.entity.Player;

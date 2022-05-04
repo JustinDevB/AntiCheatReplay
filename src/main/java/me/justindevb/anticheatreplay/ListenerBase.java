@@ -106,8 +106,6 @@ public abstract class ListenerBase {
 			acReplay.log("Saved a player report:", false);
 			acReplay.log(reporter.getName() + " reported " + target.getName() + " for " + reason, false);
 
-			PlayerCache cache = acReplay.getCachedPlayer(target.getUniqueId());
-			sendDiscordWebhook(target.getName() + "-report", target, getOnlineTime(cache.getLoginTimeStamp(), System.currentTimeMillis()));
 
 			if (alertList.contains(target.getUniqueId()))
 				alertList.remove(target.getUniqueId());

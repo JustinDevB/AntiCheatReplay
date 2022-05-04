@@ -1,7 +1,7 @@
-package me.justindevb.anticheatreplay.listeners;
+package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
-import ac.grim.grimac.utils.events.CommandExecuteEvent;
-import ac.grim.grimac.utils.events.FlagEvent;
+import de.jpx3.intave.access.check.event.IntaveCommandExecutionEvent;
+import de.jpx3.intave.access.check.event.IntaveViolationEvent;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.justindevb.anticheatreplay.ListenerBase;
 import org.bukkit.Bukkit;
@@ -12,52 +12,48 @@ import org.bukkit.event.Listener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GrimACListener extends ListenerBase implements Listener {
+public class IntaveListener extends ListenerBase implements Listener {
+
     private final AntiCheatReplay acReplay;
     private List<String> punishCommands = new ArrayList<>();
 
-    public GrimACListener(AntiCheatReplay acReplay) {
+    public IntaveListener(AntiCheatReplay acReplay) {
         super(acReplay);
         this.acReplay = acReplay;
-        Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, acReplay);
 
-        setupGrim();
+        setupIntave();
     }
 
-    private void setupGrim() {
-        initGrimSpecificConfig();
+    private void setupIntave() {
+        initIntaveSpecificConfig();
     }
-
 
     @EventHandler
-    public void onFlag(FlagEvent event) {
-        Player p = event.getPlayer().bukkitPlayer;
+    public void onViolation(IntaveViolationEvent event) {
+        final Player p = event.player();
 
         if (alertList.contains(p.getUniqueId()))
             return;
 
         alertList.add(p.getUniqueId());
 
-        startRecording(p, getReplayName(p, event.getCheckName()));
-
-
-        if (!punishList.contains(p.getUniqueId()))
-            punishList.add(p.getUniqueId());
+        startRecording(p, getReplayName(p, event.checkName()));
     }
 
     @EventHandler
-    public void onCommand(CommandExecuteEvent event) {
-        if (!parseCommand(event.getCommand()))
+    public void onIntaveCommand(IntaveCommandExecutionEvent event) {
+        if (!parseCommand(event.command()))
             return;
 
-        final Player p = event.getPlayer().bukkitPlayer;
+        final Player p = event.player();
 
         if (!punishList.contains(p.getUniqueId()))
             punishList.add(p.getUniqueId());
     }
 
     /**
-     * Check if CommandExecute returns a command that should save a recording
+     * Check if IntaveCommand is a punish command defined in the AntiCheatReplay config
      * @param command
      * @return
      */
@@ -71,9 +67,8 @@ public class GrimACListener extends ListenerBase implements Listener {
         return false;
     }
 
-    private void initGrimSpecificConfig() {
-        this.punishCommands = acReplay.getConfig().getStringList("Grim.Punish-Commands");
+
+    private void initIntaveSpecificConfig() {
+        this.punishCommands = acReplay.getConfig().getStringList("Intave.Punish-Commands");
     }
-
 }
-

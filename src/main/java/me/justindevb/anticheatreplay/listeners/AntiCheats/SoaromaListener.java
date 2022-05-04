@@ -1,4 +1,4 @@
-package me.justindevb.anticheatreplay.listeners;
+package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import java.io.File;
 import java.io.IOException;

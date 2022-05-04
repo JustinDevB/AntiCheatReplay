@@ -61,6 +61,11 @@ public class ReportCommand extends ListenerBase implements CommandExecutor {
             return true;
         }
 
+        if (Bukkit.getPlayer(strings[0]).hasPermission("AntiCheatReplay.reportImmune")) {
+            p.sendMessage(ChatColor.DARK_RED + Messages.REPORT_IMMUNE);
+            return true;
+        }
+
         String reason = "";
         if (strings.length == 1)
             reason = "No Reason Supplied";

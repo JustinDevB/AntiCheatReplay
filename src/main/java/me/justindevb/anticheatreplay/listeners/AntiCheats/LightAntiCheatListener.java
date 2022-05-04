@@ -1,23 +1,23 @@
-package me.justindevb.anticheatreplay.listeners;
+package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.justindevb.anticheatreplay.ListenerBase;
-import me.tecnio.antihaxerman.api.impl.AHMFlagEvent;
-import me.tecnio.antihaxerman.api.impl.AHMPunishEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import vekster.lightanticheat.api.LacFlagEvent;
+import vekster.lightanticheat.api.LacPunishmentEvent;
 
-public class AntiHaxermanListener extends ListenerBase implements Listener {
-    public AntiHaxermanListener(AntiCheatReplay acReplay) {
+public class LightAntiCheatListener extends ListenerBase implements Listener {
+    public LightAntiCheatListener(AntiCheatReplay acReplay) {
         super(acReplay);
-        Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, acReplay);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onFlag(AHMFlagEvent event) {
+    public void onFlag(LacFlagEvent event) {
         Player p = event.getPlayer();
 
         if (alertList.contains(p.getUniqueId()))
@@ -25,12 +25,12 @@ public class AntiHaxermanListener extends ListenerBase implements Listener {
 
         alertList.add(p.getUniqueId());
 
-        startRecording(p, getReplayName(p, event.getCheck()));
+        startRecording(p, getReplayName(p, event.getCheckType()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPunish(AHMPunishEvent event) {
-        Player p = event.getPlayer();
+    public void onPunishment(LacPunishmentEvent event) {
+        final Player p = event.getPlayer();
 
         if (!punishList.contains(p.getUniqueId()))
             punishList.add(p.getUniqueId());

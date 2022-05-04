@@ -1,7 +1,6 @@
-package me.justindevb.anticheatreplay.listeners;
+package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
-import ac.sparky.api.events.SparkyPunishEvent;
-import ac.sparky.api.events.SparkyViolationEvent;
+import com.rammelkast.anticheatreloaded.check.CheckResult;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.justindevb.anticheatreplay.ListenerBase;
 import org.bukkit.Bukkit;
@@ -9,31 +8,38 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import rip.reflex.api.event.ReflexCheckEvent;
+import rip.reflex.api.event.ReflexCommandEvent;
 
-public class SparkyListener extends ListenerBase implements Listener {
-
-    public SparkyListener(AntiCheatReplay acReplay) {
+public class ReflexListener extends ListenerBase implements Listener {
+    public ReflexListener(AntiCheatReplay acReplay) {
         super(acReplay);
         Bukkit.getPluginManager().registerEvents(this, acReplay);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void violationEvent(SparkyViolationEvent event) {
-        final Player p = event.getPlayer();
+    public void onCheck(ReflexCheckEvent event) {
+        if (event.getResult().isCheckPassed())
+            return;
+
+        Player p = event.getPlayer();
 
         if (alertList.contains(p.getUniqueId()))
             return;
 
         alertList.add(p.getUniqueId());
 
-        startRecording(p, getReplayName(p, event.getCheckType()));
+        final String replayName = super.getReplayName(p, event.getCheat().toString());
+
+        startRecording(p, replayName);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPunish(SparkyPunishEvent event) {
+    public void onCommand(ReflexCommandEvent event) {
         final Player p = event.getPlayer();
 
         if (!punishList.contains(p.getUniqueId()))
             punishList.add(p.getUniqueId());
     }
+
 }

@@ -1,4 +1,4 @@
-package me.justindevb.anticheatreplay.listeners;
+package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import dev.brighten.api.KauriAPI;
 import dev.brighten.api.check.CancelType;

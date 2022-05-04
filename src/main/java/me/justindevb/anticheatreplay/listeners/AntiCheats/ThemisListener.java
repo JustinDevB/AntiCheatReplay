@@ -1,4 +1,4 @@
-package me.justindevb.anticheatreplay.listeners;
+package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import java.util.ArrayList;
 import java.util.List;

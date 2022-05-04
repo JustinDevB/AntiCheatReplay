@@ -1,4 +1,4 @@
-package me.justindevb.anticheatreplay.listeners;
+package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,17 +8,17 @@ import org.bukkit.event.Listener;
 
 import me.justindevb.anticheatreplay.ListenerBase;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
-import me.vagdedes.spartan.api.PlayerViolationCommandEvent;
-import me.vagdedes.spartan.api.PlayerViolationEvent;
+import me.rerere.matrix.api.events.PlayerViolationCommandEvent;
+import me.rerere.matrix.api.events.PlayerViolationEvent;
 
-public class SpartanListener extends ListenerBase implements Listener {
+public class MatrixListener extends ListenerBase implements Listener {
 
-	public SpartanListener(AntiCheatReplay acReplay) {
+	public MatrixListener(AntiCheatReplay acReplay) {
 		super(acReplay);
 		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
 	}
-
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onFlagEvent(PlayerViolationEvent event) {
 		Player p = event.getPlayer();
 
@@ -27,9 +27,11 @@ public class SpartanListener extends ListenerBase implements Listener {
 
 		alertList.add(p.getUniqueId());
 
-		startRecording(p, getReplayName(p, event.getHackType().toString()));
-	}
+		final String replayName = getReplayName(p, event.getEventName());
 
+		startRecording(p, replayName);
+	}
+	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPunish(PlayerViolationCommandEvent event) {
 		final Player p = event.getPlayer();
@@ -37,5 +39,7 @@ public class SpartanListener extends ListenerBase implements Listener {
 		if (!punishList.contains(p.getUniqueId()))
 			punishList.add(p.getUniqueId());
 	}
+	
+	
 
 }

@@ -121,6 +121,8 @@ public class AntiCheatReplay extends JavaPlugin {
 
         initIntaveConfigSettings();
 
+        initGrimConfigSettings();
+
         getConfig().options().copyDefaults(true);
         saveConfig();
 

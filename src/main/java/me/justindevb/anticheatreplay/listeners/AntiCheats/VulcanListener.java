@@ -1,4 +1,4 @@
-package me.justindevb.anticheatreplay.listeners;
+package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import me.frep.vulcan.api.event.VulcanFlagEvent;
 import me.frep.vulcan.api.event.VulcanPunishEvent;

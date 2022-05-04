@@ -1,4 +1,4 @@
-package me.justindevb.anticheatreplay.listeners;
+package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -6,20 +6,20 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
+import godseye.GodsEyePlayerViolationEvent;
+import godseye.GodsEyePunishPlayerEvent;
 import me.justindevb.anticheatreplay.ListenerBase;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
-import me.rerere.matrix.api.events.PlayerViolationCommandEvent;
-import me.rerere.matrix.api.events.PlayerViolationEvent;
 
-public class MatrixListener extends ListenerBase implements Listener {
+public class GodsEyeListener extends ListenerBase implements Listener {
 
-	public MatrixListener(AntiCheatReplay acReplay) {
+	public GodsEyeListener(AntiCheatReplay acReplay) {
 		super(acReplay);
 		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
 	}
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onFlagEvent(PlayerViolationEvent event) {
+	@EventHandler(priority = EventPriority.HIGHEST) 
+	public void onFlagEvent(GodsEyePlayerViolationEvent event) {
 		Player p = event.getPlayer();
 
 		if (alertList.contains(p.getUniqueId()))
@@ -27,19 +27,15 @@ public class MatrixListener extends ListenerBase implements Listener {
 
 		alertList.add(p.getUniqueId());
 
-		final String replayName = getReplayName(p, event.getEventName());
-
-		startRecording(p, replayName);
+		startRecording(p, getReplayName(p, event.getDetection()));
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPunish(PlayerViolationCommandEvent event) {
+	public void onPunish(GodsEyePunishPlayerEvent event) {
 		final Player p = event.getPlayer();
 
 		if (!punishList.contains(p.getUniqueId()))
 			punishList.add(p.getUniqueId());
 	}
-	
-	
 
 }

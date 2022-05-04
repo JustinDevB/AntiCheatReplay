@@ -1,7 +1,7 @@
 package me.justindevb.anticheatreplay;
 
 
-import me.justindevb.anticheatreplay.listeners.*;
+import me.justindevb.anticheatreplay.listeners.AntiCheats.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 

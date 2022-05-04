@@ -27,6 +27,9 @@ public class Messages {
 	public static String COMMAND_REPORT_COOLDOWN;
 	public static String REPORT_SUBMITTED;
 	public static String NOTIFY_RECORDING;
+	public static String REPORT_TITLE;
+	public static String REPORT_DESCRIPTION;
+	public static String REPORT_IMMUNE;
 
 	public Messages() {
 		Bukkit.getScheduler().runTaskAsynchronously(AntiCheatReplay.getInstance(), () -> {
@@ -40,6 +43,8 @@ public class Messages {
 			config.addDefault("Discord.Minutes", "minutes");
 			config.addDefault("Discord.RecordingName", "Recording saved as:");
 			config.addDefault("Discord.Command", "View with:");
+			config.addDefault("Discord.Report.Title", "Report");
+			config.addDefault("Discord.Report.Description", "Player Reported");
 
 			config.addDefault("Commands.Report.Usage", "Usage: /report <player> (reason)");
 			config.addDefault("Commands.Report.Offline", "You can only report an online player!");
@@ -48,6 +53,7 @@ public class Messages {
 			config.addDefault("Commands.Report.Notify", "%r has reported %s for %t");
 			config.addDefault("Commands.Report.Success", "Report successfully submitted!");
 			config.addDefault("Commands.Report.Cooldown", "You have run that too recently!");
+			config.addDefault("Commands.Report.Immune", "You can't report that player!");
 
 			config.addDefault("General.Notify-Recording", "A recording has been saved: %r");
 
@@ -81,6 +87,9 @@ public class Messages {
 		REPORT_SUBMITTED = config.getString("Commands.Report.Success");
 		NOTIFY_RECORDING = config.getString("General.Notify-Recording");
 		COMMAND_REPORT_COOLDOWN = config.getString("Commands.Report.Cooldown");
+		REPORT_TITLE = config.getString("Discord.Report.Title");
+		REPORT_DESCRIPTION = config.getString("Discord.Report.Description");
+		REPORT_IMMUNE = config.getString("Commands.Report.Immune");
 	}
 
 }
