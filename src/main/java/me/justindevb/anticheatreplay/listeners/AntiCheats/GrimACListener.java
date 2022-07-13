@@ -40,9 +40,6 @@ public class GrimACListener extends ListenerBase implements Listener {
 
         startRecording(p, getReplayName(p, event.getCheck().getCheckName()));
 
-
-        if (!punishList.contains(p.getUniqueId()))
-            punishList.add(p.getUniqueId());
     }
 
     @EventHandler
