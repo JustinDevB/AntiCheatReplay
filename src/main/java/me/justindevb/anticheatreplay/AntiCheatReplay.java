@@ -78,7 +78,6 @@ public class AntiCheatReplay extends JavaPlugin {
     /**
      * Find a compatible AntiCheat and register support for it
      */
-    // TODO: Attempt cleaning this up
     private void findCompatAntiCheat() {
         for (AntiCheat value : AntiCheat.values()) {
             if (value.getChecker().apply(this)) {
@@ -147,6 +146,7 @@ public class AntiCheatReplay extends JavaPlugin {
         findCompatAntiCheat();
         new Messages();
         log("Reloaded Messages.yml", false);
+        log("Reloaded config.yml", false);
     }
 
     private void initBstats() {

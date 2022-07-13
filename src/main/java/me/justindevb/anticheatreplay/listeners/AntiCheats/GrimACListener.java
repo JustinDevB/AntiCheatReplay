@@ -1,7 +1,7 @@
 package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
-import ac.grim.grimac.utils.events.CommandExecuteEvent;
-import ac.grim.grimac.utils.events.FlagEvent;
+import ac.grim.grimac.events.CommandExecuteEvent;
+import ac.grim.grimac.events.FlagEvent;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.justindevb.anticheatreplay.ListenerBase;
 import org.bukkit.Bukkit;
@@ -31,14 +31,14 @@ public class GrimACListener extends ListenerBase implements Listener {
 
     @EventHandler
     public void onFlag(FlagEvent event) {
-        Player p = event.getPlayer().bukkitPlayer;
+        Player p = Bukkit.getPlayer(event.getPlayer().getUniqueId());
 
         if (alertList.contains(p.getUniqueId()))
             return;
 
         alertList.add(p.getUniqueId());
 
-        startRecording(p, getReplayName(p, event.getCheckName()));
+        startRecording(p, getReplayName(p, event.getCheck().getCheckName()));
 
 
         if (!punishList.contains(p.getUniqueId()))
@@ -50,7 +50,7 @@ public class GrimACListener extends ListenerBase implements Listener {
         if (!parseCommand(event.getCommand()))
             return;
 
-        final Player p = event.getPlayer().bukkitPlayer;
+        final Player p = Bukkit.getPlayer(event.getPlayer().getUniqueId());
 
         if (!punishList.contains(p.getUniqueId()))
             punishList.add(p.getUniqueId());
