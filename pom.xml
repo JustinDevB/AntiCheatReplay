@@ -163,7 +163,7 @@
 			<artifactId>soaroma</artifactId>
 			<version>1</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/bin/Saorama.jar</systemPath>
+			<systemPath>${project.basedir}/bin/Soaroma.jar</systemPath>
 		</dependency>
 
 		<!--

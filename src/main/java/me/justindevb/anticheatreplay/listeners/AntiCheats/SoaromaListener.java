@@ -1,8 +1,9 @@
-package me.justindevb.anticheatreplay.listeners.AntiCheats;
+/*package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import java.io.File;
 import java.io.IOException;
 
+import me.korbsti.soaromaac.api.SoaromaFlagEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,8 +14,6 @@ import org.bukkit.event.Listener;
 
 import me.justindevb.anticheatreplay.ListenerBase;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
-import me.korbsti.soaromaac.api.PunishmentEvent;
-import me.korbsti.soaromaac.api.SoaromaFlagEvent;
 
 public class SoaromaListener extends ListenerBase implements Listener {
 	private final AntiCheatReplay acReplay;
@@ -56,7 +55,7 @@ public class SoaromaListener extends ListenerBase implements Listener {
 
 	/**
 	 * Check to see if Soaromoa's API is enabled
-	 */
+
 	private void checkSoaromaAPI() {
 		acReplay.log("Checking if Soaroma API is enabled", false);
 		File file = new File(acReplay.getDataFolder().getParentFile(),
@@ -93,3 +92,4 @@ public class SoaromaListener extends ListenerBase implements Listener {
 	}
 
 }
+*/

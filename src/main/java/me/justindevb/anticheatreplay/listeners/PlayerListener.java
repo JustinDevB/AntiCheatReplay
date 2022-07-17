@@ -1,6 +1,5 @@
 package me.justindevb.anticheatreplay.listeners;
 
-import me.justindevb.anticheatreplay.ListenerBase;
 import me.justindevb.anticheatreplay.api.events.PlayerReportEvent;
 import me.justindevb.anticheatreplay.utils.DiscordWebhook;
 import me.justindevb.anticheatreplay.utils.Messages;
@@ -19,7 +18,6 @@ import me.justindevb.anticheatreplay.AntiCheatReplay;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 public class PlayerListener implements Listener {
 

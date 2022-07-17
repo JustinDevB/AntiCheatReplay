@@ -1,6 +1,7 @@
 package me.justindevb.anticheatreplay;
 
 import dev.brighten.api.KauriAPI;
+import me.justindevb.anticheatreplay.api.AntiCheatReplayAPI;
 import me.justindevb.anticheatreplay.commands.ReloadCommand;
 import me.justindevb.anticheatreplay.commands.ReportCommand;
 import me.justindevb.anticheatreplay.listeners.PlayerListener;
@@ -48,6 +49,7 @@ public class AntiCheatReplay extends JavaPlugin {
             handleReload();
             registerCommands();
             initBstats();
+            new AntiCheatReplayAPI(this);
         });
 
     }
