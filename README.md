@@ -14,7 +14,6 @@ This plugin allows for you to record a player that your AntiCheat has punished f
 
  Free AntiCheats: <br>
   [Themis](https://www.spigotmc.org/resources/themis-anti-cheat-1-17-1-18-bedrock-support-paper-compatibility-free-optimized.90766/) <br>
-  [Soaroma](https://www.spigotmc.org/resources/soaromasac-lightweight-cheat-detection-system.87702/) <br>
   [FlappyAC](https://www.spigotmc.org/resources/flappy-anticheat-1-13-1-17.92180/) <br>
   [AntiCheatReloaded](https://www.spigotmc.org/resources/anticheatreloaded.23799/) <br>
   [LightAntiCheat](https://www.spigotmc.org/resources/lightanticheat.96341/) <br>
