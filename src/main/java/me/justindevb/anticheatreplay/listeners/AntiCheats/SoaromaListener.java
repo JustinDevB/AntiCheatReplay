@@ -1,8 +1,9 @@
-/*package me.justindevb.anticheatreplay.listeners.AntiCheats;
+package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import java.io.File;
 import java.io.IOException;
 
+import me.korbsti.soaromaac.api.SoaromaAutoKick;
 import me.korbsti.soaromaac.api.SoaromaFlagEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -45,7 +46,7 @@ public class SoaromaListener extends ListenerBase implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPunish(PunishmentEvent event) {
+	public void onPunish(SoaromaAutoKick event) {
 		final Player p = event.getPunishedPlayer();
 
 		if (!punishList.contains(p.getUniqueId()))
@@ -55,6 +56,8 @@ public class SoaromaListener extends ListenerBase implements Listener {
 
 	/**
 	 * Check to see if Soaromoa's API is enabled
+     *
+     * */
 
 	private void checkSoaromaAPI() {
 		acReplay.log("Checking if Soaroma API is enabled", false);
@@ -92,4 +95,3 @@ public class SoaromaListener extends ListenerBase implements Listener {
 	}
 
 }
-*/
