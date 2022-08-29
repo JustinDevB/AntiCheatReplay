@@ -50,7 +50,7 @@ public enum AntiCheat {
 
      }, KarhuListener::new), */
     THEMIS("Themis", "Themis", null, ThemisListener::new),
- //   SOAROMA("Soaroma", "SoaromaSAC", null, SoaromaListener::new),
+    SOAROMA("Soaroma", "SoaromaSAC", null, SoaromaListener::new),
     FLAPPYAC("FlappyAC", "FlappyAnticheat", null, FlappyACListener::new),
    // ARTEMIS("Artemis", "Loader", null, ArtemisListener::new),
     ANTICHEATRELOADED("AntiCheatReloaded", "AntiCheatReloaded", null, AntiCheatReloadedListener::new),
