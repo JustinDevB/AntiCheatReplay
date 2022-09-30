@@ -20,6 +20,14 @@ public class AntiCheatReplayAPI {
         return acReplay.getAntiCheat();
     }
 
+    /**
+     * Check if Webhook is enabled
+     * @return
+     */
+    public boolean isWebhookEnabled() {
+        return acReplay.getConfig().getBoolean("Discord.Enabled");
+    }
+
 
     /**
      * Get instance of AntiCheatReplayAPI

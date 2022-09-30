@@ -127,8 +127,6 @@ public class AntiCheatReplay extends JavaPlugin {
         getConfig().options().copyDefaults(true);
         saveConfig();
 
-        updateConfig();
-
         new Messages();
     }
 
@@ -326,38 +324,6 @@ public class AntiCheatReplay extends JavaPlugin {
     private void registerCommands() {
         this.getCommand("replayreload").setExecutor(new ReloadCommand());
         this.getCommand("report").setExecutor(new ReportCommand(this));
-    }
-
-    /**
-     * Update from VulcanReplay to AntiCheatReplay
-     */
-    private void updateConfig() {
-        String separator = System.getProperty("file.separator");
-        File file = new File(this.getDataFolder().getParentFile(), "VulcanReplay" + separator + "config.yml");
-        if (file.exists()) {
-
-            log("Outdated config found...", true);
-            log("Copying old config to new plugin folder...", true);
-
-            File config = new File(this.getDataFolder().getParentFile(), "VulcanReplay" + separator + "config.yml");
-            File movedConfig = new File(this.getDataFolder().getParentFile(),
-                    "VulcanReplay" + separator + "configOLD.yml");
-            Path src = Paths.get(config.toURI());
-            Path movedSrc = Paths.get(movedConfig.toURI());
-            File dstFile = new File(this.getDataFolder() + separator + "config.yml");
-            Path dst = Paths.get(dstFile.toURI());
-
-            try {
-                Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);
-                Files.move(src, movedSrc, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                log("Error copying config from VulcanReplay" + separator + "config.yml ->" + "AntiCheatReplay"
-                        + separator + "config.yml", true);
-                e.printStackTrace();
-                return;
-            }
-            log("Successfully copied config", false);
-        }
     }
 
     public boolean isChecking(final AntiCheat antiCheat) {

@@ -13,6 +13,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import me.justindevb.anticheatreplay.api.events.WebhookSendEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -240,6 +241,14 @@ public abstract class ListenerBase {
 	 */
 	private void sendDiscordWebhook(String recording, Player player, long minutesOnline) {
 		if (!WEBHOOK_ENABLED)
+			return;
+
+		WebhookSendEvent webhookSendEvent = new WebhookSendEvent();
+		Bukkit.getScheduler().scheduleSyncDelayedTask(acReplay, () -> {
+			Bukkit.getPluginManager().callEvent(webhookSendEvent);
+		});
+
+		if (webhookSendEvent.isCancelled())
 			return;
 
 		Bukkit.getScheduler().runTaskAsynchronously(acReplay, () -> {
