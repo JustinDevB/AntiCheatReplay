@@ -167,7 +167,8 @@
 			<groupId>me.vagdedes.spartan</groupId>
 			<artifactId>SpartanAPI</artifactId>
 			<version>1.0</version>
-			<scope>provided</scope>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/bin/SpartanAPI.jar</systemPath>
 		</dependency>
 
 		<!--
@@ -268,6 +269,7 @@
 			<groupId>com.github.Sparky-Tech</groupId>
 			<artifactId>SparkyAPIV2</artifactId>
 			<version>2.8</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!--
