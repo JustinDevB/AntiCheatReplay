@@ -40,10 +40,6 @@
 			<url>https://repo.alessiodp.com/releases/</url>
 		</repository>
 		<repository>
-			<id>sparky-repo</id>
-			<url>https://nexus.sparky.ac/repository/Sparky/</url>
-		</repository>
-		<repository>
 			<id>reflex.public</id>
 			<name>Public Reflex Repository</name>
 			<url>https://archiva.reflex.rip/repository/public/</url>
@@ -269,13 +265,13 @@
 
 		<!--
 			Sparky Anticheat
-			Maven: https://nexus.sparky.ac/repository/Sparky/
+			Maven: https://jitpack.io/#Sparky-Tech/SparkyAPIV2
 			From: https://github.com/Sparky-Tech/SparkyAPIV2/
 		-->
 		<dependency>
-			<groupId>ac.sparky</groupId>
-			<artifactId>SparkyAPI</artifactId>
-			<version>2.2</version>
+			<groupId>com.github.Sparky-Tech</groupId>
+			<artifactId>SparkyAPIV2</artifactId>
+			<version>2.8</version>
 		</dependency>
 
 		<!--
