@@ -328,4 +328,7 @@ public abstract class ListenerBase {
 		this.ALWAYS_SAVE_RECORDING = config.getBoolean("General.Always-Save-Recording");
 	}
 
+	public boolean isSaveRecording() {
+		return saveRecording;
+	}
 }

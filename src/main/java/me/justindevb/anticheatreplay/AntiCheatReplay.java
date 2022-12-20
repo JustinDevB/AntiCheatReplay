@@ -79,7 +79,7 @@ public class AntiCheatReplay extends JavaPlugin {
             if (value.getChecker().apply(this)) {
                 final ListenerBase base = value.getInstantiator().apply(this);
                 activeListeners.put(value, base);
-                this.anticheat = AntiCheat.valueOf(value.getName().toUpperCase());
+                this.anticheat = value;
             }
         }
 

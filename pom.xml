@@ -309,6 +309,12 @@
 			<version>8</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.github.Elikill58</groupId>
+			<artifactId>Negativity</artifactId>
+			<version>v2-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

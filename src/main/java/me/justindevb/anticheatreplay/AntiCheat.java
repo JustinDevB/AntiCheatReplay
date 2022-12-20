@@ -73,7 +73,14 @@ public enum AntiCheat {
     LIGHTANTICHEAT("LightAntiCheat", "LightAntiCheat", null, LightAntiCheatListener::new),
     ANTIHAXERMAN("AntiHaxerman", "AntiHaxerman", null, AntiHaxermanListener::new),
     GRIMAC("GrimAC", "GrimAC", null, GrimACListener::new),
-    REFLEX("Reflex", "Reflex", null, ReflexListener::new);
+    REFLEX("Reflex", "Reflex", null, ReflexListener::new),
+    NEGATIVITY_V2("NegativityV2", "Negativity", antiCheatReplay -> {
+        Plugin plugin = Bukkit.getPluginManager().getPlugin("Negativity");
+        if (plugin == null || !plugin.isEnabled() || plugin.getDescription().getVersion().startsWith("1.")) // check if it's v1
+            return false;
+        antiCheatReplay.log("Negativity v2 detected, enabling support..", false);
+        return true;
+    }, NegativityV2Listener::new);
 
     private final String name;
     private final String pluginName;
