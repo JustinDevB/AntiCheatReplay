@@ -1,6 +1,5 @@
 package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
-import com.rammelkast.anticheatreloaded.check.CheckResult;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.justindevb.anticheatreplay.ListenerBase;
 import org.bukkit.Bukkit;
