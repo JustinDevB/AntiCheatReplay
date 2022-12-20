@@ -5,6 +5,7 @@ import me.justindevb.anticheatreplay.listeners.AntiCheats.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.function.Function;
 
 public enum AntiCheat {
@@ -74,13 +75,27 @@ public enum AntiCheat {
     ANTIHAXERMAN("AntiHaxerman", "AntiHaxerman", null, AntiHaxermanListener::new),
     GRIMAC("GrimAC", "GrimAC", null, GrimACListener::new),
     REFLEX("Reflex", "Reflex", null, ReflexListener::new),
+    NEGATIVITY_V1("NegativityV1", "Negativity", antiCheatReplay -> {
+        Plugin plugin = Bukkit.getPluginManager().getPlugin("Negativity");
+        if (plugin == null || !plugin.isEnabled() || plugin.getDescription().getVersion().startsWith("2.")) // check if it's v1
+            return false;
+        antiCheatReplay.log("Negativity v1 detected, enabling support..", false);
+        return true;
+    }, NegativityV1Listener::new),
     NEGATIVITY_V2("NegativityV2", "Negativity", antiCheatReplay -> {
         Plugin plugin = Bukkit.getPluginManager().getPlugin("Negativity");
         if (plugin == null || !plugin.isEnabled() || plugin.getDescription().getVersion().startsWith("1.")) // check if it's v1
             return false;
         antiCheatReplay.log("Negativity v2 detected, enabling support..", false);
         return true;
-    }, NegativityV2Listener::new);
+    }, (replay) -> {
+    	try {
+    		return NegativityV2Listener.class.getConstructor(AntiCheatReplay.class).newInstance(replay);
+    	} catch(NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
+    		e.printStackTrace();
+    	}
+    	return null;
+    });
 
     private final String name;
     private final String pluginName;
