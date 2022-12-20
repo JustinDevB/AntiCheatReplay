@@ -16,7 +16,7 @@ public class FlappyACListener extends ListenerBase implements Listener {
 
 	public FlappyACListener(AntiCheatReplay acReplay) {
 		super(acReplay);
-		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
+		Bukkit.getPluginManager().registerEvents(this, acReplay);
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

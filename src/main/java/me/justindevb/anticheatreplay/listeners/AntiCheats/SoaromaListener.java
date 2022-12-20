@@ -17,12 +17,10 @@ import me.justindevb.anticheatreplay.ListenerBase;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 
 public class SoaromaListener extends ListenerBase implements Listener {
-	private final AntiCheatReplay acReplay;
 
 	public SoaromaListener(AntiCheatReplay acReplay) {
 		super(acReplay);
-		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
-		this.acReplay = acReplay;
+		Bukkit.getPluginManager().registerEvents(this, acReplay);
 
 		setupSoaroma();
 	}

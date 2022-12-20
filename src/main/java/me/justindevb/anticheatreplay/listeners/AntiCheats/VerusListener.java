@@ -28,7 +28,8 @@ public class VerusListener extends ListenerBase implements Listener {
         startRecording(p, getReplayName(p, event.getCheck().getType()));
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onPunish(PunishEvent event) {
         final Player p = event.getPlayer();
 

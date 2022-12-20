@@ -21,8 +21,8 @@ import java.io.IOException;
 
 public class PlayerListener implements Listener {
 
-	private AntiCheatReplay acReplay;
-	private boolean saveOnDisconnect = false;
+	protected AntiCheatReplay acReplay;
+	protected boolean saveOnDisconnect = false;
 
 	private String WEBHOOK_URL;
 	private String WEBHOOK_AVATAR;
