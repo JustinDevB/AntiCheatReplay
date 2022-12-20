@@ -8,6 +8,8 @@ import org.bukkit.plugin.Plugin;
 import java.lang.reflect.InvocationTargetException;
 import java.util.function.Function;
 
+import javax.annotation.Nullable;
+
 public enum AntiCheat {
     VULCAN("Vulcan", "Vulcan", null, VulcanListener::new),
     SPARTAN("Spartan", "Spartan", null, SpartanListener::new),
@@ -88,21 +90,14 @@ public enum AntiCheat {
             return false;
         antiCheatReplay.log("Negativity v2 detected, enabling support..", false);
         return true;
-    }, (replay) -> {
-    	try {
-    		return NegativityV2Listener.class.getConstructor(AntiCheatReplay.class).newInstance(replay);
-    	} catch(NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
-    		e.printStackTrace();
-    	}
-    	return null;
-    });
+    }, (replay) -> createWithClass(NegativityV2Listener.class, replay));
 
     private final String name;
     private final String pluginName;
     private final Function<AntiCheatReplay, Boolean> checker;
     private final Function<AntiCheatReplay, ListenerBase> instantiator;
 
-    AntiCheat(String name, String pluginName, Function<AntiCheatReplay, Boolean> checker, Function<AntiCheatReplay, ListenerBase> instantiator) {
+    AntiCheat(String name, String pluginName, @Nullable Function<AntiCheatReplay, Boolean> checker, Function<AntiCheatReplay, ListenerBase> instantiator) {
         this.name = name;
         this.pluginName = pluginName;
 
@@ -133,5 +128,14 @@ public enum AntiCheat {
 
     public Function<AntiCheatReplay, ListenerBase> getInstantiator() {
         return instantiator;
+    }
+    
+    private static ListenerBase createWithClass(Class<? extends ListenerBase> instantiatorClass, AntiCheatReplay replay) {
+    	try {
+    		return instantiatorClass.getConstructor(AntiCheatReplay.class).newInstance(replay);
+    	} catch(NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
+    		e.printStackTrace();
+    	}
+    	return null;
     }
 }
