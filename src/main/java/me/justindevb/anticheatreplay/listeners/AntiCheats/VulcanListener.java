@@ -20,13 +20,11 @@ import java.util.ListIterator;
 
 public class VulcanListener extends ListenerBase implements Listener {
 
-    private final AntiCheatReplay acReplay;
     private List<String> disabledRecordings = new ArrayList<>();
 
     public VulcanListener(AntiCheatReplay acReplay) {
         super(acReplay);
-        this.acReplay = acReplay;
-        Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, acReplay);
 
         setupVulcan();
 

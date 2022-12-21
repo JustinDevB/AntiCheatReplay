@@ -13,13 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GrimACListener extends ListenerBase implements Listener {
-    private final AntiCheatReplay acReplay;
+	
     private List<String> punishCommands = new ArrayList<>();
 
     public GrimACListener(AntiCheatReplay acReplay) {
         super(acReplay);
-        this.acReplay = acReplay;
-        Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, acReplay);
 
         setupGrim();
     }

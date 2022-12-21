@@ -79,7 +79,7 @@ public class AntiCheatReplay extends JavaPlugin {
             if (value.getChecker().apply(this)) {
                 final ListenerBase base = value.getInstantiator().apply(this);
                 activeListeners.put(value, base);
-                this.anticheat = AntiCheat.valueOf(value.getName().toUpperCase());
+                this.anticheat = value;
             }
         }
 
@@ -211,10 +211,7 @@ public class AntiCheatReplay extends JavaPlugin {
      * @param severe Whether this is a severe message or not
      */
     public void log(String msg, boolean severe) {
-        if (severe)
-            getLogger().log(Level.SEVERE, msg);
-        else
-            getLogger().log(Level.INFO, msg);
+        getLogger().log(severe ? Level.INFO : Level.SEVERE, msg);
     }
 
     private void checkForUpdate() {

@@ -14,12 +14,10 @@ import java.util.List;
 
 public class IntaveListener extends ListenerBase implements Listener {
 
-    private final AntiCheatReplay acReplay;
     private List<String> punishCommands = new ArrayList<>();
 
     public IntaveListener(AntiCheatReplay acReplay) {
         super(acReplay);
-        this.acReplay = acReplay;
         Bukkit.getPluginManager().registerEvents(this, acReplay);
 
         setupIntave();

@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 public class AntiHaxermanListener extends ListenerBase implements Listener {
     public AntiHaxermanListener(AntiCheatReplay acReplay) {
         super(acReplay);
-        Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, acReplay);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

@@ -28,8 +28,9 @@ import me.justindevb.anticheatreplay.utils.DiscordWebhook;
 import me.justindevb.anticheatreplay.utils.Messages;
 
 public abstract class ListenerBase {
-	private AntiCheatReplay acReplay;
-	private ReplayAPI replay;
+	
+	protected AntiCheatReplay acReplay;
+	protected ReplayAPI replay;
 	private boolean saveRecording = false;
 
 	private boolean notifyStaff = false;
@@ -328,4 +329,7 @@ public abstract class ListenerBase {
 		this.ALWAYS_SAVE_RECORDING = config.getBoolean("General.Always-Save-Recording");
 	}
 
+	public boolean isSaveRecording() {
+		return saveRecording;
+	}
 }

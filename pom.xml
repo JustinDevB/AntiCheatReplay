@@ -309,6 +309,19 @@
 			<version>8</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.github.Elikill58</groupId>
+			<artifactId>Negativity</artifactId>
+			<version>v2-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.Elikill58</groupId>
+			<artifactId>NegativityV1</artifactId>
+			<version>1.12.3</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/bin/NegativityV1.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>

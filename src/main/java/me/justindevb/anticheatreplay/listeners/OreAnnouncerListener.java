@@ -14,11 +14,8 @@ import me.justindevb.anticheatreplay.AntiCheatReplay;
 
 public class OreAnnouncerListener extends ListenerBase implements Listener {
 
-	private final AntiCheatReplay acReplay;
-
 	public OreAnnouncerListener(AntiCheatReplay acReplay) {
 		super(acReplay);
-		this.acReplay = acReplay;
 		acReplay.log("Enabled Listener", true);
 	}
 
