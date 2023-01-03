@@ -5,7 +5,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import me.justindevb.anticheatreplay.AntiCheat;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 import net.md_5.bungee.api.ChatColor;
 

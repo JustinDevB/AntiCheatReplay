@@ -1,115 +1,133 @@
 package me.justindevb.anticheatreplay;
 
-
 import me.justindevb.anticheatreplay.listeners.AntiCheats.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.function.Function;
 
+import javax.annotation.Nullable;
+
 public enum AntiCheat {
-    VULCAN("Vulcan", "Vulcan", null, VulcanListener::new),
-    SPARTAN("Spartan", "Spartan", null, SpartanListener::new),
-    MATRIX("Matrix", "Matrix", null, MatrixListener::new),
-    GODSEYE("GodsEye", "GodsEye", null, GodsEyeListener::new),
-    /*   KAURI("Kauri", "Kauri", new Function<AntiCheatReplay, Boolean>() {
-           @Override
-           public Boolean apply(AntiCheatReplay antiCheatReplay) {
-               Plugin kauri = Bukkit.getPluginManager().getPlugin("Kauri");
-               if (kauri == null || !kauri.isEnabled())
-                   return false;
+	VULCAN("Vulcan", VulcanListener::new),
+	SPARTAN("Spartan", SpartanListener::new),
+	MATRIX("Matrix", MatrixListener::new),
+	GODSEYE("GodsEye", GodsEyeListener::new),
+	KAURI("Kauri", "Kauri", antiCheatReplay -> {
+		if (!hasPlugin("Kauri"))
+			return false;
+		if (!hasPlugin("Atlas")) {
+			antiCheatReplay.log("Atlas is required to use Kauri!", true);
+			return false;
+		}
 
-               Plugin atlas = Bukkit.getPluginManager().getPlugin("Atlas");
-               if (atlas == null || !atlas.isEnabled()) {
-                   antiCheatReplay.log("Atlas is required to use Kauri!", true);
-                   return false;
-               }
+		antiCheatReplay.log("Kauri detected, enabling support...", false);
+		return true;
+	}, (replay) -> createWithClass(KauriListener.class, replay)),
 
-               antiCheatReplay.log("Kauri detected, enabling support...", false);
-               return true;
-           }
-       }, KauriListener::new),
+	KARHU("Karhu", "Karhu", antiCheatReplay -> {
+		if (!hasPlugin("Karhu"))
+			return false;
+		if (!hasPlugin("KarhuAPI")) {
+			antiCheatReplay.log("KarhuAPI is required to use Kauri", true);
+			return false;
+		}
 
+		antiCheatReplay.log("Karhu detected, enabling support...", false);
+		return true;
+	}, (replay) -> createWithClass(KarhuListener.class, replay)),
+	THEMIS("Themis", ThemisListener::new),
+	SOAROMA("Soaroma", "SoaromaSAC", null, SoaromaListener::new),
+	FLAPPYAC("FlappyAC", "FlappyAnticheat", null, FlappyACListener::new),
+	ARTEMIS("Artemis", "Loader", null, ArtemisListener::new),
+	ANTICHEATRELOADED("AntiCheatReloaded", "AntiCheatReloaded", null, AntiCheatReloadedListener::new),
+	VERUS("Verus", "Verus", antiCheatReplay -> {
+		if (!hasPlugin("Verus"))
+			return false;
+		if (!hasPlugin("VerusAPI")) {
+			antiCheatReplay.log("VerusAPI is required to use Verus!", true);
+			return false;
+		}
 
-       KARHU("Karhu", "Karhu", new Function<AntiCheatReplay, Boolean>() {
-           @Override
-           public Boolean apply(AntiCheatReplay antiCheatReplay) {
-               Plugin karhu = Bukkit.getPluginManager().getPlugin("Karhu");
-               if (karhu == null || !karhu.isEnabled())
-                   return false;
+		antiCheatReplay.log("Verus detected, enabling support...", false);
+		return true;
+	}, VerusListener::new),
+	SPARKY("Sparky", SparkyListener::new),
+	INTAVE("Intave", IntaveListener::new),
+	LIGHTANTICHEAT("LightAntiCheat", LightAntiCheatListener::new),
+	ANTIHAXERMAN("AntiHaxerman", AntiHaxermanListener::new),
+	GRIMAC("GrimAC", GrimACListener::new),
+	REFLEX("Reflex", ReflexListener::new),
+	NEGATIVITY_V1("NegativityV1", "Negativity", antiCheatReplay -> {
+		if (!hasPlugin("Negativity"))
+			return false;
+		if (Bukkit.getPluginManager().getPlugin("Negativity").getDescription().getVersion().startsWith("2.")) // check if it's v1
+			return false;
+		antiCheatReplay.log("Negativity v1 detected, enabling support..", false);
+		return true;
+	}, NegativityV1Listener::new),
+	NEGATIVITY_V2("NegativityV2", "Negativity", antiCheatReplay -> {
+		if (!hasPlugin("Negativity"))
+			return false;
+		if (Bukkit.getPluginManager().getPlugin("Negativity").getDescription().getVersion().startsWith("1.")) // not v2
+			return false;
+		antiCheatReplay.log("Negativity v2 detected, enabling support..", false);
+		return true;
+	}, (replay) -> createWithClass(NegativityV2Listener.class, replay));
 
-               Plugin karhuAPI = Bukkit.getPluginManager().getPlugin("KarhuAPI");
-               if (karhuAPI == null || !karhuAPI.isEnabled()) {
-                   antiCheatReplay.log("KarhuAPI is required to use Kauri", true);
-                   return false;
-               }
+	private final String name;
+	private final String pluginName;
+	private final Function<AntiCheatReplay, Boolean> checker;
+	private final Function<AntiCheatReplay, ListenerBase> instantiator;
 
-               antiCheatReplay.log("Karhu detected, enabling support...", false);
-               return true;
-           }
+	AntiCheat(String name, Function<AntiCheatReplay, ListenerBase> instantiator) {
+		this(name, name, null, instantiator);
+	}
 
-     }, KarhuListener::new), */
-    THEMIS("Themis", "Themis", null, ThemisListener::new),
-    SOAROMA("Soaroma", "SoaromaSAC", null, SoaromaListener::new),
-    FLAPPYAC("FlappyAC", "FlappyAnticheat", null, FlappyACListener::new),
-   // ARTEMIS("Artemis", "Loader", null, ArtemisListener::new),
-    ANTICHEATRELOADED("AntiCheatReloaded", "AntiCheatReloaded", null, AntiCheatReloadedListener::new),
-    VERUS("Verus", "Verus", antiCheatReplay -> {
-        Plugin verus = Bukkit.getPluginManager().getPlugin("Verus");
-        if (verus == null || !verus.isEnabled())
-            return false;
+	AntiCheat(String name, String pluginName, @Nullable Function<AntiCheatReplay, Boolean> checker, Function<AntiCheatReplay, ListenerBase> instantiator) {
+		this.name = name;
+		this.pluginName = pluginName;
 
-        Plugin verusAPI = Bukkit.getPluginManager().getPlugin("VerusAPI");
-        if (verusAPI == null || !verusAPI.isEnabled()) {
-            antiCheatReplay.log("VerusAPI is required to use Verus!", true);
-            return false;
-        }
+		if (checker == null) {
+			checker = antiCheatReplay -> {
+				if (!hasPlugin(pluginName))
+					return false;
+				antiCheatReplay.log(name + " detected, enabling support..", false);
+				return true;
+			};
+		}
+		this.checker = checker;
+		this.instantiator = instantiator;
+	}
 
-        antiCheatReplay.log("Verus detected, enabling support...", false);
-        return true;
-    }, VerusListener::new),
-    SPARKY("Sparky", "Sparky", null, SparkyListener::new),
-    INTAVE("Intave", "Intave", null, IntaveListener::new),
-    LIGHTANTICHEAT("LightAntiCheat", "LightAntiCheat", null, LightAntiCheatListener::new),
-    ANTIHAXERMAN("AntiHaxerman", "AntiHaxerman", null, AntiHaxermanListener::new),
-    GRIMAC("GrimAC", "GrimAC", null, GrimACListener::new),
-    REFLEX("Reflex", "Reflex", null, ReflexListener::new);
+	public String getName() {
+		return name;
+	}
 
-    private final String name;
-    private final String pluginName;
-    private final Function<AntiCheatReplay, Boolean> checker;
-    private final Function<AntiCheatReplay, ListenerBase> instantiator;
+	public String getPluginName() {
+		return pluginName;
+	}
 
-    AntiCheat(String name, String pluginName, Function<AntiCheatReplay, Boolean> checker, Function<AntiCheatReplay, ListenerBase> instantiator) {
-        this.name = name;
-        this.pluginName = pluginName;
+	public Function<AntiCheatReplay, Boolean> getChecker() {
+		return checker;
+	}
 
-        if (checker == null) {
-            checker = antiCheatReplay -> {
-                Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
-                if (plugin == null || !plugin.isEnabled())
-                    return false;
-                antiCheatReplay.log(name + " detected, enabling support..", false);
-                return true;
-            };
-        }
-        this.checker = checker;
-        this.instantiator = instantiator;
-    }
+	public Function<AntiCheatReplay, ListenerBase> getInstantiator() {
+		return instantiator;
+	}
 
-    public String getName() {
-        return name;
-    }
-
-    public String getPluginName() {
-        return pluginName;
-    }
-
-    public Function<AntiCheatReplay, Boolean> getChecker() {
-        return checker;
-    }
-
-    public Function<AntiCheatReplay, ListenerBase> getInstantiator() {
-        return instantiator;
-    }
+	private static ListenerBase createWithClass(Class<? extends ListenerBase> instantiatorClass, AntiCheatReplay replay) {
+		try {
+			return instantiatorClass.getConstructor(AntiCheatReplay.class).newInstance(replay);
+		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private static boolean hasPlugin(String pluginName) {
+		Plugin plugin = Bukkit.getPluginManager().getPlugin(pluginName);
+		return plugin != null && plugin.isEnabled();
+	}
 }

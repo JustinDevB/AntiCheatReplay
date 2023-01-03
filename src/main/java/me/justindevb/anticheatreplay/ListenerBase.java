@@ -13,6 +13,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import me.justindevb.anticheatreplay.api.events.WebhookSendEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -27,8 +28,9 @@ import me.justindevb.anticheatreplay.utils.DiscordWebhook;
 import me.justindevb.anticheatreplay.utils.Messages;
 
 public abstract class ListenerBase {
-	private AntiCheatReplay acReplay;
-	private ReplayAPI replay;
+	
+	protected AntiCheatReplay acReplay;
+	protected ReplayAPI replay;
 	private boolean saveRecording = false;
 
 	private boolean notifyStaff = false;
@@ -242,6 +244,14 @@ public abstract class ListenerBase {
 		if (!WEBHOOK_ENABLED)
 			return;
 
+		WebhookSendEvent webhookSendEvent = new WebhookSendEvent();
+		Bukkit.getScheduler().scheduleSyncDelayedTask(acReplay, () -> {
+			Bukkit.getPluginManager().callEvent(webhookSendEvent);
+		});
+
+		if (webhookSendEvent.isCancelled())
+			return;
+
 		Bukkit.getScheduler().runTaskAsynchronously(acReplay, () -> {
 			final DiscordWebhook webhook = new DiscordWebhook(WEBHOOK_URL);
 			webhook.setAvatarUrl(WEBHOOK_AVATAR);
@@ -319,4 +329,7 @@ public abstract class ListenerBase {
 		this.ALWAYS_SAVE_RECORDING = config.getBoolean("General.Always-Save-Recording");
 	}
 
+	public boolean isSaveRecording() {
+		return saveRecording;
+	}
 }

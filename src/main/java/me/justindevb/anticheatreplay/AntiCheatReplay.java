@@ -17,12 +17,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -85,7 +79,7 @@ public class AntiCheatReplay extends JavaPlugin {
             if (value.getChecker().apply(this)) {
                 final ListenerBase base = value.getInstantiator().apply(this);
                 activeListeners.put(value, base);
-                this.anticheat = AntiCheat.valueOf(value.getName().toUpperCase());
+                this.anticheat = value;
             }
         }
 
@@ -126,8 +120,6 @@ public class AntiCheatReplay extends JavaPlugin {
 
         getConfig().options().copyDefaults(true);
         saveConfig();
-
-        updateConfig();
 
         new Messages();
     }
@@ -219,10 +211,7 @@ public class AntiCheatReplay extends JavaPlugin {
      * @param severe Whether this is a severe message or not
      */
     public void log(String msg, boolean severe) {
-        if (severe)
-            getLogger().log(Level.SEVERE, msg);
-        else
-            getLogger().log(Level.INFO, msg);
+        getLogger().log(severe ? Level.INFO : Level.SEVERE, msg);
     }
 
     private void checkForUpdate() {
@@ -326,38 +315,6 @@ public class AntiCheatReplay extends JavaPlugin {
     private void registerCommands() {
         this.getCommand("replayreload").setExecutor(new ReloadCommand());
         this.getCommand("report").setExecutor(new ReportCommand(this));
-    }
-
-    /**
-     * Update from VulcanReplay to AntiCheatReplay
-     */
-    private void updateConfig() {
-        String separator = System.getProperty("file.separator");
-        File file = new File(this.getDataFolder().getParentFile(), "VulcanReplay" + separator + "config.yml");
-        if (file.exists()) {
-
-            log("Outdated config found...", true);
-            log("Copying old config to new plugin folder...", true);
-
-            File config = new File(this.getDataFolder().getParentFile(), "VulcanReplay" + separator + "config.yml");
-            File movedConfig = new File(this.getDataFolder().getParentFile(),
-                    "VulcanReplay" + separator + "configOLD.yml");
-            Path src = Paths.get(config.toURI());
-            Path movedSrc = Paths.get(movedConfig.toURI());
-            File dstFile = new File(this.getDataFolder() + separator + "config.yml");
-            Path dst = Paths.get(dstFile.toURI());
-
-            try {
-                Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING);
-                Files.move(src, movedSrc, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                log("Error copying config from VulcanReplay" + separator + "config.yml ->" + "AntiCheatReplay"
-                        + separator + "config.yml", true);
-                e.printStackTrace();
-                return;
-            }
-            log("Successfully copied config", false);
-        }
     }
 
     public boolean isChecking(final AntiCheat antiCheat) {

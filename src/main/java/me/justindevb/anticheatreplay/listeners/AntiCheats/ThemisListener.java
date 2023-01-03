@@ -16,13 +16,12 @@ import me.justindevb.anticheatreplay.ListenerBase;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 
 public class ThemisListener extends ListenerBase implements Listener {
-	private final AntiCheatReplay acReplay;
+	
 	private List<String> disabledActions = new ArrayList<>();
 
 	public ThemisListener(AntiCheatReplay acReplay) {
 		super(acReplay);
-		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
-		this.acReplay = acReplay;
+		Bukkit.getPluginManager().registerEvents(this, acReplay);
 
 		setupThemis();
 	}

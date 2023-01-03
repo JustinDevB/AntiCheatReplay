@@ -15,7 +15,7 @@ public class GodsEyeListener extends ListenerBase implements Listener {
 
 	public GodsEyeListener(AntiCheatReplay acReplay) {
 		super(acReplay);
-		Bukkit.getPluginManager().registerEvents(this, AntiCheatReplay.getInstance());
+		Bukkit.getPluginManager().registerEvents(this, acReplay);
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST) 

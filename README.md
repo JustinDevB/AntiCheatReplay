@@ -1,32 +1,35 @@
 This plugin allows for you to record a player that your AntiCheat has punished from your server and watch the hack at a later time. The hacker could be the only person online and you would still have video evidence of them hacking.
 
- AntiCheats: <br>
- Premium AntiCheats: <br>
-  [Vulcan](https://www.spigotmc.org/resources/fundraiser-vulcan-anti-cheat-advanced-cheat-detection-1-7-1-17-1.83626/) <br>
-  [Spartan](https://www.spigotmc.org/resources/spartan-anti-cheat-advanced-cheat-detection-hack-blocker-1-7-2-1-18.25638/) <br>
-  [Matrix](https://matrix.rip/) <br>
-  [GodsEye](https://www.spigotmc.org/resources/godseye-anticheat-advanced-detection.69595/) <br>
-  [Kauri](https://www.spigotmc.org/resources/kauri-anticheat-best-in-class-performance-patches-log4j-removes-closet-cheaters-1-7-10-1-18-1.53721/) <br>
-  [Karhu](https://karhu.cc/) <br>
-  [Verus](https://verus.ac/) <br>
-  [Intave](https://intave.de/) <br>
-  [Sparky](https://sparky.ac/) <br>
+## AntiCheats:
 
- Free AntiCheats: <br>
-  [Themis](https://www.spigotmc.org/resources/themis-anti-cheat-1-17-1-18-bedrock-support-paper-compatibility-free-optimized.90766/) <br>
-  [FlappyAC](https://www.spigotmc.org/resources/flappy-anticheat-1-13-1-17.92180/) <br>
-  [AntiCheatReloaded](https://www.spigotmc.org/resources/anticheatreloaded.23799/) <br>
-  [LightAntiCheat](https://www.spigotmc.org/resources/lightanticheat.96341/) <br>
-  [AntiHaxerman](https://www.spigotmc.org/resources/antihaxerman-3-2-reach.83198/) <br>
+**Premium AntiCheats**:
+ - [Vulcan](https://www.spigotmc.org/resources/83626/)
+ - [Spartan](https://www.spigotmc.org/resources/25638/)
+ - [Matrix](https://matrix.rip/)
+ - [GodsEye](https://www.spigotmc.org/resources/69595/)
+ - [Kauri](https://www.spigotmc.org/resources/53721/)
+ - [Karhu](https://karhu.cc/)
+ - [Verus](https://verus.ac/)
+ - [Intave](https://intave.de/)
+ - [Sparky](https://sparky.ac/)
+ - [Negativity V2](https://www.spigotmc.org/resources/86874/)
+
+**Free AntiCheats**:
+ - [Themis](https://www.spigotmc.org/resources/90766/)
+ - [FlappyAC](https://www.spigotmc.org/resources/92180/)
+ - [AntiCheatReloaded](https://www.spigotmc.org/resources/23799/)
+ - [LightAntiCheat](https://www.spigotmc.org/resources/96341/)
+ - [AntiHaxerman](https://www.spigotmc.org/resources/83198/)
+ - [Negativity V1](https://www.spigotmc.org/resources/48399/)
 
 
 Feel free to request other AntiCheats to be supported.​
 
 Videos:
 
-[[AntiCheatReplayExample1]](https://youtu.be/P88KS4W8IGI) <br>
-[[AntiCheatReplayExample2]](https://youtu.be/YDNmiOYlvq8) <br>
-[[AntiCheatReplayExample3]](https://youtu.be/znMqh0mWuyI)
+- [[AntiCheatReplayExample1]](https://youtu.be/P88KS4W8IGI)
+- [[AntiCheatReplayExample2]](https://youtu.be/YDNmiOYlvq8)
+- [[AntiCheatReplayExample3]](https://youtu.be/znMqh0mWuyI)
 
 
 With this you can have video proof of someone hacking on your server when they appeal and claim to be "hitting grass"
@@ -39,14 +42,14 @@ Requires a supported AntiCheat and AdvancedReplay to be installed and running on
 NOTE: Your AntiCheat has to be configured to punish someone in order to record. If players never get punished you will not get a recording.
 
 
-Setup: <br>
-Vulcan: Set "enable-api" in Vulcan's config to "true" <br>
-Soaroma: Set "enableAPI" in Soaroma's config to "true"<br>
-Sparky: Set "API.Events" in Sparky's config to "true" 
+### Setup:
+- Vulcan: Set `enable-api` in Vulcan's config to "true"
+- Soaroma: Set `enableAPI` in Soaroma's config to "true"
+- Sparky: Set `API.Events` in Sparky's config to "true"
 
 For best results, follow this configuration guide for Advanced Replay:
 
-1. Enable MySQL to store the files (This plugin can generate a lot of recordings if you have a lot of hackers. Depending on your recording length this can take up quite a bit of space.)
+Enable MySQL to store the files (This plugin can generate a lot of recordings if you have a lot of hackers. Depending on your recording length this can take up quite a bit of space.)
    In AdvancedReplay config.yml change the following values:
 ```
    cleanup_replays: 10 # This makes replays delete when they're 10 days old
@@ -60,7 +63,7 @@ For best results, follow this configuration guide for Advanced Replay:
    chat:
    enabled: true
 ```
-Default Configuration:
+### Default Configuration:
 ```YAML
 General:
 Overwrite: false  #Should we overwrite a recording if a player did the same hack on the same date?
@@ -81,7 +84,7 @@ Disabled-Recordings: #Any checks you do not want to record. These are examples, 
   Username: VulcanReplay
   Server-Name: Server
 ```
-Usage:
+### Usage:
 ```
 Most commands and permissions are handled by AdvancedReplay The only command AntiCheatReplay adds is a reload command
 
@@ -89,37 +92,29 @@ Basic usage:
 /replay list Will print a list of recordings
 /replay play <recording> Play a recording
 /replay delete <recording> Deletes a recording
-/replayreload vulcanreplay.reload Reload AntiCheatReplay
+/replay reload vulcanreplay.reload Reload AntiCheatReplay
 ```
-Known Issues:
+### Known Issues:
 
 Recording does not show any mobs/entities other than Players. You may see a player take damage in a recording from what appears to be nothing, but it could be a mob. Again, this is an issue that the AdvancedReplay developer has to fix.
 
 
-Discord:
-Please join my Discord to report any bugs.
-https://discord.gg/vK3wksVdpb
+### Discord
 
+Please join my Discord to report any bugs [here](https://discord.gg/vK3wksVdpb).
 
-Disclaimer:
+**Disclaimer:**<br>
 This plugin should be used in conjunction with the logs that are provided by your AntiCheat. This should not be your only proof that a player is hacking
 
-## Adding an AntiCheat:<br>
-Create an Enum in AntiCheat.java with the format ANTICHEAT(String name, String pluginName, Function checker, Function instantiator); <br>
+## Adding an AntiCheat:
 
-Where ANTICHEAT is the Name of your AntiCheat, name should match ANTICHEAT, this is what gets reported to bStats. <br>
+1. Create an Enum in `AntiCheat.java` with the format `ANTICHEAT(String name, String pluginName, Function checker, Function instantiator);` where ANTICHEAT is the Name of your AntiCheat, name should match ANTICHEAT, this is what gets reported to bStats.
+- `pluginName` is what your plugin is referred to internally and shows up as when you do /pl on a server.
+- `checker` can be null if you do not require any extra plugin for your AntiCheat to run. (Ignore ProtocolLib, we already require it).
+- `instantiator` should just call your Listener class. Example: `ourAntiCheatListener::new`
 
-pluginName is what your plugin is referred to internally and shows up as when you do /pl on a server. <br>
+2. Create a Listener. In the package `me.justindevb.anticheatreplay.listeners` create `YourAntiCheatListener.java`
 
-checker can be null if you do not require any extra plugin for your AntiCheat to run. (Ignore ProtocolLib, we already require it) <br>
+3. This class must extends ListenerBase and implement Listener. View another Listener class to see how to build this out. <br>
 
-instantiator should just call your Listener class. Example:  YourAntiCheatListener::new <br>
-
-Create a Listener: <br>
-In the package me.justindevb.anticheatreplay.listeners create YourAntiCheatListener.java <br>
-This class must extends ListenerBase and implement Listener. View another Listener class to see how to build this out. <br>
-
-Final step:<br>
-Add your plugin(s) as a softdepend in the plugin.yml
-
-
+4. Final step: Add your plugin(s) as a softdepend in the `plugin.yml`
