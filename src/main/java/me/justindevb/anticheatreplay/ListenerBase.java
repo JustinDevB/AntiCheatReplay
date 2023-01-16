@@ -98,13 +98,14 @@ public abstract class ListenerBase {
 		if (alertList.contains(target.getUniqueId()))
 			return;
 		alertList.add(target.getUniqueId());
+		String replayName = getReplayName(target, "report");
 		acReplay.log("Starting recording of player: " + target.getName(), false);
 		Bukkit.getScheduler().runTask(acReplay, () -> {
-			replay.recordReplay(target.getName() + "-report", Bukkit.getConsoleSender(), getNearbyPlayers(target));
+			replay.recordReplay(replayName, Bukkit.getConsoleSender(), getNearbyPlayers(target));
 		});
 
 		Bukkit.getScheduler().runTaskLaterAsynchronously(acReplay, () -> {
-			replay.stopReplay(target.getName() + "-report", true);
+			replay.stopReplay(replayName, true);
 			acReplay.log("Saved a player report:", false);
 			acReplay.log(reporter.getName() + " reported " + target.getName() + " for " + reason, false);
 
