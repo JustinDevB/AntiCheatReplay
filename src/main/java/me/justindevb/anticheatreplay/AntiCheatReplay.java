@@ -211,7 +211,10 @@ public class AntiCheatReplay extends JavaPlugin {
      * @param severe Whether this is a severe message or not
      */
     public void log(String msg, boolean severe) {
-        getLogger().log(severe ? Level.INFO : Level.SEVERE, msg);
+        if (severe)
+            getLogger().log(Level.SEVERE, msg);
+        else
+            getLogger().log(Level.INFO, msg);
     }
 
     private void checkForUpdate() {

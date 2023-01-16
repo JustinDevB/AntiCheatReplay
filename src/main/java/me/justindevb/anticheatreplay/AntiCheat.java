@@ -40,7 +40,7 @@ public enum AntiCheat {
 	THEMIS("Themis", ThemisListener::new),
 	SOAROMA("Soaroma", "SoaromaSAC", null, SoaromaListener::new),
 	FLAPPYAC("FlappyAC", "FlappyAnticheat", null, FlappyACListener::new),
-	ARTEMIS("Artemis", "Loader", null, ArtemisListener::new),
+//	ARTEMIS("Artemis", "Loader", null, ArtemisListener::new),
 	ANTICHEATRELOADED("AntiCheatReloaded", "AntiCheatReloaded", null, AntiCheatReloadedListener::new),
 	VERUS("Verus", "Verus", antiCheatReplay -> {
 		if (!hasPlugin("Verus"))
