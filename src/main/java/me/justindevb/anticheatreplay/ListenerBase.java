@@ -50,6 +50,7 @@ public abstract class ListenerBase {
 	private int GREEN = 255;
 	private int BLUE = 0;
 
+
 	protected LinkedList<UUID> alertList = new LinkedList<>();
 	protected LinkedList<UUID> punishList = new LinkedList<>();
 
