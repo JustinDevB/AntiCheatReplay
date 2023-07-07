@@ -310,6 +310,7 @@ public class AntiCheatReplay extends JavaPlugin {
         config.addDefault("General.Save-Recording-On-Disconnect", false);
         config.addDefault("General.Always-Save-Recording", false);
         config.addDefault("General.Report-Cooldown", 3);
+        config.addDefault("General.Report-Enabled", true);
     }
 
     /**
@@ -317,7 +318,8 @@ public class AntiCheatReplay extends JavaPlugin {
      */
     private void registerCommands() {
         this.getCommand("replayreload").setExecutor(new ReloadCommand());
-        this.getCommand("report").setExecutor(new ReportCommand(this));
+        if (getConfig().getBoolean("General.Report-Enabled"))
+            this.getCommand("report").setExecutor(new ReportCommand(this));
     }
 
     public boolean isChecking(final AntiCheat antiCheat) {
