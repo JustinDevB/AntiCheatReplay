@@ -330,5 +330,4 @@ public class AntiCheatReplay extends JavaPlugin {
         return this.anticheat;
     }
 
-
 }
