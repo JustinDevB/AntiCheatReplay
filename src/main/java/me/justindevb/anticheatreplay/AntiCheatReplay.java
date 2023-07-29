@@ -326,7 +326,6 @@ public class AntiCheatReplay extends JavaPlugin {
         return activeListeners.containsKey(antiCheat);
     }
 
-
     public AntiCheat getAntiCheat() {
         return this.anticheat;
     }
