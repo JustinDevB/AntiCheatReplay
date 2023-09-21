@@ -160,19 +160,18 @@
 
 		<!--
 			Spartan AC
-			Maven: n/a
+			Maven: jitpack
 			From: https://www.spigotmc.org/resources/spartan-anti-cheat-advanced-cheat-detection-hack-blocker-1-7-2-1-18-1.25638/
 		-->
 		<dependency>
-			<groupId>me.vagdedes.spartan</groupId>
+			<groupId>com.github.Vagdedes</groupId>
 			<artifactId>SpartanAPI</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/bin/SpartanAPI.jar</systemPath>
+			<version>main-SNAPSHOT</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!--
-			Spartan AC
+			Kauri AC
 			Maven: n/a
 			From: https://www.spigotmc.org/resources/kauri-anticheat-best-in-class-performance-destroy-cheaters-1-7-10-1-18-1.53721/
 		-->
