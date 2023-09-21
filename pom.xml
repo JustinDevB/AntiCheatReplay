@@ -59,7 +59,7 @@
 			<groupId>com.github.Jumper251</groupId>
 			<artifactId>AdvancedReplay</artifactId>
 			<version>master-SNAPSHOT</version>
-			<scope>provider</scope>
+			<scope>provided</scope>
 		</dependency>
 
 		<!--
