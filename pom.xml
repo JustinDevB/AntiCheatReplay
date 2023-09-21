@@ -58,9 +58,8 @@
 		<dependency>
 			<groupId>com.github.Jumper251</groupId>
 			<artifactId>AdvancedReplay</artifactId>
-			<version>1.8.3</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/bin/Replay.jar</systemPath>
+			<version>master-SNAPSHOT</version>
+			<scope>provider</scope>
 		</dependency>
 
 		<!--
