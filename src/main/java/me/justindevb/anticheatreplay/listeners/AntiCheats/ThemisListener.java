@@ -3,6 +3,7 @@ package me.justindevb.anticheatreplay.listeners.AntiCheats;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.olexorus.themis.api.ThemisApi;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,6 +19,7 @@ import me.justindevb.anticheatreplay.AntiCheatReplay;
 public class ThemisListener extends ListenerBase implements Listener {
 	
 	private List<String> disabledActions = new ArrayList<>();
+	private double minimumScore;
 
 	public ThemisListener(AntiCheatReplay acReplay) {
 		super(acReplay);
@@ -32,6 +34,9 @@ public class ThemisListener extends ListenerBase implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onViolationEvent(ViolationEvent event) {
+		// If the score is less than the minimum ignore the event
+		if (ThemisApi.getViolationScore(event.getPlayer(), event.getType()) < minimumScore) return;
+
 		Player p = event.getPlayer();
 
 		if (alertList.contains(p.getUniqueId()))
@@ -56,6 +61,7 @@ public class ThemisListener extends ListenerBase implements Listener {
 
 	private void initThemisSpecificConfig() {
 		this.disabledActions = acReplay.getConfig().getStringList("Themis.Disabled-Actions");
+		this.minimumScore = acReplay.getConfig().getDouble("Themis.Minimum-Score", 5.0);
 	}
 
 }

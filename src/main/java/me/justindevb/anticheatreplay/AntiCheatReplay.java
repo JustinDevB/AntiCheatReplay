@@ -274,6 +274,7 @@ public class AntiCheatReplay extends JavaPlugin {
         List<String> list = new ArrayList<>();
         list.add("notify");
         getConfig().addDefault("Themis.Disabled-Actions", list);
+        getConfig().addDefault("Themis.Minimum-Score", 5.0);
     }
 
     @SuppressWarnings("unused")
