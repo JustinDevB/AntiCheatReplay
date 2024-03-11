@@ -13,6 +13,7 @@ This plugin allows for you to record a player that your AntiCheat has punished f
  - [Intave](https://intave.de/)
  - [Sparky](https://sparky.ac/)
  - [Negativity V2](https://www.spigotmc.org/resources/86874/)
+ - [AstroAC](https://astroac.cc/)
 
 **Free AntiCheats**:
  - [Themis](https://www.spigotmc.org/resources/90766/)
