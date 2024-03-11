@@ -1,7 +1,8 @@
 package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
-import ac.grim.grimac.events.CommandExecuteEvent;
-import ac.grim.grimac.events.FlagEvent;
+
+import ac.grim.grimac.api.events.CommandExecuteEvent;
+import ac.grim.grimac.api.events.FlagEvent;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.justindevb.anticheatreplay.ListenerBase;
 import org.bukkit.Bukkit;

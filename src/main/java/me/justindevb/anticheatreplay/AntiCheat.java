@@ -59,6 +59,7 @@ public enum AntiCheat {
 	ANTIHAXERMAN("AntiHaxerman", AntiHaxermanListener::new),
 	GRIMAC("GrimAC", GrimACListener::new),
 	REFLEX("Reflex", ReflexListener::new),
+	ASTROAC("AstroAC", AstroACListener::new),
 	NEGATIVITY_V1("NegativityV1", "Negativity", antiCheatReplay -> {
 		if (!hasPlugin("Negativity"))
 			return false;
@@ -66,8 +67,8 @@ public enum AntiCheat {
 			return false;
 		antiCheatReplay.log("Negativity v1 detected, enabling support..", false);
 		return true;
-	}, NegativityV1Listener::new),
-	NEGATIVITY_V2("NegativityV2", "Negativity", antiCheatReplay -> {
+	}, NegativityV1Listener::new);
+/*	NEGATIVITY_V2("NegativityV2", "Negativity", antiCheatReplay -> {
 		if (!hasPlugin("Negativity"))
 			return false;
 		if (Bukkit.getPluginManager().getPlugin("Negativity").getDescription().getVersion().startsWith("1.")) // not v2
@@ -75,7 +76,7 @@ public enum AntiCheat {
 		antiCheatReplay.log("Negativity v2 detected, enabling support..", false);
 		return true;
 	}, (replay) -> createWithClass(NegativityV2Listener.class, replay));
-
+*/
 	private final String name;
 	private final String pluginName;
 	private final Function<AntiCheatReplay, Boolean> checker;

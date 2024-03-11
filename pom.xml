@@ -5,7 +5,7 @@
 
 	<groupId>me.justindevb</groupId>
 	<artifactId>AntiCheatReplay</artifactId>
-	<version>2.7.8</version>
+	<version>2.7.9</version>
 	<packaging>jar</packaging>
 
 	<name>AntiCheatReplay</name>
@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.19.3-R0.1-SNAPSHOT</version>
+			<version>1.20.4-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -58,8 +58,7 @@
 		<dependency>
 			<groupId>com.github.Jumper251</groupId>
 			<artifactId>AdvancedReplay</artifactId>
-			<version>master-SNAPSHOT</version>
-			<scope>provided</scope>
+			<version>-d0ddedae1c-1</version>
 		</dependency>
 
 		<!--
@@ -165,8 +164,9 @@
 		<dependency>
 			<groupId>com.github.Vagdedes</groupId>
 			<artifactId>SpartanAPI</artifactId>
-			<version>main-SNAPSHOT</version>
-			<scope>provided</scope>
+			<version>1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/bin/SpartanAPI.jar</systemPath>
 		</dependency>
 
 		<!--
@@ -285,15 +285,14 @@
 
 		<!--
 			GrimAC
-			Maven: n/a
+			Maven: https://github.com/GrimAnticheat/GrimAPI
 			From: https://github.com/MWHunter/Grim
 		-->
 		<dependency>
-			<groupId>grimac</groupId>
-			<artifactId>grimac</artifactId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/bin/GrimAC.jar</systemPath>
+			<groupId>com.github.MWHunter</groupId>
+			<artifactId>GrimAPI</artifactId>
+			<version>9f5aaef74b</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!--
@@ -307,12 +306,15 @@
 			<version>8</version>
 			<scope>provided</scope>
 		</dependency>
+		<!--
+			Negativity v2 is dead. Dropping support as API won't populate properly
 		<dependency>
 			<groupId>com.github.Elikill58</groupId>
 			<artifactId>Negativity</artifactId>
-			<version>v2-SNAPSHOT</version>
+			<version>2.0+</version>
 			<scope>provided</scope>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>com.github.Elikill58</groupId>
 			<artifactId>NegativityV1</artifactId>
@@ -320,6 +322,19 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/bin/NegativityV1.jar</systemPath>
 		</dependency>
+
+
+		<!--
+			Astro AntiCheat
+			From: https://github.com/Astro-Anticheat/AstroAPI
+		-->
+		<dependency>
+			<groupId>com.github.Astro-Anticheat</groupId>
+			<artifactId>AstroAPI</artifactId>
+			<version>latest</version>
+			<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -1,4 +1,4 @@
-package me.justindevb.anticheatreplay.listeners.AntiCheats;
+/*package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import org.bukkit.Bukkit;
 
@@ -38,3 +38,4 @@ public class NegativityV2Listener extends ListenerBase implements Listeners {
 			punishList.add(p.getUniqueId());
 	}
 }
+*/
