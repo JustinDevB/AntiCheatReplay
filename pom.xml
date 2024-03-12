@@ -5,7 +5,7 @@
 
 	<groupId>me.justindevb</groupId>
 	<artifactId>AntiCheatReplay</artifactId>
-	<version>2.7.9</version>
+	<version>2.7.10</version>
 	<packaging>jar</packaging>
 
 	<name>AntiCheatReplay</name>
@@ -58,7 +58,9 @@
 		<dependency>
 			<groupId>com.github.Jumper251</groupId>
 			<artifactId>AdvancedReplay</artifactId>
-			<version>-d0ddedae1c-1</version>
+			<version>1.8.5</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/bin/Replay.jar</systemPath>
 		</dependency>
 
 		<!--
