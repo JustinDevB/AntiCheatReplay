@@ -27,10 +27,10 @@ public enum AntiCheat {
 	}, (replay) -> createWithClass(KauriListener.class, replay)),
 
 	KARHU("Karhu", "Karhu", antiCheatReplay -> {
-		if (!hasPlugin("Karhu"))
+		if (!hasPlugin("KarhuLoader"))
 			return false;
 		if (!hasPlugin("KarhuAPI")) {
-			antiCheatReplay.log("KarhuAPI is required to use Kauri", true);
+			antiCheatReplay.log("KarhuAPI is required to use Karhu", true);
 			return false;
 		}
 
