@@ -2,13 +2,13 @@ package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.justindevb.anticheatreplay.ListenerBase;
+import me.vekster.lightanticheat.api.event.LACPunishmentEvent;
+import me.vekster.lightanticheat.api.event.LACViolationEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import vekster.lightanticheat.api.LacFlagEvent;
-import vekster.lightanticheat.api.LacPunishmentEvent;
 
 public class LightAntiCheatListener extends ListenerBase implements Listener {
     public LightAntiCheatListener(AntiCheatReplay acReplay) {
@@ -17,7 +17,7 @@ public class LightAntiCheatListener extends ListenerBase implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onFlag(LacFlagEvent event) {
+    public void onFlag(LACViolationEvent event) {
         Player p = event.getPlayer();
 
         if (alertList.contains(p.getUniqueId()))
@@ -25,11 +25,11 @@ public class LightAntiCheatListener extends ListenerBase implements Listener {
 
         alertList.add(p.getUniqueId());
 
-        startRecording(p, getReplayName(p, event.getCheckType()));
+        startRecording(p, getReplayName(p, event.getCheckName()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPunishment(LacPunishmentEvent event) {
+    public void onPunishment(LACPunishmentEvent event) {
         final Player p = event.getPlayer();
 
         if (!punishList.contains(p.getUniqueId()))
