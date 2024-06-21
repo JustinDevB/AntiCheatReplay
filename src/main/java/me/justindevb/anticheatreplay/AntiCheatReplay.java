@@ -83,7 +83,7 @@ public class AntiCheatReplay extends JavaPlugin {
             }
         }
 
-        if (activeListeners.isEmpty() && !getConfig().getBoolean(Keep-Enabled-With-No-Anticheat)) {
+        if (activeListeners.isEmpty() && !getConfig().getBoolean("Keep-Enabled-With-No-Anticheat")) {
             disablePlugin();
         }
     }
