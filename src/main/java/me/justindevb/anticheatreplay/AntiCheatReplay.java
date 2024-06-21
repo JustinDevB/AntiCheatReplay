@@ -83,7 +83,7 @@ public class AntiCheatReplay extends JavaPlugin {
             }
         }
 
-        if (activeListeners.isEmpty()) {
+        if (activeListeners.isEmpty() && !getConfig().getBoolean(Keep-Enabled-With-No-Anticheat)) {
             disablePlugin();
         }
     }
@@ -311,6 +311,7 @@ public class AntiCheatReplay extends JavaPlugin {
         config.addDefault("General.Always-Save-Recording", false);
         config.addDefault("General.Report-Cooldown", 3);
         config.addDefault("General.Report-Enabled", true);
+        config.addDefault("Keep-Enabled-With-No-Anticheat", false);
     }
 
     /**
