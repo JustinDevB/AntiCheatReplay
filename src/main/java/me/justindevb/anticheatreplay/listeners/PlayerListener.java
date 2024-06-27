@@ -78,7 +78,7 @@ public class PlayerListener implements Listener {
 			webhook.setUsername(WEBHOOK_USERNAME);
 			webhook.addEmbed(
 					new DiscordWebhook.EmbedObject().setTitle(Messages.REPORT_TITLE).setDescription(Messages.REPORT_DESCRIPTION)
-							.setThumbnail("http://cravatar.eu/avatar/" + target.getName() + "/64.png")
+							.setThumbnail("https://crafthead.net/avatar/" + target.getName())
 							.setColor(new Color(this.RED, this.GREEN, this.BLUE)).addField(Messages.SERVER, SERVER_NAME, true)
 							.addField("Reporter:", reporter.getName(), true)
 							.addField("Player Reported:", target.getName(), true)
