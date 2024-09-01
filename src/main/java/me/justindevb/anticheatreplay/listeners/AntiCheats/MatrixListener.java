@@ -27,7 +27,7 @@ public class MatrixListener extends ListenerBase implements Listener {
 
 		alertList.add(p.getUniqueId());
 
-		final String replayName = getReplayName(p, event.getEventName());
+		final String replayName = getReplayName(p, event.getHackType().name());
 
 		startRecording(p, replayName);
 	}

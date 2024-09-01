@@ -5,7 +5,7 @@
 
 	<groupId>me.justindevb</groupId>
 	<artifactId>AntiCheatReplay</artifactId>
-	<version>2.7.13</version>
+	<version>2.7.14</version>
 	<packaging>jar</packaging>
 
 	<name>AntiCheatReplay</name>
@@ -98,10 +98,17 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/bin/VulcanAPI.jar</systemPath>
 		</dependency>
+
+		<!--
+			Matrix
+			Maven: https://matrix.rip/docs/developer/api
+			From:  https://matrix.rip
+			-->
+
 		<dependency>
-			<groupId>matrix</groupId>
-			<artifactId>matrix</artifactId>
-			<version>1</version>
+			<groupId>me.rerere.matrix</groupId>
+			<artifactId>Matrix</artifactId>
+			<version>1.0.0</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/bin/MatrixAPI.jar</systemPath>
 		</dependency>
