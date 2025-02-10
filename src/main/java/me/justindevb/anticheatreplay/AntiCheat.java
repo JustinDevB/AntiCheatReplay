@@ -10,6 +10,7 @@ import java.util.function.Function;
 import javax.annotation.Nullable;
 
 public enum AntiCheat {
+	GLADIATOR("Gladiator", GladiatorListener::new),
 	VULCAN("Vulcan", VulcanListener::new),
 	SPARTAN("Spartan", SpartanListener::new),
 	MATRIX("Matrix", MatrixListener::new),

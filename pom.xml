@@ -5,7 +5,7 @@
 
 	<groupId>me.justindevb</groupId>
 	<artifactId>AntiCheatReplay</artifactId>
-	<version>2.7.16</version>
+	<version>2.7.17</version>
 	<packaging>jar</packaging>
 
 	<name>AntiCheatReplay</name>
@@ -15,7 +15,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mainClass>me.justindevb.anticheatreplay.AntiCheatReplay</mainClass>
 		<author>JustinDevB</author>
-		<mavan.compiler.source>1.8</mavan.compiler.source>
+		<mavan.compiler.source>17</mavan.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 
 	<repositories>
@@ -330,6 +331,14 @@
 			<version>1.12.3</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/bin/NegativityV1.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>me.justindevb</groupId>
+			<artifactId>GladiatorAPI</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/bin/GladiatorAPI-1.0-SNAPSHOT.jar</systemPath>
 		</dependency>
 
 
