@@ -340,6 +340,13 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/bin/GladiatorAPI-1.0-SNAPSHOT.jar</systemPath>
 		</dependency>
+		<dependency>
+			<groupId>ai.idealistic.vacan</groupId>
+			<artifactId>Vacan</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/bin/Vacan.jar</systemPath>
+		</dependency>
 
 
 		<!--
