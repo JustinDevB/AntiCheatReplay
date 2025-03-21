@@ -4,7 +4,7 @@ This plugin allows for you to record a player that your AntiCheat has punished f
 
 **Premium AntiCheats**:
  - [Vulcan](https://www.spigotmc.org/resources/83626/)
- - [Spartan](https://www.spigotmc.org/resources/25638/)
+ - [Spartan/Vacan](https://www.spigotmc.org/resources/25638/)
  - [Matrix](https://matrix.rip/)
  - [GodsEye](https://www.spigotmc.org/resources/69595/)
  - [Kauri](https://www.spigotmc.org/resources/53721/)
