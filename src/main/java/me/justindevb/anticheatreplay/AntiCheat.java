@@ -10,8 +10,10 @@ import java.util.function.Function;
 import javax.annotation.Nullable;
 
 public enum AntiCheat {
+	GLADIATOR("Gladiator", GladiatorListener::new),
 	VULCAN("Vulcan", VulcanListener::new),
 	SPARTAN("Spartan", SpartanListener::new),
+	VACAN("Vacan", VacanListener::new),
 	MATRIX("Matrix", MatrixListener::new),
 	GODSEYE("GodsEye", GodsEyeListener::new),
 	KAURI("Kauri", "Kauri", antiCheatReplay -> {

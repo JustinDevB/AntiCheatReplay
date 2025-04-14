@@ -5,7 +5,7 @@
 
 	<groupId>me.justindevb</groupId>
 	<artifactId>AntiCheatReplay</artifactId>
-	<version>2.7.13</version>
+	<version>2.7.19</version>
 	<packaging>jar</packaging>
 
 	<name>AntiCheatReplay</name>
@@ -15,7 +15,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mainClass>me.justindevb.anticheatreplay.AntiCheatReplay</mainClass>
 		<author>JustinDevB</author>
-		<mavan.compiler.source>1.8</mavan.compiler.source>
+		<mavan.compiler.source>17</mavan.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 
 	<repositories>
@@ -58,7 +59,7 @@
 		<dependency>
 			<groupId>com.github.Jumper251</groupId>
 			<artifactId>AdvancedReplay</artifactId>
-			<version>1.8.5</version>
+			<version>1.8.12</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/bin/Replay.jar</systemPath>
 		</dependency>
@@ -98,10 +99,17 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/bin/VulcanAPI.jar</systemPath>
 		</dependency>
+
+		<!--
+			Matrix
+			Maven: https://matrix.rip/docs/developer/api
+			From:  https://matrix.rip
+			-->
+
 		<dependency>
-			<groupId>matrix</groupId>
-			<artifactId>matrix</artifactId>
-			<version>1</version>
+			<groupId>me.rerere.matrix</groupId>
+			<artifactId>Matrix</artifactId>
+			<version>1.0.0</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/bin/MatrixAPI.jar</systemPath>
 		</dependency>
@@ -290,12 +298,16 @@
 			Maven: https://github.com/GrimAnticheat/GrimAPI
 			From: https://github.com/MWHunter/Grim
 		-->
+
+
 		<dependency>
-			<groupId>com.github.MWHunter</groupId>
+			<groupId>com.github.GrimAnticheat</groupId>
 			<artifactId>GrimAPI</artifactId>
-			<version>9f5aaef74b</version>
+			<version>master</version>
 			<scope>provided</scope>
 		</dependency>
+
+
 
 		<!--
 			Reflex
@@ -323,6 +335,21 @@
 			<version>1.12.3</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/bin/NegativityV1.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>me.justindevb</groupId>
+			<artifactId>GladiatorAPI</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/bin/GladiatorAPI-1.0-SNAPSHOT.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>ai.idealistic.vacan</groupId>
+			<artifactId>Vacan</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/bin/Vacan.jar</systemPath>
 		</dependency>
 
 

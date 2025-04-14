@@ -73,9 +73,11 @@ public abstract class ListenerBase {
 	 */
 	protected void startRecording(Player p, String replayName) {
 		RecordingStartEvent startEvent = new RecordingStartEvent(p, replayName);
-		Bukkit.getScheduler().scheduleSyncDelayedTask(acReplay, () -> {
+
+		Bukkit.getScheduler().runTask(acReplay, () -> {
 			Bukkit.getPluginManager().callEvent(startEvent);
 		});
+
 		if (startEvent.isCancelled())
 			return;
 
@@ -140,9 +142,11 @@ public abstract class ListenerBase {
 				}
 				if (punishList.contains(p.getUniqueId())) {
 					RecordingSaveEvent saveEvent = new RecordingSaveEvent(p, replayName);
-					Bukkit.getScheduler().scheduleSyncDelayedTask(acReplay, () -> {
+
+					Bukkit.getScheduler().runTask(acReplay, () -> {
 						Bukkit.getPluginManager().callEvent(saveEvent);
 					});
+
 
 					if (saveEvent.isCancelled())
 						return;

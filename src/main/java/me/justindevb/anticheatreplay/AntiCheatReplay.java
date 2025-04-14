@@ -108,6 +108,8 @@ public class AntiCheatReplay extends JavaPlugin {
 
         initDiscordConfigSettings();
 
+        initGladiatorConfigSettings();
+
         initVulcanConfigSettings();
 
         // initSpartanConfigSettings();
@@ -261,6 +263,12 @@ public class AntiCheatReplay extends JavaPlugin {
         config.addDefault(path + "Red", 0);
         config.addDefault(path + "Green", 255);
         config.addDefault(path + "Blue", 0);
+    }
+
+    private void initGladiatorConfigSettings() {
+        List<String> list = new ArrayList<>();
+        getConfig().addDefault("Gladiator.Disabled-Recordings", list);
+        getConfig().addDefault("Gladiator.Record-Experimental-Checks", true);
     }
 
     private void initVulcanConfigSettings() {
