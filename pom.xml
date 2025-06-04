@@ -5,7 +5,7 @@
 
 	<groupId>me.justindevb</groupId>
 	<artifactId>AntiCheatReplay</artifactId>
-	<version>2.7.19</version>
+	<version>2.7.20</version>
 	<packaging>jar</packaging>
 
 	<name>AntiCheatReplay</name>
@@ -40,6 +40,11 @@
 			<id>reflex.public</id>
 			<name>Public Reflex Repository</name>
 			<url>https://archiva.reflex.rip/repository/public/</url>
+		</repository>
+		<repository>
+			<id>grimac-snapshots</id>
+			<name>GrimAC Repository</name>
+			<url>https://repo.grim.ac/snapshots</url>
 		</repository>
 	</repositories>
 
@@ -301,14 +306,10 @@
 
 
 		<dependency>
-			<groupId>com.github.GrimAnticheat</groupId>
+			<groupId>ac.grim.grimac</groupId>
 			<artifactId>GrimAPI</artifactId>
-			<version>master</version>
-			<scope>provided</scope>
+			<version>1.1.0.0</version>
 		</dependency>
-
-
-
 		<!--
 			Reflex
 			Maven: https://github.com/MeGysssTaa/ReflexIssueTracker/wiki/Reflex-API#maven
