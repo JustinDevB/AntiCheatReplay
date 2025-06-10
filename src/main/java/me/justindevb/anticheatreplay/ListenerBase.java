@@ -264,7 +264,7 @@ public abstract class ListenerBase {
 			webhook.setUsername(WEBHOOK_USERNAME);
 			webhook.addEmbed(
 					new DiscordWebhook.EmbedObject().setTitle(Messages.TITLE).setDescription(Messages.DESCRIPTION)
-							.setThumbnail("http://cravatar.eu/avatar/" + player.getName() + "/64.png")
+							.setThumbnail("https://crafthead.net/avatar/" + player.getName())
 							.setColor(new Color(this.RED, this.GREEN, this.BLUE)).addField(Messages.SERVER, SERVER_NAME, true)
 							.addField(Messages.ONLINE_FOR, minutesOnline + " " + Messages.ONLINE_FOR_MINUTES, true)
 							.addField(Messages.RECORDING_NAME, "`" + recording + "`", true)
