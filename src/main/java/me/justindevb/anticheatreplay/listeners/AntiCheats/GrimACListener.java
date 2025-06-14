@@ -1,35 +1,43 @@
 package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 
+import ac.grim.grimac.api.GrimAbstractAPI;
+import ac.grim.grimac.api.event.GrimEvent;
+import ac.grim.grimac.api.event.GrimEventListener;
 import ac.grim.grimac.api.event.events.CommandExecuteEvent;
 import ac.grim.grimac.api.event.events.FlagEvent;
+import ac.grim.grimac.api.plugin.GrimPlugin;
 import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.justindevb.anticheatreplay.ListenerBase;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GrimACListener extends ListenerBase implements Listener {
+public class GrimACListener extends ListenerBase implements GrimEventListener {
 	
     private List<String> punishCommands = new ArrayList<>();
 
     public GrimACListener(AntiCheatReplay acReplay) {
         super(acReplay);
-        Bukkit.getPluginManager().registerEvents(this, acReplay);
+
 
         setupGrim();
     }
 
     private void setupGrim() {
+
+        RegisteredServiceProvider<GrimAbstractAPI> provider = Bukkit.getServicesManager().getRegistration(GrimAbstractAPI.class);
+        GrimAbstractAPI api = provider.getProvider();
+
         initGrimSpecificConfig();
     }
 
 
-    @EventHandler
     public void onFlag(FlagEvent event) {
         Player p = Bukkit.getPlayer(event.getPlayer().getUniqueId());
 
@@ -42,7 +50,6 @@ public class GrimACListener extends ListenerBase implements Listener {
 
     }
 
-    @EventHandler
     public void onCommand(CommandExecuteEvent event) {
         if (!parseCommand(event.getCommand()))
             return;
@@ -72,5 +79,9 @@ public class GrimACListener extends ListenerBase implements Listener {
         this.punishCommands = acReplay.getConfig().getStringList("Grim.Punish-Commands");
     }
 
+    @Override
+    public void handle(GrimEvent grimEvent) throws Exception {
+
+    }
 }
 
