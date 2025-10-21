@@ -15,7 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mainClass>me.justindevb.anticheatreplay.AntiCheatReplay</mainClass>
 		<author>JustinDevB</author>
-		<mavan.compiler.source>17</mavan.compiler.source>
+		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 	</properties>
 
