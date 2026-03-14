@@ -3,7 +3,8 @@ main: ${mainClass}
 version: ${project.version}
 load: POSTWORLD
 author: ${author}
-depend: [AdvancedReplay]
+depend: [BetterReplay]
+folia-supported: true
 softdepend: [Vulcan, Spartan, Matrix, GodsEye, Atlas, Kauri, Karhu, KarhuAPI, Themis, Soaroma, FlappyAnticheat, OreAnnouncer, AntiCheatReloaded, Artemis, Verus, VerusAPI, Intave, Sparky, LightAntiCheat, AntiHaxerman, GrimAC, Reflex, Negativity]
 api-version: 1.13
 commands:

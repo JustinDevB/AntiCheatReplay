@@ -32,7 +32,8 @@ public class Messages {
 	public static String REPORT_IMMUNE;
 
 	public Messages() {
-		Bukkit.getScheduler().runTaskAsynchronously(AntiCheatReplay.getInstance(), () -> {
+		//Bukkit.getScheduler().runTaskAsynchronously(AntiCheatReplay.getInstance(), () -> {
+		AntiCheatReplay.getInstance().getFoliaLib().getScheduler().runAsync(task -> {
 			File file = new File(AntiCheatReplay.getInstance().getDataFolder(), "Messages.yml");
 			config = YamlConfiguration.loadConfiguration(file);
 

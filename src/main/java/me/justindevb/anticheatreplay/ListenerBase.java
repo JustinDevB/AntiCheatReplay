@@ -14,14 +14,14 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import me.justindevb.anticheatreplay.api.events.WebhookSendEvent;
+import me.justindevb.replay.api.ReplayAPI;
+import me.justindevb.replay.api.ReplayManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import me.jumper251.replay.api.ReplayAPI;
 import me.justindevb.anticheatreplay.api.events.RecordingSaveEvent;
 import me.justindevb.anticheatreplay.api.events.RecordingStartEvent;
 import me.justindevb.anticheatreplay.utils.DiscordWebhook;
@@ -30,7 +30,7 @@ import me.justindevb.anticheatreplay.utils.Messages;
 public abstract class ListenerBase {
 	
 	protected AntiCheatReplay acReplay;
-	protected ReplayAPI replay;
+	protected ReplayManager replay;
 	private boolean saveRecording = false;
 
 	private boolean notifyStaff = false;
@@ -56,13 +56,13 @@ public abstract class ListenerBase {
 
 	public ListenerBase(AntiCheatReplay acReplay) {
 		this.acReplay = acReplay;
-		this.replay = ReplayAPI.getInstance();
+		this.replay = ReplayAPI.get();
 
 		initConfigFields();
 	}
 
 	public void disinit() {
-		// Do nothing
+
 	}
 
 	/**
@@ -74,7 +74,8 @@ public abstract class ListenerBase {
 	protected void startRecording(Player p, String replayName) {
 		RecordingStartEvent startEvent = new RecordingStartEvent(p, replayName);
 
-		Bukkit.getScheduler().runTask(acReplay, () -> {
+
+		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
 			Bukkit.getPluginManager().callEvent(startEvent);
 		});
 
@@ -82,9 +83,8 @@ public abstract class ListenerBase {
 			return;
 
 		acReplay.log("Starting recording of player: " + p.getName(), false);
-		Bukkit.getScheduler().runTask(acReplay, () -> {
-
-			replay.recordReplay(replayName, Bukkit.getConsoleSender(), getNearbyPlayers(p));
+		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
+			replay.startRecording(replayName, List.of(p), 60);
 		});
 
 
@@ -103,12 +103,8 @@ public abstract class ListenerBase {
 		alertList.add(target.getUniqueId());
 		String replayName = getReplayName(target, "report");
 		acReplay.log("Starting recording of player: " + target.getName(), false);
-		Bukkit.getScheduler().runTask(acReplay, () -> {
-			replay.recordReplay(replayName, Bukkit.getConsoleSender(), getNearbyPlayers(target));
-		});
 
-		Bukkit.getScheduler().runTaskLaterAsynchronously(acReplay, () -> {
-			replay.stopReplay(replayName, true);
+		acReplay.getFoliaLib().getScheduler().runLaterAsync(() -> {
 			acReplay.log("Saved a player report:", false);
 			acReplay.log(reporter.getName() + " reported " + target.getName() + " for " + reason, false);
 
@@ -131,9 +127,7 @@ public abstract class ListenerBase {
 	private void runLogic(Player p, String replayName) {
 		PlayerCache cachedPlayer = acReplay.getCachedPlayer(p.getUniqueId());
 		long loginTime = cachedPlayer.getLoginTimeStamp();
-		new BukkitRunnable() {
-			@Override
-			public void run() {
+		acReplay.getFoliaLib().getScheduler().runLaterAsync(() -> {
 				if (ALWAYS_SAVE_RECORDING)
 					punishList.add(p.getUniqueId());
 				if (!p.isOnline() || p == null) {
@@ -143,7 +137,7 @@ public abstract class ListenerBase {
 				if (punishList.contains(p.getUniqueId())) {
 					RecordingSaveEvent saveEvent = new RecordingSaveEvent(p, replayName);
 
-					Bukkit.getScheduler().runTask(acReplay, () -> {
+					acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
 						Bukkit.getPluginManager().callEvent(saveEvent);
 					});
 
@@ -151,7 +145,7 @@ public abstract class ListenerBase {
 					if (saveEvent.isCancelled())
 						return;
 
-					replay.stopReplay(replayName, true);
+					replay.stopReplay(replayName);
 					acReplay.log("Saving recording of attempted hack...", false);
 					acReplay.log("Saved as: " + replayName, false);
 					sendDiscordWebhook(replayName, p, getOnlineTime(loginTime, System.currentTimeMillis()));
@@ -160,9 +154,9 @@ public abstract class ListenerBase {
 					if (notifyStaff) {
 						String notification = Messages.NOTIFY_RECORDING;
 						notification = notification.replace("%r", replayName);
-						for (Player p : Bukkit.getOnlinePlayers()) {
-							if (p.hasPermission("AntiCheatReplay.recording-notify"))
-								p.sendMessage(ChatColor.GOLD + notification);
+						for (Player pl : Bukkit.getOnlinePlayers()) {
+							if (pl.hasPermission("AntiCheatReplay.recording-notify"))
+								pl.sendMessage(ChatColor.GOLD + notification);
 						}
 					}
 
@@ -170,20 +164,18 @@ public abstract class ListenerBase {
 						alertList.remove(p.getUniqueId());
 
 				} else {
-					replay.stopReplay(replayName, false);
+					replay.stopReplay(replayName);
 					if (alertList.contains(p.getUniqueId()))
 						alertList.remove(p.getUniqueId());
 					acReplay.log("Not saving recording...", false);
 				}
-
-			}
-		}.runTaskLaterAsynchronously(acReplay, 20L * 60L * delay);
+	},20L * 60L * delay);
 	}
 
 
 	/**
 	 * Get all players within X distance from the target player
-	 * 
+	 *
 	 * @param p
 	 * @return
 	 */
@@ -251,14 +243,14 @@ public abstract class ListenerBase {
 			return;
 
 		WebhookSendEvent webhookSendEvent = new WebhookSendEvent();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(acReplay, () -> {
+		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
 			Bukkit.getPluginManager().callEvent(webhookSendEvent);
 		});
 
 		if (webhookSendEvent.isCancelled())
 			return;
 
-		Bukkit.getScheduler().runTaskAsynchronously(acReplay, () -> {
+		acReplay.getFoliaLib().getScheduler().runAsync(task -> {
 			final DiscordWebhook webhook = new DiscordWebhook(WEBHOOK_URL);
 			webhook.setAvatarUrl(WEBHOOK_AVATAR);
 			webhook.setUsername(WEBHOOK_USERNAME);

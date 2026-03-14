@@ -46,6 +46,10 @@
 			<name>GrimAC Repository</name>
 			<url>https://repo.grim.ac/snapshots</url>
 		</repository>
+		<repository>
+			<id>tcoded-releases</id>
+			<url>https://repo.tcoded.com/releases</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -106,12 +110,21 @@
 			<systemPath>${project.basedir}/bin/VulcanAPI.jar</systemPath>
 		</dependency>
 
+		<!-- Replay Plugin
+		-->
+		<dependency>
+			<groupId>me.justindevb</groupId>
+			<artifactId>BetterReplay</artifactId>
+			<version>1.2-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/bin/BetterReplay-1.2-SNAPSHOT.jar</systemPath>
+		</dependency>
+
 		<!--
 			Matrix
 			Maven: https://matrix.rip/docs/developer/api
 			From:  https://matrix.rip
 			-->
-
 		<dependency>
 			<groupId>me.rerere.matrix</groupId>
 			<artifactId>Matrix</artifactId>
@@ -366,6 +379,13 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>com.tcoded</groupId>
+			<artifactId>FoliaLib</artifactId>
+			<version>0.5.1</version>
+			<scope>compile</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -376,19 +396,23 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.7.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>16</source>
+					<target>16</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.6.1</version>
 				<configuration>
 					<relocations>
 						<relocation>
 							<pattern>org.bstats</pattern>
 							<shadedPattern>me.justindevb</shadedPattern>
+						</relocation>
+						<relocation>
+							<pattern>com.tcoded.folialib</pattern>
+							<shadedPattern>me.justindevb.lib.folialib</shadedPattern>
 						</relocation>
 					</relocations>
 				</configuration>

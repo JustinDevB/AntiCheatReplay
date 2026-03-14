@@ -1,5 +1,6 @@
 package me.justindevb.anticheatreplay;
 
+import com.tcoded.folialib.FoliaLib;
 import dev.brighten.api.KauriAPI;
 import me.justindevb.anticheatreplay.api.AntiCheatReplayAPI;
 import me.justindevb.anticheatreplay.commands.ReloadCommand;
@@ -26,6 +27,7 @@ public class AntiCheatReplay extends JavaPlugin {
     private final Map<AntiCheat, ListenerBase> activeListeners = new EnumMap<>(AntiCheat.class);
     private final HashMap<UUID, PlayerCache> playerCache = new HashMap<>();
     private AntiCheat anticheat = null;
+    private FoliaLib foliaLib;
 
     public static AntiCheatReplay getInstance() {
         return instance;
@@ -33,9 +35,14 @@ public class AntiCheatReplay extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
-            instance = this;
+        instance = this;
+        foliaLib = new FoliaLib(this);
+        initialInit();
 
+    }
+
+    private void initialInit() {
+        foliaLib.getScheduler().runNextTick(task -> {
             checkRequiredPlugins();
             registerListener();
             initConfig();
@@ -45,7 +52,6 @@ public class AntiCheatReplay extends JavaPlugin {
             initBstats();
             new AntiCheatReplayAPI(this);
         });
-
     }
 
     @Override
@@ -67,8 +73,6 @@ public class AntiCheatReplay extends JavaPlugin {
 
     private void registerListener() {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
-        // Bukkit.getPluginManager().registerEvents(new OreAnnouncerListener(this),
-        // this);
     }
 
     /**
@@ -92,9 +96,9 @@ public class AntiCheatReplay extends JavaPlugin {
      * Check if ReplayAPI is running on the server. If not disable AntiCheatReplay
      */
     private void checkReplayAPI() {
-        Plugin plugin = Bukkit.getPluginManager().getPlugin("AdvancedReplay");
+        Plugin plugin = Bukkit.getPluginManager().getPlugin("BetterReplay");
         if (plugin == null || !plugin.isEnabled()) {
-            log("AdvancedReplay is required to run this plugin. Shutting down...", true);
+            log("BetterReplay is required to run this plugin. Shutting down...", true);
             Bukkit.getPluginManager().disablePlugin(this);
         }
     }
@@ -234,7 +238,8 @@ public class AntiCheatReplay extends JavaPlugin {
      * Attempt to handle if the plugin was reloaded with /reload or PlugMan
      */
     private void handleReload() {
-        Bukkit.getScheduler().runTask(this, () -> {
+        //Bukkit.getScheduler().runTask(this, () -> {
+        getFoliaLib().getScheduler().runNextTick(task -> {
             if (!Bukkit.getOnlinePlayers().isEmpty()) {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     PlayerCache cachedPlayer = new PlayerCache(p, this);
@@ -338,4 +343,7 @@ public class AntiCheatReplay extends JavaPlugin {
         return this.anticheat;
     }
 
+    public FoliaLib getFoliaLib() {
+        return foliaLib;
+    }
 }

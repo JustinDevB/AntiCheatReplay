@@ -51,7 +51,7 @@ public class PlayerListener implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onQuit(PlayerQuitEvent event) {
 		Player p = event.getPlayer();
-		Bukkit.getScheduler().scheduleSyncDelayedTask(acReplay, () -> {
+		acReplay.getFoliaLib().getScheduler().runLater(() -> {
 			acReplay.removeCachedPlayer(p.getUniqueId());
 		}, 10L);
 	}
@@ -72,7 +72,7 @@ public class PlayerListener implements Listener {
 		if (!WEBHOOK_ENABLED)
 			return;
 
-		Bukkit.getScheduler().runTaskLaterAsynchronously(acReplay, () -> {
+		acReplay.getFoliaLib().getScheduler().runLaterAsync(() -> {
 			final DiscordWebhook webhook = new DiscordWebhook(WEBHOOK_URL);
 			webhook.setAvatarUrl(WEBHOOK_AVATAR);
 			webhook.setUsername(WEBHOOK_USERNAME);

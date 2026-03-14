@@ -86,7 +86,8 @@ public class SoaromaListener extends ListenerBase implements Listener {
 			e.printStackTrace();
 		}
 
-		Bukkit.getScheduler().runTask(acReplay, () -> {
+		//Bukkit.getScheduler().runTask(acReplay, () -> {
+		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
 			Bukkit.getPluginManager().disablePlugin(acReplay);
 		});
 
