@@ -5,7 +5,7 @@
 
 	<groupId>me.justindevb</groupId>
 	<artifactId>AntiCheatReplay</artifactId>
-	<version>2.7.22</version>
+	<version>3.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>AntiCheatReplay</name>
