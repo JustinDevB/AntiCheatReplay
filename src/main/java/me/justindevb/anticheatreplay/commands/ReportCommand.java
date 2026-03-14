@@ -75,7 +75,7 @@ public class ReportCommand extends ListenerBase implements CommandExecutor {
         }
 
         PlayerReportEvent reportEvent = new PlayerReportEvent(p, Bukkit.getPlayer(strings[0]), reason);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(acReplay, () -> {
+        acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
            Bukkit.getPluginManager().callEvent(reportEvent);
         });
 
@@ -99,7 +99,7 @@ public class ReportCommand extends ListenerBase implements CommandExecutor {
 
         cachedPlayer.setReportCooldown(true);
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(acReplay, () -> {
+        acReplay.getFoliaLib().getScheduler().runLaterAsync(() -> {
             cachedPlayer.setReportCooldown(false);
         }, 20L * 60L * this.reportCooldown);
 

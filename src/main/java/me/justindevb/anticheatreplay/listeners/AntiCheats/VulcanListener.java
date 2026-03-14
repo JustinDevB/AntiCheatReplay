@@ -67,7 +67,8 @@ public class VulcanListener extends ListenerBase implements Listener {
      * Check to see if the Vulcan API is enabled in Vulcan's config.yml
      */
     private void checkVulcanApi() {
-        Bukkit.getScheduler().runTaskAsynchronously(acReplay, () -> {
+        //Bukkit.getScheduler().runTaskAsynchronously(acReplay, () -> {
+        acReplay.getFoliaLib().getScheduler().runAsync(task -> {
             acReplay.log("Checking if Vulcan API is enabled", false);
             File file = new File(acReplay.getDataFolder().getParentFile(),
                     "Vulcan" + System.getProperty("file.separator") + "config.yml");
@@ -96,7 +97,8 @@ public class VulcanListener extends ListenerBase implements Listener {
                 e.printStackTrace();
             }
 
-            Bukkit.getScheduler().runTask(acReplay, () -> {
+            //Bukkit.getScheduler().runTask(acReplay, () -> {
+            acReplay.getFoliaLib().getScheduler().runNextTick(t -> {
                 Bukkit.getPluginManager().disablePlugin(acReplay);
             });
         });

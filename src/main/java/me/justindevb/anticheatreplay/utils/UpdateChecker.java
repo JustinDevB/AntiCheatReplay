@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
+import me.justindevb.anticheatreplay.AntiCheatReplay;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,7 +22,8 @@ public class UpdateChecker {
 	}
 
 	public void getVersion(final Consumer<String> consumer) {
-		Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+		//Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+		AntiCheatReplay.getInstance().getFoliaLib().getScheduler().runAsync(task -> {
 			try (InputStream inputStream = new URL(
 					"https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream();
 					Scanner scanner = new Scanner(inputStream)) {
