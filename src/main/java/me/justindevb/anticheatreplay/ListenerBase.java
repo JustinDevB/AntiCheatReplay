@@ -84,7 +84,7 @@ public abstract class ListenerBase {
 
 		acReplay.log("Starting recording of player: " + p.getName(), false);
 		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
-			replay.startRecording(replayName, List.of(p), 60);
+			replay.startRecording(replayName, List.of(getNearbyPlayers(p)), Math.toIntExact(delay));
 		});
 
 
@@ -127,6 +127,7 @@ public abstract class ListenerBase {
 	private void runLogic(Player p, String replayName) {
 		PlayerCache cachedPlayer = acReplay.getCachedPlayer(p.getUniqueId());
 		long loginTime = cachedPlayer.getLoginTimeStamp();
+
 		acReplay.getFoliaLib().getScheduler().runLaterAsync(() -> {
 				if (ALWAYS_SAVE_RECORDING)
 					punishList.add(p.getUniqueId());
@@ -145,7 +146,7 @@ public abstract class ListenerBase {
 					if (saveEvent.isCancelled())
 						return;
 
-					replay.stopReplay(replayName);
+					replay.stopRecording(replayName, true);
 					acReplay.log("Saving recording of attempted hack...", false);
 					acReplay.log("Saved as: " + replayName, false);
 					sendDiscordWebhook(replayName, p, getOnlineTime(loginTime, System.currentTimeMillis()));
@@ -164,7 +165,7 @@ public abstract class ListenerBase {
 						alertList.remove(p.getUniqueId());
 
 				} else {
-					replay.stopReplay(replayName);
+					replay.stopRecording(replayName, false);
 					if (alertList.contains(p.getUniqueId()))
 						alertList.remove(p.getUniqueId());
 					acReplay.log("Not saving recording...", false);

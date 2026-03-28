@@ -117,7 +117,7 @@
 			<artifactId>BetterReplay</artifactId>
 			<version>1.2-SNAPSHOT</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/bin/BetterReplay-1.2-SNAPSHOT.jar</systemPath>
+			<systemPath>${project.basedir}/bin/BetterReplay-1.3.2-SNAPSHOT.jar</systemPath>
 		</dependency>
 
 		<!--
