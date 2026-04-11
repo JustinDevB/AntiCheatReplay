@@ -23,6 +23,7 @@ This plugin allows for you to record a player that your AntiCheat has punished f
  - [LightAntiCheat](https://www.spigotmc.org/resources/96341/)
  - [AntiHaxerman](https://www.spigotmc.org/resources/83198/)
  - [Negativity V1](https://www.spigotmc.org/resources/48399/)
+ - [GrimAC](https://modrinth.com/plugin/grimac)
 
 
 Feel free to request other AntiCheats to be supported.​

@@ -59,7 +59,19 @@ public enum AntiCheat {
 	INTAVE("Intave", IntaveListener::new),
 	LIGHTANTICHEAT("LightAntiCheat", LightAntiCheatListener::new),
 	ANTIHAXERMAN("AntiHaxerman", AntiHaxermanListener::new),
-//	GRIMAC("GrimAC", GrimACListener::new),
+	GRIMAC("GrimAC", "GrimAC", antiCheatReplay -> hasPlugin("GrimAC"), antiCheatReplay -> {
+		try {
+			return (ListenerBase) Class
+					.forName("me.justindevb.anticheatreplay.listeners.AntiCheats.GrimACListener")
+					.getConstructor(AntiCheatReplay.class)
+					.newInstance(antiCheatReplay);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}),
+
+
 	REFLEX("Reflex", ReflexListener::new),
 	ASTROAC("AstroAC", AstroACListener::new),
 	NEGATIVITY_V1("NegativityV1", "Negativity", antiCheatReplay -> {

@@ -84,7 +84,7 @@ public abstract class ListenerBase {
 
 		acReplay.log("Starting recording of player: " + p.getName(), false);
 		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
-			replay.startRecording(replayName, List.of(getNearbyPlayers(p)), Math.toIntExact(delay));
+			replay.startRecording(replayName, List.of(getNearbyPlayers(p)), Math.toIntExact(delay * 60));
 		});
 
 
