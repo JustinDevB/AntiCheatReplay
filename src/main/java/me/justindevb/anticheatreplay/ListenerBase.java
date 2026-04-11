@@ -170,7 +170,7 @@ public abstract class ListenerBase {
 						alertList.remove(p.getUniqueId());
 					acReplay.log("Not saving recording...", false);
 				}
-	},20L * 60L * delay * 60L); //BetterReplay handles recording length in seconds. So we need to convert it into minutes
+	},20L * 60L * delay);
 	}
 
 
