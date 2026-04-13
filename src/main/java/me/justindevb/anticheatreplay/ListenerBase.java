@@ -7,10 +7,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
 
 import me.justindevb.anticheatreplay.api.events.WebhookSendEvent;
@@ -51,8 +51,8 @@ public abstract class ListenerBase {
 	private int BLUE = 0;
 
 
-	protected LinkedList<UUID> alertList = new LinkedList<>();
-	protected LinkedList<UUID> punishList = new LinkedList<>();
+	protected ConcurrentLinkedDeque<UUID> alertList = new ConcurrentLinkedDeque<>();
+	protected ConcurrentLinkedDeque<UUID> punishList = new ConcurrentLinkedDeque<>();
 
 	public ListenerBase(AntiCheatReplay acReplay) {
 		this.acReplay = acReplay;
@@ -84,7 +84,7 @@ public abstract class ListenerBase {
 
 		acReplay.log("Starting recording of player: " + p.getName(), false);
 		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
-			replay.startRecording(replayName, List.of(getNearbyPlayers(p)), Math.toIntExact(delay * 60));
+			replay.startRecording(replayName, List.of(getNearbyPlayers(p)), 0);
 		});
 
 
@@ -129,9 +129,10 @@ public abstract class ListenerBase {
 		long loginTime = cachedPlayer.getLoginTimeStamp();
 
 		acReplay.getFoliaLib().getScheduler().runLaterAsync(() -> {
+			try {
 				if (ALWAYS_SAVE_RECORDING)
 					punishList.add(p.getUniqueId());
-				if (!p.isOnline() || p == null) {
+				if (p == null || !p.isOnline()) {
 					if (SAVE_ON_DISCONNECT)
 						punishList.add(p.getUniqueId());
 				}
@@ -150,7 +151,6 @@ public abstract class ListenerBase {
 					acReplay.log("Saving recording of attempted hack...", false);
 					acReplay.log("Saved as: " + replayName, false);
 					sendDiscordWebhook(replayName, p, getOnlineTime(loginTime, System.currentTimeMillis()));
-					punishList.remove(p.getUniqueId());
 
 					if (notifyStaff) {
 						String notification = Messages.NOTIFY_RECORDING;
@@ -161,15 +161,14 @@ public abstract class ListenerBase {
 						}
 					}
 
-					if (alertList.contains(p.getUniqueId()))
-						alertList.remove(p.getUniqueId());
-
 				} else {
 					replay.stopRecording(replayName, false);
-					if (alertList.contains(p.getUniqueId()))
-						alertList.remove(p.getUniqueId());
 					acReplay.log("Not saving recording...", false);
 				}
+			} finally {
+				alertList.remove(p.getUniqueId());
+				punishList.remove(p.getUniqueId());
+			}
 	},20L * 60L * delay);
 	}
 

@@ -3,8 +3,6 @@ package me.justindevb.anticheatreplay.listeners.AntiCheats;
 
 import ac.grim.grimac.api.GrimAbstractAPI;
 import ac.grim.grimac.api.GrimUser;
-import ac.grim.grimac.api.event.GrimEvent;
-import ac.grim.grimac.api.event.GrimEventListener;
 import ac.grim.grimac.api.event.events.CommandExecuteEvent;
 import ac.grim.grimac.api.event.events.FlagEvent;
 import ac.grim.grimac.api.plugin.BasicGrimPlugin;
@@ -13,8 +11,6 @@ import me.justindevb.anticheatreplay.AntiCheatReplay;
 import me.justindevb.anticheatreplay.ListenerBase;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import java.util.ArrayList;
@@ -59,7 +55,8 @@ public class GrimACListener extends ListenerBase {
 
             alertList.add(p.getUniqueId());
 
-            startRecording(Bukkit.getPlayer(p.getUniqueId()), event.getCheck().getCheckName());
+            Player bukkitPlayer = Bukkit.getPlayer(p.getUniqueId());
+            startRecording(bukkitPlayer, getReplayName(bukkitPlayer, event.getCheck().getCheckName()));
 
         });
 
