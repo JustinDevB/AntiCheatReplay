@@ -1,5 +1,7 @@
 This plugin allows for you to record a player that your AntiCheat has punished from your server and watch the hack at a later time. The hacker could be the only person online and you would still have video evidence of them hacking.
 
+See the [Changelog](CHANGELOG.md) for a full history of changes across all versions.
+
 ## AntiCheats:
 
 **Premium AntiCheats**:
