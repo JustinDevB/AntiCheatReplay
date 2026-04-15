@@ -7,7 +7,6 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 import me.justindevb.anticheatreplay.AntiCheatReplay;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 //From: https://www.spigotmc.org/wiki/creating-an-update-checker-that-checks-for-updates

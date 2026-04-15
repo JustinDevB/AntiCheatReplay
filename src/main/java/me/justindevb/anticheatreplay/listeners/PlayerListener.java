@@ -3,7 +3,6 @@ package me.justindevb.anticheatreplay.listeners;
 import me.justindevb.anticheatreplay.api.events.PlayerReportEvent;
 import me.justindevb.anticheatreplay.utils.DiscordWebhook;
 import me.justindevb.anticheatreplay.utils.Messages;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
