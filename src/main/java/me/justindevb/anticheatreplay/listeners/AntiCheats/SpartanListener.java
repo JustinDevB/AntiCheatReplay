@@ -27,7 +27,7 @@ public class SpartanListener extends ListenerBase implements Listener {
 
 		alertList.add(p.getUniqueId());
 
-		startRecording(p, getReplayName(p, event.getHackType().toString()));
+		startRecording(p, getReplayName(p, getHackTypeName(event)));
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -36,6 +36,20 @@ public class SpartanListener extends ListenerBase implements Listener {
 
 		if (!punishList.contains(p.getUniqueId()))
 			punishList.add(p.getUniqueId());
+	}
+
+	/**
+	 * Uses reflection to call getHackType() to avoid NoSuchMethodError when
+	 * the Spartan API return type changes between versions
+	 * (me.vagdedes.spartan.system.Enums$HackType vs ai.idealistic.spartan.abstraction.check.CheckEnums$HackType).
+	 */
+	private String getHackTypeName(PlayerViolationEvent event) {
+		try {
+			Object hackType = event.getClass().getMethod("getHackType").invoke(event);
+			return hackType != null ? hackType.toString() : "unknown";
+		} catch (Exception e) {
+			return "unknown";
+		}
 	}
 
 }
