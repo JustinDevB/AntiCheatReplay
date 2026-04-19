@@ -1,8 +1,38 @@
-- uses: cloudnode-pro/modrinth-publish@v2
-  with:
-    token: ${{ secrets.MODRINTH_TOKEN }}
-    project: KX9g44hM
-    version: 1.2.3
-    loaders: paper
-    game-versions: 1.21.11
-    files: target/Project-1.2.3.jar
+name: Publish
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          # !!! Select the correct Java version for your project !!!
+          java-version: 21
+          distribution: temurin
+          cache: maven
+
+      # Takes the version tag from the release and replaces it temporarily
+      # in `pom.xml` before building.
+      - name: Set version from release tag
+        run: mvn -B versions:set -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
+
+      - name: Build and package with Maven
+        run: mvn -B clean package --file pom.xml
+
+      - uses: cloudnode-pro/modrinth-publish@v2
+        with:
+          token: ${{ secrets.MODRINTH_TOKEN }}
+          project: KX9g44hM
+          version: 1.2.3
+          loaders: paper
+          game-versions: 1.21.11
+          files: target/Project-1.2.3.jar
