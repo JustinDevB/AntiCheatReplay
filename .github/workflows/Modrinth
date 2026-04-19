@@ -1,2 +1,8 @@
-- name: Modrinth Publish
-  uses: cloudnode-pro/modrinth-publish@v2.3.3
+- uses: cloudnode-pro/modrinth-publish@v2
+  with:
+    token: ${{ secrets.MODRINTH_TOKEN }}
+    project: AABBCCDD
+    version: 1.2.3
+    loaders: fabric
+    game-versions: 1.21.11
+    files: target/Project-1.2.3.jar
