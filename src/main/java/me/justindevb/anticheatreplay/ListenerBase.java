@@ -13,6 +13,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
 
+import com.tcoded.folialib.FoliaLib;
 import me.justindevb.anticheatreplay.api.events.WebhookSendEvent;
 import me.justindevb.replay.api.ReplayAPI;
 import me.justindevb.replay.api.ReplayManager;
@@ -83,7 +84,7 @@ public abstract class ListenerBase {
 			return;
 
 		acReplay.log("Starting recording of player: " + p.getName(), false);
-		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
+		acReplay.getFoliaLib().getScheduler().runAtEntity(p, task -> {
 			replay.startRecording(replayName, List.of(getNearbyPlayers(p)), Math.toIntExact(delay * 60));
 		});
 
@@ -128,7 +129,7 @@ public abstract class ListenerBase {
 		PlayerCache cachedPlayer = acReplay.getCachedPlayer(p.getUniqueId());
 		long loginTime = cachedPlayer.getLoginTimeStamp();
 
-		acReplay.getFoliaLib().getScheduler().runLaterAsync(() -> {
+		acReplay.getFoliaLib().getScheduler().runLater(() -> {
 			try {
 				if (ALWAYS_SAVE_RECORDING)
 					punishList.add(p.getUniqueId());
@@ -139,10 +140,7 @@ public abstract class ListenerBase {
 				if (punishList.contains(p.getUniqueId())) {
 					RecordingSaveEvent saveEvent = new RecordingSaveEvent(p, replayName);
 
-					acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
-						Bukkit.getPluginManager().callEvent(saveEvent);
-					});
-
+					Bukkit.getPluginManager().callEvent(saveEvent);
 
 					if (saveEvent.isCancelled())
 						return;
