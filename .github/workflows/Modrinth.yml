@@ -1,8 +1,8 @@
 - uses: cloudnode-pro/modrinth-publish@v2
   with:
     token: ${{ secrets.MODRINTH_TOKEN }}
-    project: AABBCCDD
+    project: KX9g44hM
     version: 1.2.3
-    loaders: fabric
+    loaders: paper
     game-versions: 1.21.11
-    files: target/Project-1.2.3.jar
+    files: target/AntiCheatReplay-1.2.3.jar
