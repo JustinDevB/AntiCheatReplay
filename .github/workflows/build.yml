@@ -37,14 +37,14 @@ jobs:
           path: target/*.jar
 
       - name: Publish to Modrinth
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/dev'
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           modrinth-id: ${{ secrets.MODRINTH_PROJECT_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: target/AntiCheatReplay-*.jar
           version: ${{ steps.version.outputs.VERSION }}
-          version-type: ${{ github.ref == 'refs/heads/main' && 'release' || 'alpha' }}
+          version-type: ${{ github.ref == 'refs/heads/master' && 'release' || 'alpha' }}
           loaders: |
             paper
             folia
