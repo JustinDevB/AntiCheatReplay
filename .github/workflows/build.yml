@@ -42,7 +42,7 @@ jobs:
         with:
           modrinth-id: ${{ secrets.MODRINTH_PROJECT_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          files: target/BetterReplay-*.jar
+          files: target/AntiCheatReplay-*.jar
           version: ${{ steps.version.outputs.VERSION }}
           version-type: ${{ github.ref == 'refs/heads/main' && 'release' || 'alpha' }}
           loaders: |
