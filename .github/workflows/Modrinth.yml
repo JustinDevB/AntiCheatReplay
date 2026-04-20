@@ -1,38 +1,54 @@
-name: Publish
+name: Build
 
 on:
-  release:
-    types: [ published ]
+  push:
+  pull_request:
 
 jobs:
-  publish:
-    name: Publish
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      - name: Checkout git repo
+        uses: actions/checkout@v4
 
-      - name: Set up JDK
-        uses: actions/setup-java@v5
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
-          # !!! Select the correct Java version for your project !!!
           java-version: 21
-          distribution: temurin
-          cache: maven
+          distribution: 'temurin'
 
-      # Takes the version tag from the release and replaces it temporarily
-      # in `pom.xml` before building.
-      - name: Set version from release tag
-        run: mvn -B versions:set -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
+      - name: Set alpha version for dev builds
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          BASE=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          mvn versions:set -DnewVersion="${BASE}-alpha.${GITHUB_RUN_NUMBER}" -DgenerateBackupPoms=false
 
-      - name: Build and package with Maven
-        run: mvn -B clean package --file pom.xml
+      - name: Build
+        run: mvn install
 
-      - uses: cloudnode-pro/modrinth-publish@v2
+      - name: Resolve version
+        id: version
+        run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.MODRINTH_TOKEN }}
-          project: KX9g44hM
-          version: 1.2.3
-          loaders: paper
-          game-versions: 1.21.11
-          files: target/Project-1.2.3.jar
+          name: AntiCheatReplay
+          path: target/*.jar
+
+      - name: Publish to Modrinth
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ${{ secrets.MODRINTH_PROJECT_ID }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: target/BetterReplay-*.jar
+          version: ${{ steps.version.outputs.VERSION }}
+          version-type: ${{ github.ref == 'refs/heads/main' && 'release' || 'alpha' }}
+          loaders: |
+            paper
+            folia
+          game-versions: |
+            1.21.11
+          dependencies: |
+            packetevents(required)
