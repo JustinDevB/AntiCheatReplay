@@ -52,3 +52,4 @@ jobs:
             1.21.11
           dependencies: |
             packetevents(required)
+            BetterReplay(required)
