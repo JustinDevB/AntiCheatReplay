@@ -61,7 +61,7 @@ public class PlayerListener implements Listener {
 		Player target = event.getTarget();
 		String reason = event.getReason();
 
-		sendDiscordWebhook(target.getName() + "-report", reason, reporter, target);
+		sendDiscordWebhook(event.getRecordingName(), reason, reporter, target);
 
 
 	}

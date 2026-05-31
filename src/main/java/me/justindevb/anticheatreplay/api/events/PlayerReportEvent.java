@@ -13,11 +13,13 @@ public class PlayerReportEvent extends Event implements Cancellable {
     private Player reporter;
     private Player target;
     private String reason;
+    private String recordingName;
 
-    public PlayerReportEvent(Player reporter, Player target, String reason) {
+    public PlayerReportEvent(Player reporter, Player target, String reason, String recordingName) {
         this.reporter = reporter;
         this.target = target;
         this.reason = reason;
+        this.recordingName = recordingName;
         this.isCancelled = false;
     }
 
@@ -47,6 +49,10 @@ public class PlayerReportEvent extends Event implements Cancellable {
      */
     public String getReason() {
         return this.reason;
+    }
+
+    public String getRecordingName() {
+        return this.recordingName;
     }
 
     @Override
