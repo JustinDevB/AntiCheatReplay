@@ -13,12 +13,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GrimACListener extends ListenerBase {
 	
     private List<String> punishCommands = new ArrayList<>();
+    private GrimPlugin grimPlugin;
+    private Object grimEventBus;
 
     public GrimACListener(AntiCheatReplay acReplay) {
         super(acReplay);
@@ -37,7 +41,7 @@ public class GrimACListener extends ListenerBase {
 
         initGrimSpecificConfig();
 
-        GrimPlugin plugin = new BasicGrimPlugin(
+        this.grimPlugin = new BasicGrimPlugin(
                 this.acReplay.getLogger(),
                 this.acReplay.getDataFolder(),
                 acReplay.getDescription().getVersion(),
@@ -46,8 +50,9 @@ public class GrimACListener extends ListenerBase {
         );
 
         GrimAbstractAPI api = provider.getProvider();
+        this.grimEventBus = api.getEventBus();
 
-        api.getEventBus().subscribe(plugin, FlagEvent.class, event -> {
+        api.getEventBus().subscribe(grimPlugin, FlagEvent.class, event -> {
             GrimUser p = event.getPlayer();
 
             if (alertList.contains(p.getUniqueId()))
@@ -60,7 +65,7 @@ public class GrimACListener extends ListenerBase {
 
         });
 
-        api.getEventBus().subscribe(plugin, CommandExecuteEvent.class, event -> {
+        api.getEventBus().subscribe(grimPlugin, CommandExecuteEvent.class, event -> {
             if (!parseCommand(event.getCommand())) {
                 return;
             }
@@ -72,6 +77,15 @@ public class GrimACListener extends ListenerBase {
         });
 
 
+    }
+
+    @Override
+    public void disinit() {
+        if (grimEventBus == null || grimPlugin == null)
+            return;
+
+        invokeIfPresent(grimEventBus, "unsubscribe");
+        invokeIfPresent(grimEventBus, "unregister");
     }
 
 
@@ -121,6 +135,16 @@ public class GrimACListener extends ListenerBase {
 
     private void initGrimSpecificConfig() {
         this.punishCommands = acReplay.getConfig().getStringList("Grim.Punish-Commands");
+    }
+
+    private void invokeIfPresent(Object target, String methodName) {
+        try {
+            Method method = target.getClass().getMethod(methodName, GrimPlugin.class);
+            method.invoke(target, grimPlugin);
+        } catch (NoSuchMethodException ignored) {
+        } catch (IllegalAccessException | InvocationTargetException ex) {
+            acReplay.log("Unable to unregister Grim listener via " + methodName + ": " + ex.getMessage(), true);
+        }
     }
 
 }

@@ -9,11 +9,25 @@ import me.liwk.karhu.api.event.KarhuEvent;
 import me.liwk.karhu.api.event.impl.KarhuAlertEvent;
 import me.liwk.karhu.api.event.impl.KarhuBanEvent;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 public class KarhuListener extends ListenerBase implements me.liwk.karhu.api.event.KarhuListener {
 
 	public KarhuListener(AntiCheatReplay acReplay) {
 		super(acReplay);
 		KarhuAPI.getEventRegistry().addListener(this);
+	}
+
+	@Override
+	public void disinit() {
+		Object registry = KarhuAPI.getEventRegistry();
+		if (registry == null)
+			return;
+
+		invokeIfPresent(registry, "removeListener");
+		invokeIfPresent(registry, "unregisterListener");
+		invokeIfPresent(registry, "unregister");
 	}
 
 	public void onEvent(KarhuEvent event) {
@@ -32,6 +46,16 @@ public class KarhuListener extends ListenerBase implements me.liwk.karhu.api.eve
 
 			if (!punishList.contains(p.getUniqueId()))
 				punishList.add(p.getUniqueId());
+		}
+	}
+
+	private void invokeIfPresent(Object target, String methodName) {
+		try {
+			Method method = target.getClass().getMethod(methodName, me.liwk.karhu.api.event.KarhuListener.class);
+			method.invoke(target, this);
+		} catch (NoSuchMethodException ignored) {
+		} catch (IllegalAccessException | InvocationTargetException ex) {
+			acReplay.log("Unable to unregister Karhu listener via " + methodName + ": " + ex.getMessage(), true);
 		}
 	}
 

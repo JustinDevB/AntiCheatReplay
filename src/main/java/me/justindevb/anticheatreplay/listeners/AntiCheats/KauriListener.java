@@ -23,6 +23,11 @@ public class KauriListener extends ListenerBase implements KauriEvent {
 	}
 
 	@Override
+	public void disinit() {
+		KauriAPI.INSTANCE.unregisterEvents(acReplay);
+	}
+
+	@Override
 	public FlagResult onFlag(Player p, KauriCheck check, String information, boolean cancelled) {
 
 		if (alertList.contains(p.getUniqueId()))

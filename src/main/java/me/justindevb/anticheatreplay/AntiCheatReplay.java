@@ -19,6 +19,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 public class AntiCheatReplay extends JavaPlugin {
@@ -26,6 +27,7 @@ public class AntiCheatReplay extends JavaPlugin {
     private static AntiCheatReplay instance = null;
     private final Map<AntiCheat, ListenerBase> activeListeners = new EnumMap<>(AntiCheat.class);
     private final HashMap<UUID, PlayerCache> playerCache = new HashMap<>();
+    private final Set<UUID> activeRecordings = ConcurrentHashMap.newKeySet();
     private AntiCheat anticheat = null;
     private FoliaLib foliaLib;
 
@@ -57,6 +59,7 @@ public class AntiCheatReplay extends JavaPlugin {
     @Override
     public void onDisable() {
         this.playerCache.clear();
+        this.activeRecordings.clear();
 
         // Properly disinitialize listeners
         for (ListenerBase value : this.activeListeners.values()) {
@@ -79,11 +82,20 @@ public class AntiCheatReplay extends JavaPlugin {
      * Find a compatible AntiCheat and register support for it
      */
     private void findCompatAntiCheat() {
+        this.activeListeners.clear();
+        this.anticheat = null;
+
         for (AntiCheat value : AntiCheat.values()) {
             if (value.getChecker().apply(this)) {
                 final ListenerBase base = value.getInstantiator().apply(this);
+
+                if (base == null) {
+                    continue;
+                }
+
                 activeListeners.put(value, base);
                 this.anticheat = value;
+                break;
             }
         }
 
@@ -142,11 +154,21 @@ public class AntiCheatReplay extends JavaPlugin {
                 value.disinit();
             }
         }
+        this.activeListeners.clear();
+        this.activeRecordings.clear();
         reloadConfig();
         findCompatAntiCheat();
         new Messages();
         log("Reloaded Messages.yml", false);
         log("Reloaded config.yml", false);
+    }
+
+    public boolean tryStartRecording(UUID uuid) {
+        return this.activeRecordings.add(uuid);
+    }
+
+    public void finishRecording(UUID uuid) {
+        this.activeRecordings.remove(uuid);
     }
 
     private void initBstats() {

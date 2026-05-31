@@ -73,23 +73,33 @@ public abstract class ListenerBase {
 	 * @param replayName  Name of the recording when saving
 	 */
 	protected void startRecording(Player p, String replayName) {
-		RecordingStartEvent startEvent = new RecordingStartEvent(p, replayName);
-
-
-		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
-			Bukkit.getPluginManager().callEvent(startEvent);
-		});
-
-		if (startEvent.isCancelled())
+		if (p == null)
 			return;
 
-		acReplay.log("Starting recording of player: " + p.getName(), false);
-		acReplay.getFoliaLib().getScheduler().runAtEntity(p, task -> {
-			replay.startRecording(replayName, List.of(getNearbyPlayers(p)), Math.toIntExact(delay * 60));
+		if (!acReplay.tryStartRecording(p.getUniqueId()))
+			return;
+
+		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
+			if (!p.isOnline()) {
+				acReplay.finishRecording(p.getUniqueId());
+				return;
+			}
+
+			RecordingStartEvent startEvent = new RecordingStartEvent(p, replayName);
+			Bukkit.getPluginManager().callEvent(startEvent);
+
+			if (startEvent.isCancelled()) {
+				acReplay.finishRecording(p.getUniqueId());
+				return;
+			}
+
+			acReplay.log("Starting recording of player: " + p.getName(), false);
+			acReplay.getFoliaLib().getScheduler().runAtEntity(p, entityTask -> {
+				replay.startRecording(replayName, List.of(getNearbyPlayers(p)), Math.toIntExact(delay * 60));
+			});
+
+			runLogic(p, replayName);
 		});
-
-
-		runLogic(p, replayName);
 	}
 
 	/**
@@ -166,6 +176,7 @@ public abstract class ListenerBase {
 			} finally {
 				alertList.remove(p.getUniqueId());
 				punishList.remove(p.getUniqueId());
+				acReplay.finishRecording(p.getUniqueId());
 			}
 	},20L * 60L * delay);
 	}
