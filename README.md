@@ -1,4 +1,4 @@
-This plugin allows for you to record a player that your AntiCheat has punished from your server and watch the hack at a later time. The hacker could be the only person online and you would still have video evidence of them hacking.
+This plugin records suspicious players so you can review the incident later in BetterReplay. Recordings can start from supported AntiCheat alerts and punishments, and staff can also trigger a recording manually with `/report`.
 
 See the [Changelog](CHANGELOG.md) for a full history of changes across all versions.
 
@@ -42,9 +42,9 @@ With this you can have video proof of someone hacking on your server when they a
 Features Discord Integration. Optionally send a message to a Discord Channel whenever a recording is created.
 ![Discord Webhook Example](https://www.spigotmc.org/attachments/capture-png.665322/)
 
-Requires a supported AntiCheat and AdvancedReplay to be installed and running on your server.
+Requires a supported AntiCheat and BetterReplay to be installed and running on your server.
 
-NOTE: Your AntiCheat has to be configured to punish someone in order to record. If players never get punished you will not get a recording.
+NOTE: AntiCheat-driven recordings still depend on the integrations your AntiCheat exposes. For most integrations, a flag starts the recording and a punish event causes it to be saved. The `/report` command can also start and save a recording without relying on a punish event.
 
 
 ### Setup:
@@ -52,10 +52,10 @@ NOTE: Your AntiCheat has to be configured to punish someone in order to record. 
 - Soaroma: Set `enableAPI` in Soaroma's config to "true"
 - Sparky: Set `API.Events` in Sparky's config to "true"
 
-For best results, follow this configuration guide for Advanced Replay:
+For best results, follow this configuration guide for BetterReplay:
 
 Enable MySQL to store the files (This plugin can generate a lot of recordings if you have a lot of hackers. Depending on your recording length this can take up quite a bit of space.)
-   In AdvancedReplay config.yml change the following values:
+  In BetterReplay `config.yml` change the following values:
 ```
    cleanup_replays: 10 # This makes replays delete when they're 10 days old
    hide_players: true
@@ -71,37 +71,47 @@ Enable MySQL to store the files (This plugin can generate a lot of recordings if
 ### Default Configuration:
 ```YAML
 General:
-Overwrite: false  #Should we overwrite a recording if a player did the same hack on the same date?
-Check-Update: true  #Be notified when this plugin updates
-Nearby-Range: 30     #How far to look for nearby players to include in the recording? NOTE: The formula is 1/2 of what you put here in each. So it will be 15 blocks in each +x and -x for a total of 30 blocks, etc.
-Recording-Length: 2 #Length in minutes of a recording. Recording will not be created until this time has passed from the start of a recording.
+  Overwrite: false  # Should we overwrite a recording if a player did the same hack on the same date?
+  Check-Update: true  # Be notified when this plugin updates
+  Nearby-Range: 30  # How far to look for nearby players to include in the recording?
+  Recording-Length: 2  # Length in minutes of a recording.
+  Notify-Staff: true  # Notify staff with AntiCheatReplay.recording-notify when a replay is saved.
+  Save-Recording-On-Disconnect: false
+  Always-Save-Recording: false
+  Report-Cooldown: 3  # Cooldown in minutes between reports per player.
+  Report-Enabled: true
 Vulcan:
-Disabled-Recordings: #Any checks you do not want to record. These are examples, replace/add as many as you want NOTE: Must be lowercase
-- timer
-- strafe
-  Themis:
-  Disabled-Actions:   #Themis Actions to disable, refer to Themis config.yml
-- notify
-  Discord: # Send a recording notification to a Discord Channel
+  Disabled-Recordings: # Any checks you do not want to record. Must be lowercase.
+    - timer
+    - strafe
+Themis:
+  Disabled-Actions:   # Themis actions to disable, refer to the Themis config.yml.
+    - notify
+Discord: # Send a recording notification to a Discord channel.
   Enabled: true
   Webhook: Enter webhook here
-  Avatar: https://i.imgur.com/JPG1Kwk.png     #Default Vulcan avatar, feel free to change this
+  Avatar: https://i.imgur.com/JPG1Kwk.png  # Default Vulcan avatar, feel free to change this.
   Username: VulcanReplay
   Server-Name: Server
 ```
 ### Usage:
 ```
-Most commands and permissions are handled by AdvancedReplay The only command AntiCheatReplay adds is a reload command
+Most replay management commands are handled by BetterReplay. AntiCheatReplay adds a reload command and an optional player report command.
 
 Basic usage:
-/replay list Will print a list of recordings
-/replay play <recording> Play a recording
-/replay delete <recording> Deletes a recording
-/replay reload vulcanreplay.reload Reload AntiCheatReplay
-```
-### Known Issues:
+/replay list                          # List recordings
+/replay play <recording>              # Play a recording
+/replay delete <recording>            # Delete a recording
+/replayreload                         # Reload AntiCheatReplay
+/report <player> [reason]             # Start or mark a recording to be saved for the reported player
 
-Recording does not show any mobs/entities other than Players. You may see a player take damage in a recording from what appears to be nothing, but it could be a mob. Again, this is an issue that the AdvancedReplay developer has to fix.
+Permissions:
+AntiCheatReplay.reload                # Use /replayreload
+AntiCheatReplay.report                # Use /report
+AntiCheatReplay.report-notify         # Receive staff notifications when someone files a report
+AntiCheatReplay.reportImmune          # Prevent a player from being reported
+AntiCheatReplay.recording-notify      # Receive staff notifications when a replay is saved
+```
 
 
 ### Discord

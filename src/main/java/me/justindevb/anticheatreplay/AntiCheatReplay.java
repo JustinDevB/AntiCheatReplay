@@ -20,6 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.logging.Level;
 
 public class AntiCheatReplay extends JavaPlugin {
@@ -27,7 +28,9 @@ public class AntiCheatReplay extends JavaPlugin {
     private static AntiCheatReplay instance = null;
     private final Map<AntiCheat, ListenerBase> activeListeners = new EnumMap<>(AntiCheat.class);
     private final HashMap<UUID, PlayerCache> playerCache = new HashMap<>();
-    private final Set<UUID> activeRecordings = ConcurrentHashMap.newKeySet();
+    private final Map<UUID, String> activeRecordings = new ConcurrentHashMap<>();
+    private final ConcurrentLinkedDeque<UUID> alertList = new ConcurrentLinkedDeque<>();
+    private final ConcurrentLinkedDeque<UUID> punishList = new ConcurrentLinkedDeque<>();
     private AntiCheat anticheat = null;
     private FoliaLib foliaLib;
 
@@ -60,6 +63,8 @@ public class AntiCheatReplay extends JavaPlugin {
     public void onDisable() {
         this.playerCache.clear();
         this.activeRecordings.clear();
+        this.alertList.clear();
+        this.punishList.clear();
 
         // Properly disinitialize listeners
         for (ListenerBase value : this.activeListeners.values()) {
@@ -156,6 +161,8 @@ public class AntiCheatReplay extends JavaPlugin {
         }
         this.activeListeners.clear();
         this.activeRecordings.clear();
+        this.alertList.clear();
+        this.punishList.clear();
         reloadConfig();
         findCompatAntiCheat();
         new Messages();
@@ -163,12 +170,24 @@ public class AntiCheatReplay extends JavaPlugin {
         log("Reloaded config.yml", false);
     }
 
-    public boolean tryStartRecording(UUID uuid) {
-        return this.activeRecordings.add(uuid);
+    public boolean tryStartRecording(UUID uuid, String replayName) {
+        return this.activeRecordings.putIfAbsent(uuid, replayName) == null;
+    }
+
+    public String getActiveRecordingName(UUID uuid) {
+        return this.activeRecordings.get(uuid);
     }
 
     public void finishRecording(UUID uuid) {
         this.activeRecordings.remove(uuid);
+    }
+
+    public ConcurrentLinkedDeque<UUID> getAlertList() {
+        return this.alertList;
+    }
+
+    public ConcurrentLinkedDeque<UUID> getPunishList() {
+        return this.punishList;
     }
 
     private void initBstats() {

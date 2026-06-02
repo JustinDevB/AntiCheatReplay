@@ -52,12 +52,14 @@ public abstract class ListenerBase {
 	private int BLUE = 0;
 
 
-	protected ConcurrentLinkedDeque<UUID> alertList = new ConcurrentLinkedDeque<>();
-	protected ConcurrentLinkedDeque<UUID> punishList = new ConcurrentLinkedDeque<>();
+	protected ConcurrentLinkedDeque<UUID> alertList;
+	protected ConcurrentLinkedDeque<UUID> punishList;
 
 	public ListenerBase(AntiCheatReplay acReplay) {
 		this.acReplay = acReplay;
 		this.replay = ReplayAPI.get();
+		this.alertList = acReplay.getAlertList();
+		this.punishList = acReplay.getPunishList();
 
 		initConfigFields();
 	}
@@ -76,7 +78,7 @@ public abstract class ListenerBase {
 		if (p == null)
 			return;
 
-		if (!acReplay.tryStartRecording(p.getUniqueId()))
+		if (!acReplay.tryStartRecording(p.getUniqueId(), replayName))
 			return;
 
 		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
@@ -108,21 +110,22 @@ public abstract class ListenerBase {
 	 * @param target
 	 * @param reason
 	 */
-	protected void reportPlayer(Player reporter, Player target, String reason) {
-		if (alertList.contains(target.getUniqueId()))
+	protected void reportPlayer(Player reporter, Player target, String reason, String replayName) {
+		if (target == null)
 			return;
-		alertList.add(target.getUniqueId());
-		String replayName = getReplayName(target, "report");
-		acReplay.log("Starting recording of player: " + target.getName(), false);
 
-		acReplay.getFoliaLib().getScheduler().runLaterAsync(() -> {
-			acReplay.log("Saved a player report:", false);
-			acReplay.log(reporter.getName() + " reported " + target.getName() + " for " + reason, false);
+		UUID targetId = target.getUniqueId();
 
+		if (!punishList.contains(targetId))
+			punishList.add(targetId);
 
-			if (alertList.contains(target.getUniqueId()))
-				alertList.remove(target.getUniqueId());
-		}, 20L * 60L * delay);
+		acReplay.log(reporter.getName() + " reported " + target.getName() + " for " + reason, false);
+
+		if (alertList.contains(targetId))
+			return;
+
+		alertList.add(targetId);
+		startRecording(target, replayName);
 	}
 
 	protected void saveRecording() {

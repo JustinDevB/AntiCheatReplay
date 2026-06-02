@@ -51,17 +51,18 @@ public class ReportCommand extends ListenerBase implements CommandExecutor {
             return true;
         }
 
-        if (Bukkit.getPlayer(strings[0]) == null || !Bukkit.getPlayer(strings[0]).isOnline()) {
+        Player target = Bukkit.getPlayer(strings[0]);
+        if (target == null || !target.isOnline()) {
             p.sendMessage(ChatColor.DARK_RED + Messages.REPORT_OFFLINE_ERROR);
             return true;
         }
 
-        if (Bukkit.getPlayer(strings[0]).getName().contentEquals(p.getName())) {
+        if (target.getName().contentEquals(p.getName())) {
             p.sendMessage(ChatColor.DARK_RED + Messages.COMMAND_REPORT_SELF_REPORT);
             return true;
         }
 
-        if (Bukkit.getPlayer(strings[0]).hasPermission("AntiCheatReplay.reportImmune")) {
+        if (target.hasPermission("AntiCheatReplay.reportImmune")) {
             p.sendMessage(ChatColor.DARK_RED + Messages.REPORT_IMMUNE);
             return true;
         }
@@ -74,7 +75,11 @@ public class ReportCommand extends ListenerBase implements CommandExecutor {
                 reason += strings[i] + " ";
         }
 
-        PlayerReportEvent reportEvent = new PlayerReportEvent(p, Bukkit.getPlayer(strings[0]), reason);
+        String replayName = acReplay.getActiveRecordingName(target.getUniqueId());
+        if (replayName == null)
+            replayName = getReplayName(target, "report");
+
+        PlayerReportEvent reportEvent = new PlayerReportEvent(p, target, reason, replayName);
         acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
            Bukkit.getPluginManager().callEvent(reportEvent);
         });
@@ -85,7 +90,7 @@ public class ReportCommand extends ListenerBase implements CommandExecutor {
         String notification = Messages.COMMAND_REPORT_NOTIFY;
         notification = notification
                 .replace("%r", p.getName())
-                .replace("%s", Bukkit.getPlayer(strings[0]).getName())
+                .replace("%s", target.getName())
                 .replace("%t", reason);
 
         for (Player player : Bukkit.getOnlinePlayers()) {
@@ -93,7 +98,7 @@ public class ReportCommand extends ListenerBase implements CommandExecutor {
                 player.sendMessage(ChatColor.GOLD + notification);
         }
 
-        reportPlayer(p, Bukkit.getPlayer(strings[0]), reason);
+        reportPlayer(p, target, reason, replayName);
 
         p.sendMessage(ChatColor.DARK_GREEN + Messages.REPORT_SUBMITTED);
 
