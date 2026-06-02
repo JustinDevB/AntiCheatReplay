@@ -41,6 +41,8 @@ public class Messages {
 
 			config.addDefault("Discord.Title", "Instant Replay");
 			config.addDefault("Discord.Description", "Recording created");
+			config.addDefault("Discord.Alert.Title", "AntiCheat Recording Saved");
+			config.addDefault("Discord.Alert.Description", "Recording created from an anti-cheat alert.");
 			config.addDefault("Discord.Server", "Server:");
 			config.addDefault("Discord.OnlineFor", "Online for:");
 			config.addDefault("Discord.Minutes", "minutes");
@@ -50,7 +52,9 @@ public class Messages {
 			config.addDefault("Discord.Alert.Source", "AntiCheat Alert");
 			config.addDefault("Discord.Report.Title", "Report");
 			config.addDefault("Discord.Report.Description", "Player Reported");
-			config.addDefault("Discord.Report.Source", "Player Report");
+			config.addDefault("Discord.Report.Recording-Title", "Report Recording Saved");
+			config.addDefault("Discord.Report.Recording-Description", "Recording created from a player /report.");
+			config.addDefault("Discord.Report.Source", "/report Command");
 
 			config.addDefault("Commands.Report.Usage", "Usage: /report <player> (reason)");
 			config.addDefault("Commands.Report.Offline", "You can only report an online player!");
@@ -78,8 +82,8 @@ public class Messages {
 	}
 
 	private void initFields() {
-		TITLE = config.getString("Discord.Title");
-		DESCRIPTION = config.getString("Discord.Description");
+		TITLE = config.getString("Discord.Alert.Title", config.getString("Discord.Title"));
+		DESCRIPTION = config.getString("Discord.Alert.Description", config.getString("Discord.Description"));
 		SERVER = config.getString("Discord.Server");
 		ONLINE_FOR = config.getString("Discord.OnlineFor");
 		ONLINE_FOR_MINUTES = config.getString("Discord.Minutes");
@@ -96,8 +100,8 @@ public class Messages {
 		REPORT_SUBMITTED = config.getString("Commands.Report.Success");
 		NOTIFY_RECORDING = config.getString("General.Notify-Recording");
 		COMMAND_REPORT_COOLDOWN = config.getString("Commands.Report.Cooldown");
-		REPORT_TITLE = config.getString("Discord.Report.Title");
-		REPORT_DESCRIPTION = config.getString("Discord.Report.Description");
+		REPORT_TITLE = config.getString("Discord.Report.Recording-Title", config.getString("Discord.Report.Title"));
+		REPORT_DESCRIPTION = config.getString("Discord.Report.Recording-Description", config.getString("Discord.Report.Description"));
 		REPORT_IMMUNE = config.getString("Commands.Report.Immune");
 	}
 
