@@ -95,7 +95,7 @@ public abstract class ListenerBase {
 
 			acReplay.log("Starting recording of player: " + p.getName(), false);
 			acReplay.getFoliaLib().getScheduler().runAtEntity(p, entityTask -> {
-				replay.startRecording(replayName, List.of(getNearbyPlayers(p)), Math.toIntExact(delay * 60));
+				replay.startRecording(replayName, getNearbyPlayers(p), Math.toIntExact(delay * 60));
 			});
 
 			runLogic(p, replayName);
@@ -188,31 +188,21 @@ public abstract class ListenerBase {
 	 * @param p
 	 * @return
 	 */
-	private Player[] getNearbyPlayers(Player p) {
+	private Collection<Player> getNearbyPlayers(Player p) {
 		final List<Player> nearbyPlayers = new ArrayList<>();
-		int i = 0;
+		nearbyPlayers.add(p);
 		final Collection<Entity> entites = p.getWorld().getNearbyEntities(p.getLocation(), PLAYER_RANGE, PLAYER_RANGE,
 				PLAYER_RANGE);
 
 		for (final Entity e : entites)
 			if (e instanceof Player) {
-				nearbyPlayers.add((Player) e);
-				i++;
+				Player nearbyPlayer = (Player) e;
+				if (!nearbyPlayer.getUniqueId().equals(p.getUniqueId())) {
+					nearbyPlayers.add(nearbyPlayer);
+				}
 			}
 
-		if (i == 0) {
-			Player[] player = new Player[1];
-			player[0] = p;
-			return player;
-		}
-
-		final Player[] players = new Player[i];
-		players[0] = p;
-
-		for (int j = 1; i > 1 && j < nearbyPlayers.size(); j++)
-			players[j] = nearbyPlayers.get(j);
-
-		return players;
+		return nearbyPlayers;
 
 	}
 
