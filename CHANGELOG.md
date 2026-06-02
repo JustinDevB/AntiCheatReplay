@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Fixed
+- Fix startup crash when no supported AntiCheat is installed by stopping initialization after the plugin disables itself (branch: fix/no-anticheat-graceful-disable)
 - Fix Spartan API `NoSuchMethodError` for `getHackType()` (branch: fix/spartan-api-compat)
 - Fix recordings failing after first anticheat trigger (branch: fix/recording-state-bugs)
 
