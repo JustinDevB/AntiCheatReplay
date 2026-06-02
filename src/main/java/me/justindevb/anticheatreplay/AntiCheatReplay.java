@@ -31,6 +31,7 @@ public class AntiCheatReplay extends JavaPlugin {
     private final Map<UUID, String> activeRecordings = new ConcurrentHashMap<>();
     private final ConcurrentLinkedDeque<UUID> alertList = new ConcurrentLinkedDeque<>();
     private final ConcurrentLinkedDeque<UUID> punishList = new ConcurrentLinkedDeque<>();
+    private final Map<UUID, RecordingSource> activeRecordingSources = new ConcurrentHashMap<>();
     private AntiCheat anticheat = null;
     private FoliaLib foliaLib;
 
@@ -65,6 +66,7 @@ public class AntiCheatReplay extends JavaPlugin {
         this.activeRecordings.clear();
         this.alertList.clear();
         this.punishList.clear();
+        this.activeRecordingSources.clear();
 
         // Properly disinitialize listeners
         for (ListenerBase value : this.activeListeners.values()) {
@@ -163,6 +165,7 @@ public class AntiCheatReplay extends JavaPlugin {
         this.activeRecordings.clear();
         this.alertList.clear();
         this.punishList.clear();
+        this.activeRecordingSources.clear();
         reloadConfig();
         findCompatAntiCheat();
         new Messages();
@@ -171,15 +174,34 @@ public class AntiCheatReplay extends JavaPlugin {
     }
 
     public boolean tryStartRecording(UUID uuid, String replayName) {
-        return this.activeRecordings.putIfAbsent(uuid, replayName) == null;
+        return tryStartRecording(uuid, replayName, RecordingSource.ANTICHEAT);
+    }
+
+    public boolean tryStartRecording(UUID uuid, String replayName, RecordingSource source) {
+        if (this.activeRecordings.putIfAbsent(uuid, replayName) != null)
+            return false;
+
+        this.activeRecordingSources.put(uuid, source);
+        return true;
     }
 
     public String getActiveRecordingName(UUID uuid) {
         return this.activeRecordings.get(uuid);
     }
 
+    public void setRecordingSource(UUID uuid, RecordingSource source) {
+        if (this.activeRecordings.containsKey(uuid)) {
+            this.activeRecordingSources.put(uuid, source);
+        }
+    }
+
+    public RecordingSource getRecordingSource(UUID uuid) {
+        return this.activeRecordingSources.getOrDefault(uuid, RecordingSource.ANTICHEAT);
+    }
+
     public void finishRecording(UUID uuid) {
         this.activeRecordings.remove(uuid);
+        this.activeRecordingSources.remove(uuid);
     }
 
     public ConcurrentLinkedDeque<UUID> getAlertList() {
