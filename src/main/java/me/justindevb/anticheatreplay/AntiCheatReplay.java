@@ -50,6 +50,9 @@ public class AntiCheatReplay extends JavaPlugin {
     private void initialInit() {
         foliaLib.getScheduler().runNextTick(task -> {
             checkRequiredPlugins();
+            if (!isEnabled()) {
+                return;
+            }
             registerListener();
             initConfig();
             checkForUpdate();
@@ -216,7 +219,7 @@ public class AntiCheatReplay extends JavaPlugin {
         final int pluginId = 13402;
         Metrics metrics = new Metrics(this, pluginId);
         metrics.addCustomChart(new SimplePie("anticheat", () -> {
-            return this.anticheat.getName();
+            return this.anticheat != null ? this.anticheat.getName() : "none";
         }));
 
         metrics.addCustomChart(new SimplePie("discord-hook", () -> {
