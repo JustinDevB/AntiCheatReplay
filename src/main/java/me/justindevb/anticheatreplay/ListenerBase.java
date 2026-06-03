@@ -13,7 +13,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.TimeUnit;
 
-import com.tcoded.folialib.FoliaLib;
 import me.justindevb.anticheatreplay.api.events.WebhookSendEvent;
 import me.justindevb.replay.api.ReplayAPI;
 import me.justindevb.replay.api.ReplayManager;
@@ -75,10 +74,14 @@ public abstract class ListenerBase {
 	 * @param replayName  Name of the recording when saving
 	 */
 	protected void startRecording(Player p, String replayName) {
+		startRecording(p, replayName, RecordingSource.ANTICHEAT);
+	}
+
+	protected void startRecording(Player p, String replayName, RecordingSource source) {
 		if (p == null)
 			return;
 
-		if (!acReplay.tryStartRecording(p.getUniqueId(), replayName))
+		if (!acReplay.tryStartRecording(p.getUniqueId(), replayName, source))
 			return;
 
 		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
@@ -120,12 +123,13 @@ public abstract class ListenerBase {
 			punishList.add(targetId);
 
 		acReplay.log(reporter.getName() + " reported " + target.getName() + " for " + reason, false);
+		acReplay.setRecordingSource(targetId, RecordingSource.REPORT);
 
 		if (alertList.contains(targetId))
 			return;
 
 		alertList.add(targetId);
-		startRecording(target, replayName);
+		startRecording(target, replayName, RecordingSource.REPORT);
 	}
 
 	protected void saveRecording() {
@@ -244,6 +248,11 @@ public abstract class ListenerBase {
 		if (!WEBHOOK_ENABLED)
 			return;
 
+		RecordingSource source = acReplay.getRecordingSource(player.getUniqueId());
+		String title = source == RecordingSource.REPORT ? Messages.REPORT_TITLE : Messages.TITLE;
+		String description = source == RecordingSource.REPORT ? Messages.REPORT_DESCRIPTION : Messages.DESCRIPTION;
+		String sourceName = source == RecordingSource.REPORT ? Messages.REPORT_SOURCE_NAME : Messages.ALERT_SOURCE_NAME;
+
 		WebhookSendEvent webhookSendEvent = new WebhookSendEvent();
 		acReplay.getFoliaLib().getScheduler().runNextTick(task -> {
 			Bukkit.getPluginManager().callEvent(webhookSendEvent);
@@ -257,9 +266,10 @@ public abstract class ListenerBase {
 			webhook.setAvatarUrl(WEBHOOK_AVATAR);
 			webhook.setUsername(WEBHOOK_USERNAME);
 			webhook.addEmbed(
-					new DiscordWebhook.EmbedObject().setTitle(Messages.TITLE).setDescription(Messages.DESCRIPTION)
+					new DiscordWebhook.EmbedObject().setTitle(title).setDescription(description)
 							.setThumbnail("http://cravatar.eu/avatar/" + player.getName() + "/64.png")
 							.setColor(new Color(this.RED, this.GREEN, this.BLUE)).addField(Messages.SERVER, SERVER_NAME, true)
+							.addField(Messages.SOURCE, sourceName, true)
 							.addField(Messages.ONLINE_FOR, minutesOnline + " " + Messages.ONLINE_FOR_MINUTES, true)
 							.addField(Messages.RECORDING_NAME, "`" + recording + "`", true)
 							.addField(Messages.COMMAND + " ", "`/replay play " + recording + "`", true));

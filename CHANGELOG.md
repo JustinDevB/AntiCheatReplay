@@ -6,12 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+- Add `RecordingSource` tracking so recording origin (anti-cheat vs report command) is handled consistently (branch: fix/report-webhook-source)
+- Add default fallback messages for anti-cheat alerts and player reports when custom message keys are missing (branch: fix/report-webhook-source)
+
 ### Fixed
 - Fix Spartan API `NoSuchMethodError` for `getHackType()` (branch: fix/spartan-api-compat)
 - Fix recordings failing after first anticheat trigger (branch: fix/recording-state-bugs)
+- Fix nearby player targeting logic for recordings to use the correct nearby-player set (PR #62)
+- Fix `/report`-triggered recording flow and include recording names in reporting output (PR #63)
+- Fix duplicate Discord/webhook notifications triggered by `/rport` by applying recording-source-aware handling (branch: fix/report-webhook-source)
 
 ### Changed
 - Bump version to 3.0.4 (branch: fix/recording-state-bugs)
+- Refactor report/alert processing paths tied to `/report` recordings and refresh BetterReplay integration notes in the README (PR #63)
 
 ---
 
